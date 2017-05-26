@@ -64,15 +64,13 @@ void GameWorld::Enter()
 
 void GameWorld::Render()
 {
+	//	update character y positions so they don't go beneath the terrain
+	knight._pos.y = terrain->getHeight(knight._pos.x, knight._pos.z);
+	dragon._pos.y = terrain->getHeight(dragon._pos.x, dragon._pos.z);
+
 
 	//	set view matrix
-	//D3DXMATRIX V;
-	//D3DXMatrixLookAtLH(&V, &knight.thirdPersonCamera._pos, &D3DXVECTOR3(knight._pos.x, knight.box._max.y, knight._pos.z), &D3DXVECTOR3(0,1,0));
 	Device->SetTransform(D3DTS_VIEW, &knight.getRearView());
-
-
-	knight._pos.y = terrain->getHeight(knight._pos.x, knight._pos.z);
-
 
 	if (Device) {
 

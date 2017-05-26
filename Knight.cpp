@@ -14,7 +14,7 @@ Knight::~Knight()
 bool Knight::Initialize()
 {
 	//	set speed variables
-	speed = 100.0f;
+	speed = 50.0f;
 	strafeSpeed = 50.0f;
 	turnSpeed = 2.0f;
 
@@ -48,7 +48,7 @@ void Knight::Render()
 void Knight::Update()
 {
 	//	update third person camera position (rear view)
-	thirdPersonCamera._pos = ((-_look * 100.0f) + (_up * 50.0f)) + _pos;
+	thirdPersonCamera._pos = ((-_look * 20.0) + (_up * 10.0f)) + _pos;
 
 
 	if (!isAuto) {
@@ -86,6 +86,8 @@ void Knight::Update()
 
 void Knight::Reset()
 {
+	//	set start position
+	_pos = { 900.0f, 0.0f, -900.0f };
 }
 
 D3DXMATRIX Knight::getRearView()

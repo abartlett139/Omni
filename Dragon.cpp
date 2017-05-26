@@ -18,11 +18,14 @@ bool Dragon::Initialize()
 	strafeSpeed = 75.0f;
 	turnSpeed = 1.0f;
 
+	//	set start position
+	_pos = { -900.0f, 0.0f, 900.0f };
+
 	//	initialize the physical mesh object
 	characterMesh.Initialize("models/dragon.x");
 
 	//	set the scale
-	D3DXMatrixScaling(&S, 10.0f, 10.0f, 10.0f);
+	D3DXMatrixScaling(&S, 1.5f, 1.5f, 1.5f);
 
 	return true;
 }
@@ -82,6 +85,8 @@ void Dragon::Update()
 
 void Dragon::Reset()
 {
+	//	set start position
+	_pos = { -900.0f, 0.0f, 900.0f };
 }
 
 D3DXMATRIX Dragon::getRearView()
