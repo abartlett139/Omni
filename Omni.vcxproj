@@ -125,9 +125,11 @@
     <ClCompile Include="Camera.cpp" />
     <ClCompile Include="Character.cpp" />
     <ClCompile Include="D3D.cpp" />
+    <ClCompile Include="Dragon.cpp" />
     <ClCompile Include="GameState.cpp" />
     <ClCompile Include="GameTimer.cpp" />
     <ClCompile Include="GameWorld.cpp" />
+    <ClCompile Include="Knight.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="Mesh.cpp" />
     <ClCompile Include="Skybox.cpp" />
@@ -137,9 +139,11 @@
     <ClInclude Include="Camera.h" />
     <ClInclude Include="Character.h" />
     <ClInclude Include="D3D.h" />
+    <ClInclude Include="Dragon.h" />
     <ClInclude Include="GameState.h" />
     <ClInclude Include="GameTimer.h" />
     <ClInclude Include="GameWorld.h" />
+    <ClInclude Include="Knight.h" />
     <ClInclude Include="Mesh.h" />
     <ClInclude Include="Skybox.h" />
     <ClInclude Include="Terrain.h" />

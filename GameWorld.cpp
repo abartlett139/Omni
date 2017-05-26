@@ -35,11 +35,18 @@ bool GameWorld::Init()
 
 	skybox.generate();
 
-	terrain = new Terrain("textures/heightMap.raw", 2000, 2000, 10, 2.0f);
-	terrain->genTexture(&D3DXVECTOR3(0.0, -1.0f, 0.0f));
-	terrain->loadTexture("textures/terrain.png");
 
-	knight.Initialize(Character::KNIGHT);
+	//	DO HEIGHTMAP SKEW / DISTORTION IN PHOTOSHOP
+	terrain = new Terrain("textures/heightMap2.raw", 2001, 2001, 1, 0.2f);
+	terrain->genTexture(&D3DXVECTOR3(0.0, -1.0f, 0.0f));
+	terrain->loadTexture("textures/terrain2.png");
+
+	knight.Initialize();
+	dragon.Initialize();
+
+	moat.Initialize("models/moat.x");
+
+	knight.isAuto = false;
 
 	return true;
 }
@@ -58,15 +65,13 @@ void GameWorld::Enter()
 void GameWorld::Render()
 {
 
-	knight._pos.y = terrain->getHeight(knight._pos.x, knight._pos.z);
-
-
 	//	set view matrix
+	//D3DXMATRIX V;
+	//D3DXMatrixLookAtLH(&V, &knight.thirdPersonCamera._pos, &D3DXVECTOR3(knight._pos.x, knight.box._max.y, knight._pos.z), &D3DXVECTOR3(0,1,0));
+	Device->SetTransform(D3DTS_VIEW, &knight.getRearView());
 
-	//	VIEW MATRIX FOR THIRD PERSON CAMERA
-	D3DXMATRIX V;
-	D3DXMatrixLookAtLH(&V, &knight.thirdPersonCamera._pos, &D3DXVECTOR3(knight._pos.x, knight.box._max.y, knight._pos.z), &D3DXVECTOR3(0,1,0));
-	Device->SetTransform(D3DTS_VIEW, &V);
+
+	knight._pos.y = terrain->getHeight(knight._pos.x, knight._pos.z);
 
 
 	if (Device) {
@@ -89,6 +94,14 @@ void GameWorld::Render()
 		//	render knight
 		knight.Render();
 
+		// render dragon
+		dragon.Render();
+
+		D3DXMATRIX moatScale, moatPos;
+		D3DXMatrixScaling(&moatScale, 100.0f, 100.0f, 100.0f);
+		D3DXMatrixTranslation(&moatPos, 0.0f, 10.0f, -300.0f);
+		Device->SetTransform(D3DTS_WORLD, &(moatScale * moatPos));
+		moat.Render();
 
 		Device->EndScene();
 		Device->Present(0, 0, 0, 0);
@@ -97,19 +110,12 @@ void GameWorld::Render()
 
 void GameWorld::Update()
 {
-
 	knight.Update();
-
-	if (GetKeyState(VK_UP) & 0x800)
-		cam.pitch(-timer.DeltaTime());
-	if (GetKeyState(VK_DOWN) & 0x800)
-		cam.pitch(timer.DeltaTime());
-	if (GetKeyState(VK_LEFT) & 0x800)
-		cam.yaw(-timer.DeltaTime());
-	if (GetKeyState(VK_RIGHT) & 0x800)
-		cam.yaw(timer.DeltaTime());
+	dragon.Update();
 }
 
 void GameWorld::Exit(GameState * nextState)
 {
+	knight.Reset();
+	dragon.Reset();
 }

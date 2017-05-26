@@ -5,38 +5,26 @@
 #include "Mesh.h"
 #include "GameTimer.h"
 
-class Character : public Camera
-{
+class Character : public Camera {
 public:
 	Character();
 	~Character();
 
-	bool Initialize(int characterType);
-	void Render();
+	virtual bool Initialize() = 0;
+	virtual void Render() = 0;
+	virtual void Update() = 0;
+	virtual void Reset() = 0;
 
-
-	//--------------------//
-	//	Update()
-	//--------------------//
-	//	character update
-	//	called in GameWorld.cpp update
-	//--------------------//
-	void Update();
-
-
-	Camera thirdPersonCamera;
 	Mesh characterMesh;
 	D3D::BoundingBox box;
-	int type;
-	int view;
-	float scale;
 
 	D3DXMATRIX P, T, S;
 
-	bool isAuto;	//	is the character being controlled by AI or not
+	bool isAuto;
+	int currentState;
+	virtual enum STATES;
 
-	enum CharacterType{KNIGHT, DRAGON, PRINCESS};
-	enum CameraView{REAR, SIDE};
+	float speed, strafeSpeed, turnSpeed;
 };
 
 #endif

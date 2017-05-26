@@ -6,7 +6,8 @@
 #include "Mesh.h"
 #include "Skybox.h"
 #include "Terrain.h"
-#include "Character.h"
+#include "Knight.h"
+#include "Dragon.h"
 
 class GameWorld : public GameState
 {
@@ -24,13 +25,13 @@ public:
 	D3DLIGHT9 spotLight;
 	D3DLIGHT9 pointLight;
 
-
-	Camera cam;
-
 	Skybox skybox;
 	Terrain *terrain = 0;
 
-	Character knight;
+	Knight knight;
+	Dragon dragon;
+
+	Mesh moat;
 
 	ID3DXFont *font;
 
