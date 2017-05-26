@@ -37,7 +37,7 @@ bool GameWorld::Init()
 
 
 	//	DO HEIGHTMAP SKEW / DISTORTION IN PHOTOSHOP
-	terrain = new Terrain("textures/heightMap2.raw", 2001, 2001, 1, 0.2f);
+	terrain = new Terrain("textures/heightMap5.raw", 2001, 2001, 1, 0.2f);
 	terrain->genTexture(&D3DXVECTOR3(0.0, -1.0f, 0.0f));
 	terrain->loadTexture("textures/terrain2.png");
 
@@ -72,6 +72,14 @@ void GameWorld::Render()
 	//	set view matrix
 	Device->SetTransform(D3DTS_VIEW, &knight.getRearView());
 
+<<<<<<< HEAD
+=======
+
+	knight._pos.y = terrain->getHeight(knight._pos.x, knight._pos.z);
+	dragon._pos.y = terrain->getHeight(dragon._pos.x, dragon._pos.z);
+
+
+>>>>>>> origin/master
 	if (Device) {
 
 		Device->Clear(0, 0, D3DCLEAR_TARGET | D3DCLEAR_ZBUFFER | D3DCLEAR_STENCIL, COLOR_WINDOW, 1.0f, 0);
