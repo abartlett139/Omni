@@ -48,7 +48,7 @@ void Knight::Render()
 void Knight::Update()
 {
 	//	update third person camera position (rear view)
-	thirdPersonCamera._pos = ((-_look * 100.0f) + (_up * 50.0f)) + _pos;
+	thirdPersonCamera._pos = ((-_look * 50.0f) + (_up * 25.0f)) + _pos;
 
 
 	if (!isAuto) {
