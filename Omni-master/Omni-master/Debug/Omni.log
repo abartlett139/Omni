@@ -1,4 +1,0 @@
-﻿  GameWorld.cpp
-c:\users\cmknox51643\desktop\omni-master\omni-master\character.h(25): warning C4091: 'virtual ': ignored on left of 'Character::STATES' when no variable is declared
-  Omni.vcxproj -> C:\Users\cmknox51643\Desktop\Omni-master\Omni-master\Debug\Omni.exe
-  Omni.vcxproj -> C:\Users\cmknox51643\Desktop\Omni-master\Omni-master\Debug\Omni.pdb (Full PDB)
