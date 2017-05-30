@@ -1,4 +1,12 @@
-﻿  GameWorld.cpp
+﻿  Witch.cpp
 c:\users\amy\documents\github\omni\character.h(25): warning C4091: 'virtual ': ignored on left of 'Character::STATES' when no variable is declared
+  GameWorld.cpp
+c:\users\amy\documents\github\omni\character.h(25): warning C4091: 'virtual ': ignored on left of 'Character::STATES' when no variable is declared
+  Generating Code...
+  Compiling...
+  main.cpp
+c:\users\amy\documents\github\omni\character.h(25): warning C4091: 'virtual ': ignored on left of 'Character::STATES' when no variable is declared
+c:\users\amy\documents\github\omni\main.cpp(67): warning C4244: 'argument': conversion from 'time_t' to 'unsigned int', possible loss of data
+  Generating Code...
   Omni.vcxproj -> C:\Users\Amy\Documents\GitHub\Omni\Debug\Omni.exe
   Omni.vcxproj -> C:\Users\Amy\Documents\GitHub\Omni\Debug\Omni.pdb (Full PDB)

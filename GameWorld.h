@@ -8,6 +8,7 @@
 #include "Terrain.h"
 #include "Knight.h"
 #include "Dragon.h"
+#include "Witch.h"
 
 class GameWorld : public GameState
 {
@@ -30,6 +31,7 @@ public:
 
 	Knight knight;
 	Dragon dragon;
+	Witch witch;
 
 	Mesh moat;
 

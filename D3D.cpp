@@ -151,6 +151,28 @@ float D3D::Lerp(float a, float b, float t)
 	return a - (a*t) + (b*t);
 }
 
+float D3D::GetRandomFloat(float lowBound, float highBound)
+{
+	if (lowBound >= highBound)
+		return lowBound;
+
+	float f = (rand() % 10000) * 0.0001f;
+
+	return (f*(highBound - lowBound)) + lowBound;
+}
+
+void D3D::GetRandomVector(D3DXVECTOR3 * out, D3DXVECTOR3 * min, D3DXVECTOR3 * max)
+{
+	out->x = GetRandomFloat(min->x, max->x);
+	out->y = GetRandomFloat(min->y, max->y);
+	out->z = GetRandomFloat(min->z, max->z);
+}
+
+DWORD D3D::FtoDw(float f)
+{
+	return *((DWORD*)&f);
+}
+
 bool D3D::operator<=(const D3DXVECTOR3 & a, const D3DXVECTOR3 & b)
 {
 	if(a.x <= b.x && a.y <= b.y && a.z <= b.z)

@@ -37,7 +37,24 @@ namespace D3D {
 
 
 	float Lerp(float a, float b, float t);
+	float GetRandomFloat(float lowBound, float highBound);
+	void GetRandomVector(D3DXVECTOR3 *out, D3DXVECTOR3 *min, D3DXVECTOR3* max);
+	DWORD FtoDw(float f);
 
+	//	structures for animated mesh container
+	struct D3DXMESHCONTAINER_EXTENDED : public D3DXMESHCONTAINER {
+		IDirect3DTexture9** exTextures;
+		D3DMATERIAL9* exMaterials;
+
+		ID3DXMesh* exSkinMesh;
+		D3DXMATRIX* exBoneOffsets;
+		D3DXMATRIX** exFrameCombinedMatrixPointer;
+	};
+
+	//	structure for extended frame for animated meshes
+	struct D3DXFRAME_EXTENDED : public D3DXFRAME {
+		D3DXMATRIX exCombinedTransformationMatrix;
+	};
 
 	//	vertex struct for environment objects
 	struct EVertex {

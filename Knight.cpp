@@ -48,11 +48,8 @@ void Knight::Render()
 void Knight::Update()
 {
 	//	update third person camera position (rear view)
-<<<<<<< HEAD
+
 	thirdPersonCamera._pos = ((-_look * 20.0) + (_up * 10.0f)) + _pos;
-=======
-	thirdPersonCamera._pos = ((-_look * 50.0f) + (_up * 25.0f)) + _pos;
->>>>>>> origin/master
 
 
 	if (!isAuto) {
@@ -81,10 +78,10 @@ void Knight::Update()
 			strafe(timer.DeltaTime() * strafeSpeed);
 		}
 	}
-	else {
+	//else {
 		//	do ai for knight here
 		//	maybe strafe back and forth or whatever
-	}
+	//}
 	
 }
 
