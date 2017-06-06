@@ -4,9 +4,9 @@
 #include "Graphics.h"
 #include "GameTimer.h"
 
-class GameState;
+//class GameState;
 
-extern GameState *currentState, *previousState, *gameWorld;
+//extern GameState *currentState, *previousState, *gameWorld;
 
 class GameState
 {
@@ -17,7 +17,7 @@ public:
 	virtual bool Init() = 0;
 	virtual void Enter() = 0;
 	virtual void Render() = 0;
-	virtual void Update() = 0;
+	virtual void Update(UINT msg, WPARAM wParam, LPARAM lParam, void * Data) = 0;
 	virtual void Exit(GameState *nextState) = 0;
 
 	void GameLoop();

@@ -19,7 +19,7 @@ public:
 	bool Init();
 	void Enter();
 	void Render();
-	void Update();
+	void Update(UINT msg, WPARAM wParam, LPARAM lParam, void * Data);
 	void Exit(GameState *nextState);
 
 	D3DLIGHT9 worldLight;

@@ -1,10 +1,19 @@
 #pragma once
+#ifndef OMNI_GRAPHICS_H
+#define OMNI_GRAPHICS_H
+
 #include <d3d9.h>
 #include <d3dx9.h>
-#include "Input.h"
-#include "MainMenu.h"
 #define screenWidth 1600
 #define screenHeight 900
+
+// Forward declerations to eliminate header file cycles
+class Input;
+class Mouse;
+class Keyboard;
+class Sprite;
+class Texture;
+class GameState;
 
 namespace D3D {
 
@@ -123,8 +132,8 @@ private:
 	Input * m_Input;
     Sprite* sprt;
     Texture* tex;
-	MainMenu* m_MM;
 public:
+	GameState* m_MainMenu, *m_GameWorld, *m_CurrentState, *m_PreviousState;
 	Keyboard* m_Keyboard;
 	Mouse* m_Mouse;
     Graphics();
@@ -143,3 +152,5 @@ public:
 };
 
 extern Graphics graphics;
+
+#endif // OMNI_GRAPHICS_H

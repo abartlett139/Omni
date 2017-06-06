@@ -2,6 +2,7 @@
 #ifndef UICONTROLS_H
 #define UICONTROLS_H
 #include "UIBase.h"
+#include "GameState.h"
 class WindowControl : public UIBase
 {
 private:
@@ -59,6 +60,7 @@ class ButtonControl : public UIBase
 	bool m_Over;
 	LPDIRECT3DDEVICE9 m_Device;
 	RECT m_Rect;
+	GameState* m_ChangeState;
 public:
 	ButtonControl(UIBase* parent, int vecPos, D3DXVECTOR2 Position, LPDIRECT3DDEVICE9 Device);
 	~ButtonControl();
@@ -71,6 +73,9 @@ public:
 	bool SetTextures(Texture* fileDefault, Texture* fileOver);
 	void SetCaption(char* Caption);
 	void OnLostFocus();
+	void SetChangeState(GameState* gameState) { m_ChangeState = gameState; }
+	void ChangeState(GameState* gameState) { gameState = m_ChangeState; }
+
 };
 #endif // !UICONTROLS_H
 

@@ -14,7 +14,7 @@ GameState::~GameState()
 void GameState::GameLoop()
 {
 
-	currentState->Render();
-	currentState->Update();
+	//currentState->Render();
+	//currentState->Update();
 
 }

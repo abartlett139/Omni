@@ -5,7 +5,6 @@
 #include <d3dx9.h>
 #include "UIWrappers.h"
 #include <vector>
-
 class UIBase
 {
 protected:

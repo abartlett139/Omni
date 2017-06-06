@@ -158,7 +158,7 @@ ButtonControl::ButtonControl(UIBase * parent, int vecPos, D3DXVECTOR2 Position, 
 	m_Position = Position;
 	m_OverTex = NULL;
 	m_DefaultTex = NULL;
-	
+	m_ChangeState = NULL;
 }
 
 ButtonControl::~ButtonControl()
@@ -170,7 +170,6 @@ ButtonControl::~ButtonControl()
 
 bool ButtonControl::OnRender()
 {
-	//GetSprite()->DrawTexture(m_Texture);
 	m_Sprite->DrawTexture(m_Texture);
 	if (m_Caption)
 	{
@@ -182,7 +181,9 @@ bool ButtonControl::OnRender()
 void ButtonControl::OnMouseDown(int Button, int x, int y)
 {
 	if (CursorIntersect(x, y) && (Button == WM_LBUTTONDOWN))
-		SetCaption("MouseDown");
+	{
+		graphics.m_CurrentState = m_ChangeState;
+	}
 }
 
 void ButtonControl::OnMouseMove(int x, int y)

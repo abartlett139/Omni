@@ -1,6 +1,7 @@
 #include "MainMenu.h"
-
-
+#include "Input.h"
+#include "UIControls.h"
+#include "UIWrappers.h"	
 
 MainMenu::MainMenu( LPDIRECT3DDEVICE9 Device)
 {
@@ -26,7 +27,7 @@ MainMenu::~MainMenu()
 		delete wc;
 }
 
-bool MainMenu::Initialize()
+bool MainMenu::Init()
 {
 	if (!m_Init)
 	{
@@ -41,13 +42,22 @@ bool MainMenu::Initialize()
 		temp = new ButtonControl(wc->GetThis(), 1, D3DXVECTOR2{ 100,100 }, m_Device);
 		wc->AddChildControl(temp);
 		temp->SetTextures(m_ButtonDefault, m_ButtonOver);
-		temp->SetCaption("Testing");
+		temp->SetCaption("Play Game");
+		temp->SetChangeState(graphics.m_GameWorld);
 		m_Init = true;
 	}
 	return m_Init;
 }
 
-void MainMenu::OnRender()
+void MainMenu::Enter()
+{
+	if (!m_Init)
+	{
+		m_Init = Init();
+	}
+}
+
+void MainMenu::Render()
 {
 	wc->OnRender();
 }
@@ -56,5 +66,9 @@ void MainMenu::Update(UINT msg, WPARAM wParam, LPARAM lParam, void * Data)
 {
 	//wc->PostMessage(WM_PAINT, wParam, lParam, NULL);
 	wc->PostMessage(msg, wParam, lParam, NULL);
+}
+
+void MainMenu::Exit(GameState * nextState)
+{
 }
 

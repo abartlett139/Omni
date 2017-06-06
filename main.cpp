@@ -7,8 +7,8 @@
 //HWND hwnd;
 Graphics graphics;
 
-GameState *currentState, *previousState;
-GameState *gameWorld = new GameWorld();
+//GameState *currentState, *previousState;
+//GameState *gameWorld = new GameWorld();
 
 GameTimer timer;
 
@@ -52,12 +52,10 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevinstances, LPSTR cmdLine,
 	graphics.Initialized(768, 1366, hInstance);
 
 	//	set the initial state
-	currentState = gameWorld;
 
 	MSG msg;
 	ZeroMemory(&msg, sizeof(MSG));
 
-	currentState->Enter();
 	while (msg.message != WM_QUIT) {
 
 		if (PeekMessage(&msg, NULL, 0, 0, PM_REMOVE) && !IsDialogMessage(NULL, &msg)) 
@@ -69,14 +67,14 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevinstances, LPSTR cmdLine,
 		{
 			timer.Tick();
 
-			//graphics.Render();
-			currentState->GameLoop();
+			graphics.Render();
+			//currentState->GameLoop();
 		}
 
 	}
 
 	//	get rid of all extern variables
-	D3D::Delete(gameWorld);
+	//D3D::Delete(gameWorld);
 
 	return msg.wParam;
 }

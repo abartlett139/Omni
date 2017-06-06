@@ -115,7 +115,7 @@ void GameWorld::Render()
 	}
 }
 
-void GameWorld::Update()
+void GameWorld::Update(UINT msg, WPARAM wParam, LPARAM lParam, void * Data)
 {
 	knight.Update();
 	dragon.Update();
