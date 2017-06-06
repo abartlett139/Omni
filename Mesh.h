@@ -1,7 +1,7 @@
 #ifndef MESH_H
 #define MESH_H
 
-#include "D3D.h"
+#include "Graphics.h"
 #include <vector>
 
 

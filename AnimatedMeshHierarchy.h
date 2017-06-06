@@ -1,7 +1,7 @@
 #ifndef ANIMATEDMESHHIERARCHY_H
 #define ANIMATEDMESHHIERARCHY_H
 
-#include "D3D.h"
+#include "Graphics.h"
 #include <string>
 
 class AnimatedMeshHierarchy : public ID3DXAllocateHierarchy

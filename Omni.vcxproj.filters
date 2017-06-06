@@ -13,12 +13,15 @@
       <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
       <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
     </Filter>
+    <Filter Include="UI Files">
+      <UniqueIdentifier>{7295bd9a-7977-4634-8785-06d4aabf70af}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="UI Files\Images">
+      <UniqueIdentifier>{2d67d340-0d87-4850-b1a4-0fe2effe4ff5}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="D3D.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="GameState.cpp">
@@ -63,14 +66,31 @@
     <ClCompile Include="Witch.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+<<<<<<< HEAD
     <ClCompile Include="SoundEngine.cpp">
       <Filter>Source Files</Filter>
+=======
+    <ClCompile Include="Graphics.cpp">
+      <Filter>UI Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Input.cpp">
+      <Filter>UI Files</Filter>
+    </ClCompile>
+    <ClCompile Include="MainMenu.cpp">
+      <Filter>UI Files</Filter>
+    </ClCompile>
+    <ClCompile Include="UIBase.cpp">
+      <Filter>UI Files</Filter>
+    </ClCompile>
+    <ClCompile Include="UIControls.cpp">
+      <Filter>UI Files</Filter>
+    </ClCompile>
+    <ClCompile Include="UIWrappers.cpp">
+      <Filter>UI Files</Filter>
+>>>>>>> refs/remotes/origin/ui-merge
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="D3D.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="GameState.h">
       <Filter>Header Files</Filter>
     </ClInclude>
@@ -113,11 +133,49 @@
     <ClInclude Include="Witch.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+<<<<<<< HEAD
     <ClInclude Include="WAVE.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="SoundEngine.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+=======
+    <ClInclude Include="Graphics.h">
+      <Filter>UI Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Input.h">
+      <Filter>UI Files</Filter>
+    </ClInclude>
+    <ClInclude Include="MainMenu.h">
+      <Filter>UI Files</Filter>
+    </ClInclude>
+    <ClInclude Include="UIBase.h">
+      <Filter>UI Files</Filter>
+    </ClInclude>
+    <ClInclude Include="UIControls.h">
+      <Filter>UI Files</Filter>
+    </ClInclude>
+    <ClInclude Include="UIWrappers.h">
+      <Filter>UI Files</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <Image Include="button.png">
+      <Filter>UI Files\Images</Filter>
+    </Image>
+    <Image Include="buttonOver.png">
+      <Filter>UI Files\Images</Filter>
+    </Image>
+    <Image Include="cursor.png">
+      <Filter>UI Files\Images</Filter>
+    </Image>
+    <Image Include="cursor_sprite.png">
+      <Filter>UI Files\Images</Filter>
+    </Image>
+    <Image Include="grey_background.png">
+      <Filter>UI Files\Images</Filter>
+    </Image>
+>>>>>>> refs/remotes/origin/ui-merge
   </ItemGroup>
 </Project>

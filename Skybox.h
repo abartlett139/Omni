@@ -1,7 +1,7 @@
 #ifndef SKYBOX_H
 #define SKYBOX_H
 
-#include "D3D.h"
+#include "Graphics.h"
 
 class Skybox
 {

@@ -13,6 +13,7 @@ PSYS::ParticleSystem::~ParticleSystem()
 
 bool PSYS::ParticleSystem::Init(char * fileName)
 {
+	IDirect3DDevice9* Device = graphics.GetDevice();
 	Device->CreateVertexBuffer(vertexBufferSize * sizeof(Particle), D3DUSAGE_DYNAMIC | D3DUSAGE_POINTS | D3DUSAGE_WRITEONLY, Particle::FVF, D3DPOOL_DEFAULT, &vertexBuffer, 0);
 	
 	D3DXCreateTextureFromFile(Device, fileName, &texture);
@@ -39,6 +40,7 @@ void PSYS::ParticleSystem::AddParticle()
 
 void PSYS::ParticleSystem::PreRender()
 {
+	IDirect3DDevice9* Device = graphics.GetDevice();
 	Device->SetRenderState(D3DRS_LIGHTING, false);
 	Device->SetRenderState(D3DRS_POINTSPRITEENABLE, true);
 	Device->SetRenderState(D3DRS_POINTSCALEENABLE, true);
@@ -64,6 +66,7 @@ void PSYS::ParticleSystem::Render()
 	if (!particles.empty()) {
 		PreRender();
 
+		IDirect3DDevice9* Device = graphics.GetDevice();
 		Device->SetTexture(0, texture);
 		Device->SetFVF(Particle::FVF);
 		Device->SetStreamSource(0, vertexBuffer, 0, sizeof(Particle));
@@ -113,6 +116,7 @@ void PSYS::ParticleSystem::Render()
 
 void PSYS::ParticleSystem::PostRender()
 {
+	IDirect3DDevice9* Device = graphics.GetDevice();
 	Device->SetRenderState(D3DRS_LIGHTING, true);
 	Device->SetRenderState(D3DRS_POINTSPRITEENABLE, false);
 	Device->SetRenderState(D3DRS_POINTSCALEENABLE, false);
