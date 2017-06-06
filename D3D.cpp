@@ -13,7 +13,7 @@ bool D3D::InitWindow(HINSTANCE hInstance)
 	wc.hInstance = hInstance;
 	wc.hIcon = LoadIcon(0, IDI_APPLICATION);
 	wc.hCursor = LoadCursor(0, IDC_ARROW);
-	wc.hbrBackground = (HBRUSH)GetStockObject(WHITE_BRUSH);
+	wc.hbrBackground = (HBRUSH)GetStockObject(COLOR_WINDOW);
 	wc.lpszMenuName = 0;
 	wc.lpszClassName = "D3DApp";
 
@@ -144,6 +144,15 @@ D3DLIGHT9 D3D::InitPointLight(D3DXVECTOR3 * position, D3DXCOLOR * color)
 	light.Attenuation2 = 0.0f;
 
 	return light;
+}
+
+IDirect3DTexture9 * D3D::LoadTexture(char * fileName)
+{
+	D3DXIMAGE_INFO imageInfo;
+	IDirect3DTexture9* texture = NULL;
+	D3DXGetImageInfoFromFile(fileName, &imageInfo);
+	D3DXCreateTextureFromFileEx(Device, fileName, imageInfo.Width, imageInfo.Height, 0, D3DUSAGE_DYNAMIC, D3DFMT_A8R8G8B8, D3DPOOL_DEFAULT, D3DX_FILTER_POINT, D3DX_FILTER_POINT, 0, &imageInfo, NULL, &texture);
+	return texture;
 }
 
 float D3D::Lerp(float a, float b, float t)

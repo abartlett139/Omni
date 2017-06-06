@@ -136,6 +136,7 @@
     <ClCompile Include="Mesh.cpp" />
     <ClCompile Include="PSYS.cpp" />
     <ClCompile Include="Skybox.cpp" />
+    <ClCompile Include="SoundEngine.cpp" />
     <ClCompile Include="Terrain.cpp" />
     <ClCompile Include="Witch.cpp" />
   </ItemGroup>
@@ -153,7 +154,9 @@
     <ClInclude Include="Mesh.h" />
     <ClInclude Include="PSYS.h" />
     <ClInclude Include="Skybox.h" />
+    <ClInclude Include="SoundEngine.h" />
     <ClInclude Include="Terrain.h" />
+    <ClInclude Include="WAVE.h" />
     <ClInclude Include="Witch.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

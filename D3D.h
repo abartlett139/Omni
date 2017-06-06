@@ -35,7 +35,7 @@ namespace D3D {
 	D3DLIGHT9 InitSpotLight(D3DXVECTOR3 * position, D3DXVECTOR3 * direction, D3DXCOLOR * color);
 	D3DLIGHT9 InitPointLight(D3DXVECTOR3 * position, D3DXCOLOR * color);
 
-
+	IDirect3DTexture9* LoadTexture(char* fileName);
 	float Lerp(float a, float b, float t);
 	float GetRandomFloat(float lowBound, float highBound);
 	void GetRandomVector(D3DXVECTOR3 *out, D3DXVECTOR3 *min, D3DXVECTOR3* max);

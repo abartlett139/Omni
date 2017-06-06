@@ -33,14 +33,15 @@ bool GameWorld::Init()
 	Device->SetRenderState(D3DRS_LIGHTING, true);
 	Device->SetRenderState(D3DRS_SPECULARENABLE, true);
 
+	//	intialize skybox
 	skybox.generate();
 
-
-	//	DO HEIGHTMAP SKEW / DISTORTION IN PHOTOSHOP
+	//	initialize terrain
 	terrain = new Terrain("textures/heightMap2.raw", 2001, 2001, 1, 0.2f);
 	terrain->genTexture(&D3DXVECTOR3(0.0, -1.0f, 0.0f));
 	terrain->loadTexture("textures/terrain2.png");
 
+	//	initialize game objects
 	knight.Initialize();
 	dragon.Initialize();
 	witch.Initialize();
@@ -49,13 +50,15 @@ bool GameWorld::Init()
 
 	knight.isAuto = false;
 
+	//	set music type
+	musicType = soundEngine->GAME_BACKGROUND;
+
 	return true;
 }
 
 void GameWorld::Enter()
 {
-	if (!isInit)
-		isInit = Init();
+	GameState::Enter();
 
 	//	set projection matrix
 	D3DXMATRIX P;
@@ -119,7 +122,16 @@ void GameWorld::Update()
 
 void GameWorld::Exit(GameState * nextState)
 {
+	//	reset the projection and view matrices to the default
+	D3DXMATRIX I;
+	D3DXMatrixIdentity(&I);
+	Device->SetTransform(D3DTS_PROJECTION, &I);
+	Device->SetTransform(D3DTS_VIEW, &I);
+	
+	//	reset game objects
 	knight.Reset();
 	dragon.Reset();
 	witch.Reset();
+
+	GameState::Exit(nextState);
 }

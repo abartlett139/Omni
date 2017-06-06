@@ -10,6 +10,7 @@ GameState *gameWorld = new GameWorld();
 
 GameTimer timer;
 
+SoundEngine *soundEngine = new SoundEngine();
 
 //	WinProc
 LRESULT CALLBACK D3D::WndProc(HWND hWnd, UINT msg, WPARAM wParam, LPARAM lParam) {
@@ -41,8 +42,9 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevinstances, LPSTR cmdLine,
 	//	set the initial state
 	currentState = gameWorld;
 
-	MSG msg;
-	ZeroMemory(&msg, sizeof(MSG));
+
+	//	initialize the sound engine
+	soundEngine->Initialize();
 
 	//	initialize the window
 	D3D::InitWindow(hInstance);
@@ -51,7 +53,11 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevinstances, LPSTR cmdLine,
 	//	initialize the directx stuff
 	D3D::InitD3D();
 
+	//	message for loop
+	MSG msg;
+	ZeroMemory(&msg, sizeof(MSG));
 
+	//	enter the current state
 	currentState->Enter();
 	while (msg.message != WM_QUIT) {
 
