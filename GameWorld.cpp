@@ -14,6 +14,8 @@ GameWorld::~GameWorld()
 
 bool GameWorld::Init()
 {
+	IDirect3DDevice9* Device = graphics.GetDevice();
+
 	//	directional light
 	worldLight = D3D::InitDirectionalLight(&D3DXVECTOR3(0.0f, -1.0f, 0.0f), (D3DXCOLOR*)&D3D::WHITE);
 	Device->SetLight(0, &worldLight);
@@ -59,6 +61,8 @@ void GameWorld::Enter()
 
 	//	set projection matrix
 	D3DXMATRIX P;
+	IDirect3DDevice9* Device = graphics.GetDevice();
+
 	D3DXMatrixPerspectiveFovLH(&P, D3DX_PI / 4, screenWidth / screenHeight, 1.0f, 3000.0f);
 	Device->SetTransform(D3DTS_PROJECTION, &P);
 }
@@ -71,6 +75,7 @@ void GameWorld::Render()
 	witch._pos.y = terrain->getHeight(witch._pos.x, witch._pos.z);
 
 	//	set view matrix
+	IDirect3DDevice9* Device = graphics.GetDevice();
 	Device->SetTransform(D3DTS_VIEW, &knight.getRearView());
 
 	if (Device) {

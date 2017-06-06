@@ -32,6 +32,8 @@ bool Knight::Initialize()
 
 void Knight::Render()
 {
+	IDirect3DDevice9* Device = graphics.GetDevice();
+
 	//	the position and rotation translation matrix is the inverse of the characters's view matrix
 	getViewMatrix(&T);
 	D3DXMatrixInverse(&T, NULL, &T);
@@ -41,8 +43,8 @@ void Knight::Render()
 	characterMesh.Render();
 
 	//	update the bounding box coordinates to match the mesh
-	D3DXVec3TransformCoord(&box._min, &characterMesh.min, &P);
-	D3DXVec3TransformCoord(&box._max, &characterMesh.max, &P);
+	D3DXVec3TransformCoord(&box.MIN, &characterMesh.min, &P);
+	D3DXVec3TransformCoord(&box.MAX, &characterMesh.max, &P);
 }
 
 void Knight::Update()
@@ -94,7 +96,7 @@ void Knight::Reset()
 D3DXMATRIX Knight::getRearView()
 {
 	D3DXMATRIX V;
-	D3DXMatrixLookAtLH(&V, &thirdPersonCamera._pos, &D3DXVECTOR3(_pos.x, box._max.y, _pos.z), &D3DXVECTOR3(0, 1, 0));
+	D3DXMatrixLookAtLH(&V, &thirdPersonCamera._pos, &D3DXVECTOR3(_pos.x, box.MAX.y, _pos.z), &D3DXVECTOR3(0, 1, 0));
 	return V;
 }
 
@@ -102,7 +104,7 @@ D3DXMATRIX Knight::getSideView()
 {
 	D3DXMATRIX V;
 	thirdPersonCamera._pos = ((_right * 500.0f) + (_up * 50.0f)) + _pos;
-	D3DXMatrixLookAtLH(&V, &thirdPersonCamera._pos, &D3DXVECTOR3(_pos.x, box._max.y, _pos.z), &D3DXVECTOR3(1, 0, 0));
+	D3DXMatrixLookAtLH(&V, &thirdPersonCamera._pos, &D3DXVECTOR3(_pos.x, box.MAX.y, _pos.z), &D3DXVECTOR3(1, 0, 0));
 
 	return V;
 }

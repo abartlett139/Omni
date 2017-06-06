@@ -59,6 +59,7 @@ bool Skybox::generate()
 		{ size, -size, size, 1,0 }
 	};
 	HRESULT hRet;
+	IDirect3DDevice9* Device = graphics.GetDevice();
 	hRet = Device->CreateVertexBuffer((int)sizeof(D3D::EVertex) * 24, 0, D3D::EVertex::FVF,
 		D3DPOOL_MANAGED, &vertexBuffer, 0);
 	if (FAILED(hRet))
@@ -87,6 +88,7 @@ bool Skybox::generate()
 
 void Skybox::render()
 {
+	IDirect3DDevice9* Device = graphics.GetDevice();
 	//	disable lighting and z-buffer
 	Device->SetRenderState(D3DRS_LIGHTING, false);
 	Device->SetRenderState(D3DRS_ZENABLE, false);

@@ -3,7 +3,7 @@
 #ifndef __terrainH__
 #define __terrainH__
 
-#include "D3D.h"
+#include "Graphics.h"
 #include <string>
 #include <vector>
 #include <fstream>

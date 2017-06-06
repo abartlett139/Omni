@@ -2,7 +2,7 @@
 #ifndef PSYS_H
 #define PSYS_H
 
-#include "D3D.h"
+#include "Graphics.h"
 #include "Camera.h"
 #include "GameTimer.h"
 #include <list>

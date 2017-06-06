@@ -1,7 +1,7 @@
 #ifndef GAMESTATE_H
 #define GAMESTATE_H
 
-#include "D3D.h"
+#include "Graphics.h"
 #include "GameTimer.h"
 
 class GameState;
