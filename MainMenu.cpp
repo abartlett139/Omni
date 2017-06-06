@@ -31,7 +31,7 @@ bool MainMenu::Init()
 {
 	if (!m_Init)
 	{
-		m_Background = new Texture(m_Device, "test.png", D3DXVECTOR2{ 0,0 }, 0, D3DXVECTOR2{ 0,0 }, D3DXVECTOR2{ 1,1});
+		m_Background = new Texture(m_Device, "grey_background.png", D3DXVECTOR2{ 0,0 }, 0, D3DXVECTOR2{ 0,0 }, D3DXVECTOR2{ 1,1});
 		m_ButtonDefault = new Texture(m_Device, "button.png", D3DXVECTOR2{ 0,0 }, 0, D3DXVECTOR2{ 0,0 }, D3DXVECTOR2{ 1,1 });
 		m_ButtonOver = new Texture(m_Device, "buttonOver.png", D3DXVECTOR2{ 0,0 }, 0, D3DXVECTOR2{ 0,0 }, D3DXVECTOR2{ 1,1 });
 		wc = new WindowControl(NULL, NULL);
@@ -70,5 +70,8 @@ void MainMenu::Update(UINT msg, WPARAM wParam, LPARAM lParam, void * Data)
 
 void MainMenu::Exit(GameState * nextState)
 {
+	graphics.m_CurrentState = graphics.m_PreviousState;
+	graphics.m_CurrentState = nextState;
+	graphics.m_CurrentState->Enter();
 }
 

@@ -182,7 +182,7 @@ void ButtonControl::OnMouseDown(int Button, int x, int y)
 {
 	if (CursorIntersect(x, y) && (Button == WM_LBUTTONDOWN))
 	{
-		graphics.m_CurrentState = m_ChangeState;
+		graphics.m_CurrentState->Exit(m_ChangeState);
 	}
 }
 
@@ -192,21 +192,18 @@ void ButtonControl::OnMouseMove(int x, int y)
 	{
 		m_Over = true;
 		SetTexture(m_OverTex);
-		SetCaption("MouseOver");
 		m_Caption->SetColor(D3DCOLOR_XRGB(255, 0, 0));
 	}
 	else
 	{
 		m_Over = false;
 		SetTexture(m_DefaultTex);
-		SetCaption("Default");
 		m_Caption->SetColor(D3DCOLOR_XRGB(255, 255, 0));
 	}
 }
 
 void ButtonControl::OnMouseUp(int Button, int x, int y)
 {
-	SetCaption("MouseUP");
 }
 
 bool ButtonControl::SetTextures(Texture * fileDefault, Texture * fileOver)

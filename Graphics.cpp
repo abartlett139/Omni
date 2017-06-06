@@ -195,11 +195,11 @@ bool Graphics::Initialized(int height, int width, HINSTANCE hInstance)
 	m_Keyboard = m_Input->CreateKeyboard();
 	m_Mouse = m_Input->CreateMouse(m_Device, false);
 	m_MainMenu = new MainMenu(m_Device);
-	m_MainMenu->Init();
 	m_GameWorld = new GameWorld();
 	m_GameWorld->Init();
+	m_MainMenu->Init();
 	m_CurrentState = m_MainMenu;
-    return TRUE;
+	return TRUE;
 }
 
 void Graphics::Shutdown()
@@ -219,6 +219,8 @@ void Graphics::Shutdown()
         delete sprt;
 	if (m_MainMenu)
 		delete m_MainMenu;
+	if (m_GameWorld)
+		delete m_GameWorld;
 }
 
 bool Graphics::Frame()

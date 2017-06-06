@@ -68,13 +68,10 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevinstances, LPSTR cmdLine,
 			timer.Tick();
 
 			graphics.Render();
-			//currentState->GameLoop();
 		}
 
 	}
 
-	//	get rid of all extern variables
-	//D3D::Delete(gameWorld);
 
 	return msg.wParam;
 }
