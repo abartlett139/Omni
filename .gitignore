@@ -16,6 +16,8 @@
 *.tlog
 *.idb
 *.db
+*.user
+*.suo
 
 # Compiled Dynamic libraries
 *.so
