@@ -128,6 +128,8 @@ void GameWorld::Update(UINT msg, WPARAM wParam, LPARAM lParam, void * Data)
 void GameWorld::Exit(GameState * nextState)
 {
 	//	reset the projection and view matrices to the default
+	IDirect3DDevice9* Device = graphics.GetDevice();
+
 	D3DXMATRIX I;
 	D3DXMatrixIdentity(&I);
 	Device->SetTransform(D3DTS_PROJECTION, &I);

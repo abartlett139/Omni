@@ -1,181 +1,58 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup>
-    <Filter Include="Source Files">
-      <UniqueIdentifier>{4FC737F1-C7A5-4376-A066-2A32D752A2FF}</UniqueIdentifier>
-      <Extensions>cpp;c;cc;cxx;def;odl;idl;hpj;bat;asm;asmx</Extensions>
-    </Filter>
-    <Filter Include="Header Files">
-      <UniqueIdentifier>{93995380-89BD-4b04-88EB-625FBE52EBFB}</UniqueIdentifier>
-      <Extensions>h;hh;hpp;hxx;hm;inl;inc;xsd</Extensions>
-    </Filter>
-    <Filter Include="Resource Files">
-      <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
-      <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
-    </Filter>
-    <Filter Include="UI Files">
-      <UniqueIdentifier>{7295bd9a-7977-4634-8785-06d4aabf70af}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="UI Files\Images">
-      <UniqueIdentifier>{2d67d340-0d87-4850-b1a4-0fe2effe4ff5}</UniqueIdentifier>
-    </Filter>
+    <ClCompile Include="AnimatedMesh.cpp" />
+    <ClCompile Include="AnimatedMeshHierarchy.cpp" />
+    <ClCompile Include="Camera.cpp" />
+    <ClCompile Include="Character.cpp" />
+    <ClCompile Include="Dragon.cpp" />
+    <ClCompile Include="GameState.cpp" />
+    <ClCompile Include="GameTimer.cpp" />
+    <ClCompile Include="GameWorld.cpp" />
+    <ClCompile Include="Graphics.cpp" />
+    <ClCompile Include="Input.cpp" />
+    <ClCompile Include="Knight.cpp" />
+    <ClCompile Include="main.cpp" />
+    <ClCompile Include="MainMenu.cpp" />
+    <ClCompile Include="Mesh.cpp" />
+    <ClCompile Include="PSYS.cpp" />
+    <ClCompile Include="Skybox.cpp" />
+    <ClCompile Include="SoundEngine.cpp" />
+    <ClCompile Include="Terrain.cpp" />
+    <ClCompile Include="UIBase.cpp" />
+    <ClCompile Include="UIControls.cpp" />
+    <ClCompile Include="UIWrappers.cpp" />
+    <ClCompile Include="Witch.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="main.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="GameState.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="GameWorld.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="Camera.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="Mesh.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="Skybox.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="Terrain.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="GameTimer.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="Character.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="Knight.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="Dragon.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="AnimatedMesh.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="AnimatedMeshHierarchy.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="PSYS.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="Witch.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-<<<<<<< HEAD
-    <ClCompile Include="SoundEngine.cpp">
-      <Filter>Source Files</Filter>
-=======
-    <ClCompile Include="Graphics.cpp">
-      <Filter>UI Files</Filter>
-    </ClCompile>
-    <ClCompile Include="Input.cpp">
-      <Filter>UI Files</Filter>
-    </ClCompile>
-    <ClCompile Include="MainMenu.cpp">
-      <Filter>UI Files</Filter>
-    </ClCompile>
-    <ClCompile Include="UIBase.cpp">
-      <Filter>UI Files</Filter>
-    </ClCompile>
-    <ClCompile Include="UIControls.cpp">
-      <Filter>UI Files</Filter>
-    </ClCompile>
-    <ClCompile Include="UIWrappers.cpp">
-      <Filter>UI Files</Filter>
->>>>>>> refs/remotes/origin/ui-merge
-    </ClCompile>
+    <ClInclude Include="AnimatedMesh.h" />
+    <ClInclude Include="AnimatedMeshHierarchy.h" />
+    <ClInclude Include="Camera.h" />
+    <ClInclude Include="Character.h" />
+    <ClInclude Include="Dragon.h" />
+    <ClInclude Include="GameState.h" />
+    <ClInclude Include="GameTimer.h" />
+    <ClInclude Include="GameWorld.h" />
+    <ClInclude Include="Graphics.h" />
+    <ClInclude Include="Input.h" />
+    <ClInclude Include="Knight.h" />
+    <ClInclude Include="MainMenu.h" />
+    <ClInclude Include="Mesh.h" />
+    <ClInclude Include="PSYS.h" />
+    <ClInclude Include="Skybox.h" />
+    <ClInclude Include="SoundEngine.h" />
+    <ClInclude Include="Terrain.h" />
+    <ClInclude Include="WAVE.h" />
+    <ClInclude Include="UIBase.h" />
+    <ClInclude Include="UIControls.h" />
+    <ClInclude Include="UIWrappers.h" />
+    <ClInclude Include="Witch.h" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="GameState.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="GameWorld.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="Camera.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="Mesh.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="Skybox.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="Terrain.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="GameTimer.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="Character.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="Knight.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="Dragon.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="AnimatedMesh.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="AnimatedMeshHierarchy.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="PSYS.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="Witch.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-<<<<<<< HEAD
-    <ClInclude Include="WAVE.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="SoundEngine.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-=======
-    <ClInclude Include="Graphics.h">
-      <Filter>UI Files</Filter>
-    </ClInclude>
-    <ClInclude Include="Input.h">
-      <Filter>UI Files</Filter>
-    </ClInclude>
-    <ClInclude Include="MainMenu.h">
-      <Filter>UI Files</Filter>
-    </ClInclude>
-    <ClInclude Include="UIBase.h">
-      <Filter>UI Files</Filter>
-    </ClInclude>
-    <ClInclude Include="UIControls.h">
-      <Filter>UI Files</Filter>
-    </ClInclude>
-    <ClInclude Include="UIWrappers.h">
-      <Filter>UI Files</Filter>
-    </ClInclude>
-  </ItemGroup>
-  <ItemGroup>
-    <Image Include="button.png">
-      <Filter>UI Files\Images</Filter>
-    </Image>
-    <Image Include="buttonOver.png">
-      <Filter>UI Files\Images</Filter>
-    </Image>
-    <Image Include="cursor.png">
-      <Filter>UI Files\Images</Filter>
-    </Image>
-    <Image Include="cursor_sprite.png">
-      <Filter>UI Files\Images</Filter>
-    </Image>
-    <Image Include="grey_background.png">
-      <Filter>UI Files\Images</Filter>
-    </Image>
->>>>>>> refs/remotes/origin/ui-merge
+    <Image Include="button.png" />
+    <Image Include="buttonOver.png" />
+    <Image Include="cursor.png" />
+    <Image Include="cursor_sprite.png" />
+    <Image Include="grey_background.png" />
   </ItemGroup>
 </Project>

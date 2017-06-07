@@ -3,20 +3,14 @@
 #include <time.h>
 #include "Graphics.h"
 
-//IDirect3DDevice9 *Device;
-//HWND hwnd;
 Graphics graphics;
 
 //GameState *currentState, *previousState;
 //GameState *gameWorld = new GameWorld();
 
 GameTimer timer;
-
-<<<<<<< HEAD
 SoundEngine *soundEngine = new SoundEngine();
 
-=======
->>>>>>> refs/remotes/origin/ui-merge
 //	WinProc
 LRESULT CALLBACK D3D::MsgProc(HWND hWnd, UINT msg, WPARAM wParam, LPARAM lParam) {
 
@@ -56,28 +50,12 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevinstances, LPSTR cmdLine,
 
 	graphics.Initialized(768, 1366, hInstance);
 
-	//	set the initial state
-
-
 	//	initialize the sound engine
 	soundEngine->Initialize();
-
-<<<<<<< HEAD
-	//	initialize the window
-	D3D::InitWindow(hInstance);
-	ShowWindow(hwnd, SW_SHOW);
-
-	//	initialize the directx stuff
-	D3D::InitD3D();
 
 	//	message for loop
 	MSG msg;
 	ZeroMemory(&msg, sizeof(MSG));
-
-	//	enter the current state
-	currentState->Enter();
-=======
->>>>>>> refs/remotes/origin/ui-merge
 	while (msg.message != WM_QUIT) {
 
 		if (PeekMessage(&msg, NULL, 0, 0, PM_REMOVE) && !IsDialogMessage(NULL, &msg)) 
@@ -94,6 +72,8 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevinstances, LPSTR cmdLine,
 
 	}
 
+	//	get rid of all extern variables
+	//D3D::Delete(gameWorld);
 
 	return msg.wParam;
 }
