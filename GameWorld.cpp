@@ -62,6 +62,8 @@ void GameWorld::Enter()
 {
 	GameState::Enter();
 
+	soundEngine->PlayMusic(musicType);
+
 	//	set projection matrix
 	D3DXMATRIX P;
 	IDirect3DDevice9* Device = graphics.GetDevice();
@@ -139,6 +141,8 @@ void GameWorld::Exit(GameState * nextState)
 	knight.Reset();
 	dragon.Reset();
 	witch.Reset();
+
+	soundEngine->StopMusic();
 
 	GameState::Exit(nextState);
 }

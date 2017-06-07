@@ -5,9 +5,6 @@
 
 Graphics graphics;
 
-//GameState *currentState, *previousState;
-//GameState *gameWorld = new GameWorld();
-
 GameTimer timer;
 SoundEngine *soundEngine = new SoundEngine();
 
@@ -71,9 +68,6 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevinstances, LPSTR cmdLine,
 		}
 
 	}
-
-	//	get rid of all extern variables
-	//D3D::Delete(gameWorld);
 
 	return msg.wParam;
 }
