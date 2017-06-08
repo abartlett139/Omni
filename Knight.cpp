@@ -22,10 +22,17 @@ bool Knight::Initialize()
 	_pos = { 900.0f, 0.0f, -900.0f };
 
 	//	initialize the physical mesh object
-	characterMesh.Initialize("models/knight.x");
+//	characterMesh.Initialize("models/knight.x");
+
+	charMesh = new AnimatedMesh();
+	charMesh->Load("models/bones_all.x");
+
+	charMesh->SetAnimationSet(0);
 
 	//	set the scale
-	D3DXMatrixScaling(&S, 1.0f, 1.0f, 1.0f);
+	D3DXMatrixScaling(&S, 5.0f, 5.0f, 5.0f);
+	charMesh->m_sphereRadius *= 5.0f;
+
 
 	return true;
 }
@@ -36,13 +43,18 @@ void Knight::Render()
 	getViewMatrix(&T);
 	D3DXMatrixInverse(&T, NULL, &T);
 	P = S*T;
-	Device->SetTransform(D3DTS_WORLD, &P);
+	//Device->SetTransform(D3DTS_WORLD, &P);
 
-	characterMesh.Render();
+	//	characterMesh.Render();
+	if (charMesh) {
+		charMesh->FrameMove(timer.DeltaTime(), &P);
+		charMesh->Render();
+	}
 
 	//	update the bounding box coordinates to match the mesh
-	D3DXVec3TransformCoord(&box._min, &characterMesh.min, &P);
-	D3DXVec3TransformCoord(&box._max, &characterMesh.max, &P);
+	//D3DXVec3TransformCoord(&box._min, &characterMesh.min, &P);
+	//D3DXVec3TransformCoord(&box._max, &characterMesh.max, &P);
+	//	charMesh->m_sphereCentre = _pos;
 }
 
 void Knight::Update()
@@ -50,7 +62,6 @@ void Knight::Update()
 	//	update third person camera position (rear view)
 
 	thirdPersonCamera._pos = ((-_look * 20.0) + (_up * 10.0f)) + _pos;
-
 
 	if (!isAuto) {
 		if (GetAsyncKeyState(VK_RIGHT) & 0x8000f) {
@@ -94,7 +105,7 @@ void Knight::Reset()
 D3DXMATRIX Knight::getRearView()
 {
 	D3DXMATRIX V;
-	D3DXMatrixLookAtLH(&V, &thirdPersonCamera._pos, &D3DXVECTOR3(_pos.x, box._max.y, _pos.z), &D3DXVECTOR3(0, 1, 0));
+	D3DXMatrixLookAtLH(&V, &thirdPersonCamera._pos, &D3DXVECTOR3(_pos.x, _pos.y+charMesh->m_sphereRadius, _pos.z), &D3DXVECTOR3(0, 1, 0));
 	return V;
 }
 

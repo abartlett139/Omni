@@ -131,6 +131,7 @@
     <ClCompile Include="GameState.cpp" />
     <ClCompile Include="GameTimer.cpp" />
     <ClCompile Include="GameWorld.cpp" />
+    <ClCompile Include="Input.cpp" />
     <ClCompile Include="Knight.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="Mesh.cpp" />
@@ -150,6 +151,7 @@
     <ClInclude Include="GameState.h" />
     <ClInclude Include="GameTimer.h" />
     <ClInclude Include="GameWorld.h" />
+    <ClInclude Include="Input.h" />
     <ClInclude Include="Knight.h" />
     <ClInclude Include="Mesh.h" />
     <ClInclude Include="PSYS.h" />

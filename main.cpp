@@ -1,5 +1,6 @@
 #include "GameWorld.h"
 #include "GameTimer.h"
+#include "Input.h"
 #include <time.h>
 
 IDirect3DDevice9 *Device;
@@ -12,6 +13,8 @@ GameTimer timer;
 
 SoundEngine *soundEngine = new SoundEngine();
 
+Input input;
+
 //	WinProc
 LRESULT CALLBACK D3D::WndProc(HWND hWnd, UINT msg, WPARAM wParam, LPARAM lParam) {
 
@@ -19,6 +22,10 @@ LRESULT CALLBACK D3D::WndProc(HWND hWnd, UINT msg, WPARAM wParam, LPARAM lParam)
 	case WM_KEYDOWN:
 		if (wParam == VK_ESCAPE)
 			DestroyWindow(hWnd);
+		break;
+		input.GetKeyPress(wParam);
+	case WM_MOUSEMOVE:
+		input.UpdateMousePosition(lParam);
 		break;
 	case WM_DESTROY:
 		PostQuitMessage(0);

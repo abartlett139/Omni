@@ -30,10 +30,12 @@ void AnimatedMesh::UpdateFrameMatrices(const D3DXFRAME * frameBase, const D3DXMA
 {
 	D3D::D3DXFRAME_EXTENDED *currentFrame = (D3D::D3DXFRAME_EXTENDED*)frameBase;
 
-	if (parentMatrix != NULL)
+	if (parentMatrix != NULL) {
 		D3DXMatrixMultiply(&currentFrame->exCombinedTransformationMatrix, &currentFrame->TransformationMatrix, parentMatrix);
-	else
+	}
+	else {
 		currentFrame->exCombinedTransformationMatrix = currentFrame->TransformationMatrix;
+	}
 
 	if (currentFrame->pFrameSibling != NULL)
 		UpdateFrameMatrices(currentFrame->pFrameSibling, parentMatrix);
@@ -89,6 +91,7 @@ void AnimatedMesh::SetupBoneMatrices(D3D::D3DXFRAME_EXTENDED * pFrame, LPD3DXMAT
 
 			pMesh->MeshData.pMesh->CloneMesh(D3DXMESH_MANAGED, Declaration, Device, &pMesh->exSkinMesh);
 
+
 			m_maxBones = max(m_maxBones, (int)pMesh->pSkinInfo->GetNumBones());
 
 			for (unsigned int i = 0; i < pMesh->pSkinInfo->GetNumBones(); i++) {
@@ -120,6 +123,7 @@ bool AnimatedMesh::Load(char * fileName)
 		m_numAnimationSets = m_animController->GetMaxNumAnimationSets();
 
 	if (m_frameRoot) {
+		
 		SetupBoneMatrices((D3D::D3DXFRAME_EXTENDED*)m_frameRoot, NULL);
 
 		m_boneMatrices = new D3DXMATRIX[m_maxBones];
@@ -134,11 +138,11 @@ bool AnimatedMesh::Load(char * fileName)
 void AnimatedMesh::FrameMove(float elapsedTime, const D3DXMATRIX * matWorld)
 {
 	elapsedTime /= m_speedAdjust;
-
+	m_currentTime += elapsedTime;
 	if (m_animController != NULL)
 		m_animController->AdvanceTime(elapsedTime, NULL);
 
-	m_currentTime += elapsedTime;
+
 
 	UpdateFrameMatrices(m_frameRoot, matWorld);
 
@@ -146,7 +150,7 @@ void AnimatedMesh::FrameMove(float elapsedTime, const D3DXMATRIX * matWorld)
 	if (pMesh && pMesh->pSkinInfo) {
 		unsigned int Bones = pMesh->pSkinInfo->GetNumBones();
 
-		for (unsigned int i = 0; i < Bones; i++) {
+		for (unsigned int i = 0; i < Bones; ++i) {
 			D3DXMatrixMultiply(&m_boneMatrices[i], &pMesh->exBoneOffsets[i], pMesh->exFrameCombinedMatrixPointer[i]);
 		}
 		void *srcPtr = 0;

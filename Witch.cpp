@@ -35,8 +35,10 @@ bool Witch::Initialize()
 
 void Witch::Render()
 {
-	//	render particle effect
-	magic->Render();
+	//	update particle effect
+	magic->Update();
+
+
 
 	//	the position and rotation translation matrix is the inverse of the characters's view matrix
 	getViewMatrix(&T);
@@ -49,6 +51,9 @@ void Witch::Render()
 	//	update the bounding box coordinates to match the mesh
 	D3DXVec3TransformCoord(&box._min, &characterMesh.min, &P);
 	D3DXVec3TransformCoord(&box._max, &characterMesh.max, &P);
+
+	//	render particle effect
+	magic->Render();
 }
 
 void Witch::Update()
@@ -56,8 +61,7 @@ void Witch::Update()
 	//	update third person camera position (rear view)
 	thirdPersonCamera._pos = ((-_look * 20.0) + (_up * 10.0f)) + _pos;
 
-	//	update particle effect
-	magic->Update();
+	
 
 	if (!isAuto) {
 		if (GetAsyncKeyState(VK_SPACE) & 0x8000f) {

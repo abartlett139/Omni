@@ -57,21 +57,24 @@ HRESULT AnimatedMeshHierarchy::CreateMeshContainer(LPCSTR Name, CONST D3DXMESHDA
 	//	load textrues and copy materials over
 	//	else if there are no materials, create one
 	if (numMaterials > 0) {
-		for (DWORD i = 0; i < numMaterials; i++) {
+		for (DWORD i = 0; i < numMaterials; ++i) {
 			newMeshContainer->exTextures[i] = 0;
 			newMeshContainer->exMaterials[i] = materials[i].MatD3D;
 
 			if (materials[i].pTextureFilename) {
-				std::string texturePath(materials[i].pTextureFilename);
-				D3DXCreateTextureFromFile(Device, texturePath.c_str(), &newMeshContainer->exTextures[i]);
+				newMeshContainer->exTextures[i] = D3D::LoadTexture(materials[i].pTextureFilename);
 			}
 		}
 	}
 	else {
 		ZeroMemory(&newMeshContainer->exMaterials[0], sizeof(D3DMATERIAL9));
-		newMeshContainer->exMaterials[0] = D3D::InitMtrl(D3D::WHITE, D3D::WHITE, D3D::WHITE, D3D::WHITE, 1.0f);
+		newMeshContainer->exMaterials[0].Diffuse.r = 0.5f;
+		newMeshContainer->exMaterials[0].Diffuse.g = 0.5f;
+		newMeshContainer->exMaterials[0].Diffuse.b = 0.5f;
+		newMeshContainer->exMaterials[0].Specular = newMeshContainer->exMaterials[0].Diffuse;
 		newMeshContainer->exTextures[0] = 0;
 	}
+
 
 	if (pSkinInfo) {
 		newMeshContainer->pSkinInfo = pSkinInfo;

@@ -3,6 +3,7 @@
 
 #include "Camera.h"
 #include "Mesh.h"
+#include "AnimatedMesh.h"
 #include "GameTimer.h"
 
 class Character : public Camera {
@@ -16,8 +17,8 @@ public:
 	virtual void Reset() = 0;
 
 	Mesh characterMesh;
-	D3D::BoundingBox box;
 
+	D3D::BoundingBox box;
 	D3DXMATRIX P, T, S;
 
 	bool isAuto;
@@ -25,6 +26,8 @@ public:
 	virtual enum STATES;
 
 	float speed, strafeSpeed, turnSpeed;
+
+	AnimatedMesh *charMesh;
 };
 
 #endif
