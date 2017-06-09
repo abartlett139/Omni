@@ -3,6 +3,8 @@
 #include <time.h>
 #include "Graphics.h"
 
+//Hi Amy, how is it going?
+
 Graphics graphics;
 
 GameTimer timer;
@@ -45,7 +47,8 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevinstances, LPSTR cmdLine,
 	// reinterpret_cast<GameWorld&>(gameWorld);
 	srand(time(NULL));
 
-	graphics.Initialized(768, 1366, hInstance);
+	// graphics.Initialized(768, 1366, hInstance);
+	graphics.Initialized(screenHeight, screenWidth, hInstance);
 
 	//	initialize the sound engine
 	soundEngine->Initialize();

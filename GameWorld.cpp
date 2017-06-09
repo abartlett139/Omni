@@ -39,9 +39,9 @@ bool GameWorld::Init()
 	skybox.generate();
 
 	//	initialize terrain
-	terrain = new Terrain("textures/heightMap2.raw", 2001, 2001, 1, 0.2f);
+	terrain = new Terrain("textures/ckheightMap2.raw", 1025, 1025, 1, 0.2f);
 	terrain->genTexture(&D3DXVECTOR3(0.0, -1.0f, 0.0f));
-	terrain->loadTexture("textures/terrain2.png");
+	terrain->loadTexture("textures/tertex.png");
 
 	//	initialize game objects
 	knight.Initialize();
@@ -75,7 +75,7 @@ void GameWorld::Enter()
 void GameWorld::Render()
 {
 	//	update character y positions so they don't go beneath the terrain
-	knight._pos.y = terrain->getHeight(knight._pos.x, knight._pos.z);
+	knight._pos.y = terrain->getHeight(knight._pos.x, knight._pos.z) + 10;
 	dragon._pos.y = terrain->getHeight(dragon._pos.x, dragon._pos.z);
 	witch._pos.y = terrain->getHeight(witch._pos.x, witch._pos.z);
 
