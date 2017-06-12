@@ -133,6 +133,8 @@ private:
     Sprite* sprt;
     Texture* tex;
 public:
+	D3DPRESENT_PARAMETERS d3dpp; //create a struct ot hold device ingormation
+	RECT m_ScreneRect;
 	GameState* m_MainMenu, *m_GameWorld, *m_CurrentState, *m_PreviousState;
 	Keyboard* m_Keyboard;
 	Mouse* m_Mouse;
@@ -145,6 +147,7 @@ public:
     bool Render( );
     void BeginScene(float, float, float, float);
 	void EndScene();
+	void SetScreenRect();
 	LPDIRECT3DDEVICE9 GetDevice() { return m_Device; }
 	void GetProjectionMatrix(D3DXMATRIX& projMat) { projMat = m_projectionMatrix; }
 	void GetWorldMatrix(D3DXMATRIX& worldMat) { worldMat = m_worldMatrix; }

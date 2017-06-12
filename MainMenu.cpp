@@ -31,19 +31,28 @@ bool MainMenu::Init()
 {
 	if (!m_Init)
 	{
-		m_Background = new Texture(m_Device, "grey_background.png", D3DXVECTOR2{ 0,0 }, 0, D3DXVECTOR2{ 0,0 }, D3DXVECTOR2{ 1,1});
+
+		m_Background = new Texture(m_Device, "menuBackground.png", D3DXVECTOR2{ 0,0 }, 0, D3DXVECTOR2{ 0,0 }, D3DXVECTOR2{ 1,1});
 		m_ButtonDefault = new Texture(m_Device, "button.png", D3DXVECTOR2{ 0,0 }, 0, D3DXVECTOR2{ 0,0 }, D3DXVECTOR2{ 1,1 });
 		m_ButtonOver = new Texture(m_Device, "buttonOver.png", D3DXVECTOR2{ 0,0 }, 0, D3DXVECTOR2{ 0,0 }, D3DXVECTOR2{ 1,1 });
 		wc = new WindowControl(NULL, NULL);
 		wc->SetSprite(m_Sprite);
 		wc->SetTexture(m_Background);
-		
+		wc->SetRect(graphics.m_ScreneRect);
 		ButtonControl* temp;
 		temp = new ButtonControl(wc->GetThis(), 1, D3DXVECTOR2{ 100,100 }, m_Device);
-		wc->AddChildControl(temp);
 		temp->SetTextures(m_ButtonDefault, m_ButtonOver);
 		temp->SetCaption("Play Game");
 		temp->SetChangeState(graphics.m_GameWorld);
+		wc->AddChildControl(temp);
+		temp = NULL;
+
+		temp = new ButtonControl(wc->GetThis(), 1, D3DXVECTOR2{ 100,600 }, m_Device);
+		temp->SetTextures(m_ButtonDefault, m_ButtonOver);
+		temp->SetCaption("Credits");
+		temp->SetChangeState(graphics.m_GameWorld);
+		wc->AddChildControl(temp);
+
 		m_Init = true;
 	}
 	return m_Init;

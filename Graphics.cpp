@@ -160,7 +160,6 @@ bool Graphics::Initialized(int height, int width, HINSTANCE hInstance)
         vp = D3DCREATE_SOFTWARE_VERTEXPROCESSING;
 
 
-    D3DPRESENT_PARAMETERS d3dpp; //create a struct ot hold device ingormation
 
     ZeroMemory(&d3dpp, sizeof(d3dpp)); //clear structure for use
     d3dpp.BackBufferWidth = width;
@@ -199,6 +198,11 @@ bool Graphics::Initialized(int height, int width, HINSTANCE hInstance)
 	m_GameWorld->Init();
 	m_MainMenu->Init();
 	m_CurrentState = m_MainMenu;
+
+	//m_Device->SetRenderState(D3DRS_ALPHABLENDENABLE, TRUE);
+	//m_Device->SetRenderState(D3DRS_ALPHAFUNC, D3DCMP_GREATEREQUAL);
+	//m_Device->SetRenderState(D3DRS_ALPHAREF, (DWORD)8);
+	//m_Device->SetRenderState(D3DRS_ALPHATESTENABLE, TRUE);
 	return TRUE;
 }
 
@@ -239,6 +243,14 @@ void Graphics::BeginScene(float, float, float, float)
 
 void Graphics::EndScene()
 {
+}
+
+void Graphics::SetScreenRect()
+{
+	m_ScreneRect.top = 0;
+	m_ScreneRect.left = 0;
+	m_ScreneRect.bottom = d3dpp.BackBufferHeight;
+	m_ScreneRect.right = d3dpp.BackBufferWidth;
 }
 
 

@@ -84,6 +84,7 @@ public:
     void SetSprite(LPD3DXSPRITE Sprite) { m_Sprite = Sprite; }
     LPDIRECT3DDEVICE9 GetDevice()const { return m_pDevice; }
     void SetDevice(LPDIRECT3DDEVICE9 pDevice) { m_pDevice = pDevice; }
-    HRESULT DrawTexture(Texture* Tex);
+    HRESULT DrawTexture(Texture* Tex, D3DXVECTOR2 Pos);
+	HRESULT DrawBackground(Texture * Tex);
 };
 #endif // !UIWRAPPERS_H_

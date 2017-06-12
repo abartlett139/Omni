@@ -131,12 +131,13 @@ HRESULT Texture::LoadFromFile(LPSTR Path)
         m_Texture->Release();
 	if (SUCCEEDED(D3DXGetImageInfoFromFile(Path, &m_Info)))
 	{
+	
 		m_SrcRect.top = 0;
 		m_SrcRect.left = 0;
 		m_SrcRect.bottom = m_Info.Height;
 		m_SrcRect.right = m_Info.Width;
 		return D3DXCreateTextureFromFileEx(m_pDevice, Path, D3DX_DEFAULT_NONPOW2, D3DX_DEFAULT_NONPOW2,
-			D3DX_DEFAULT, 0, D3DFMT_UNKNOWN, D3DPOOL_MANAGED, D3DX_DEFAULT, D3DX_DEFAULT, 0, NULL, NULL, &m_Texture);
+			D3DX_DEFAULT, 0, m_Info.Format, D3DPOOL_MANAGED, D3DX_DEFAULT, D3DX_DEFAULT, 0, NULL, NULL, &m_Texture);
 	}
 
 	return E_FAIL;
@@ -156,14 +157,14 @@ Sprite::~Sprite()
         SafeRelease(m_Sprite);
 }
 
-HRESULT Sprite::DrawTexture(Texture* Tex)
+HRESULT Sprite::DrawTexture(Texture* Tex, D3DXVECTOR2 Pos)
 {
     if ((Tex->GetTexture() != NULL) && (m_Sprite != NULL))
     {
         D3DXMATRIX Mat;
-        D3DXMatrixTransformation2D(&Mat, NULL, 0, &Tex->GetScaling(), &Tex->GetRotationCenter(), Tex->GetRotation(), &Tex->GetTranslation());
+        D3DXMatrixTransformation2D(&Mat, NULL, 0, &Tex->GetScaling(), &Tex->GetRotationCenter(), Tex->GetRotation(), &Pos);
 
-        m_Sprite->Begin(0);
+        m_Sprite->Begin(D3DXSPRITE_ALPHABLEND);
         m_Sprite->SetTransform(&Mat);
         HRESULT Result = m_Sprite->Draw(Tex->GetTexture(), &Tex->GetRect(), NULL, NULL, 0xFFFFFFFF);
         m_Sprite->End();
@@ -171,4 +172,25 @@ HRESULT Sprite::DrawTexture(Texture* Tex)
     }
     else
         return E_FAIL;
+}
+
+HRESULT Sprite::DrawBackground(Texture* Tex)
+{
+	if ((Tex->GetTexture() != NULL) && (m_Sprite != NULL))
+	{
+		D3DXMATRIX Mat;
+		D3DXVECTOR2 m_scale;
+		ZeroMemory(&m_scale, sizeof(D3DXVECTOR2));
+		m_scale.x = (FLOAT(Tex->GetRect().right)/ FLOAT(Tex->GetWidth()));
+		m_scale.y = (FLOAT(Tex->GetRect().bottom)/ FLOAT(Tex->GetHeight()));
+		D3DXMatrixTransformation2D(&Mat, NULL, 0, &m_scale, &Tex->GetRotationCenter(), Tex->GetRotation(), &Tex->GetTranslation());
+
+		m_Sprite->Begin(D3DXSPRITE_ALPHABLEND);
+		m_Sprite->SetTransform(&Mat);
+		HRESULT Result = m_Sprite->Draw(Tex->GetTexture(), NULL, NULL, NULL, 0xFFFFFFFF);
+		m_Sprite->End();
+		return Result;
+	}
+	else
+		return E_FAIL;
 }

@@ -69,6 +69,7 @@ bool UIBase::PostMessage( UINT msg, WPARAM wParam, LPARAM lParam, void * Data )
 		if (m_vControl.size() > 1)
 			PostToAllReverse(msg, wParam, lParam, Data);
 		break;
+	case WM_SIZING:
     default:
         break;
     }

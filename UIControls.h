@@ -21,6 +21,7 @@ public:
 	void OnKeyDown(WPARAM Key, LPARAM Extended);
 	void OnKeyUp(WPARAM Key, LPARAM Extended);
 	bool LoadCanvasFromFile(char* File);
+	void SetRect(RECT rect) { m_Texture->SetRect(rect); }
 };
 
 //--------------------------------------------------------------------Labels---------------------------

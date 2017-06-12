@@ -18,12 +18,16 @@ WindowControl::~WindowControl()
 
 bool WindowControl::OnRender()
 {
+	if (m_IsParentWindow)
+	{
+		m_Texture->SetRect(graphics.m_ScreneRect);
+	}
 	D3DXVECTOR2 l_ControlAbsPos;
 	l_ControlAbsPos.x = 0;
 	l_ControlAbsPos.y = 0;
 	GetAbsolutePosition(&l_ControlAbsPos);
 	GetTexture()->SetTranslation(l_ControlAbsPos);
-	m_Sprite->DrawTexture(GetTexture());
+	m_Sprite->DrawBackground(GetTexture());
 	GetTexture()->SetTranslation(D3DXVECTOR2{ 0,0 });
 
 	for (int i = 1; i < m_vControl.size(); i++)
@@ -170,7 +174,7 @@ ButtonControl::~ButtonControl()
 
 bool ButtonControl::OnRender()
 {
-	m_Sprite->DrawTexture(m_Texture);
+	m_Sprite->DrawTexture(m_Texture,m_Position);
 	if (m_Caption)
 	{
 		m_Caption->OnRender();
@@ -212,20 +216,20 @@ bool ButtonControl::SetTextures(Texture * fileDefault, Texture * fileOver)
 	{
 		m_DefaultTex = fileDefault;
 		SetWidthHeight(fileDefault->GetWidth(), fileDefault->GetHeight());
-		m_DefaultTex->SetTranslation(m_Position);
+		//m_DefaultTex->SetTranslation(m_Position);
 	}
 	if (!m_OverTex)
 	{
 		m_OverTex = fileOver;
 		SetWidthHeight(fileOver->GetWidth(), fileOver->GetHeight());
-		m_OverTex->SetTranslation(m_Position);
+		//m_OverTex->SetTranslation(m_Position);
 	}
 	m_Rect.left = 0;
 	m_Rect.top = 0;
 	m_Rect.right =  GetWidth();
 	m_Rect.bottom = GetHeight();
 	m_OverTex->SetRect(m_Rect);
-	m_DefaultTex->SetRect(m_Rect);
+	//m_DefaultTex->SetRect(m_Rect);
 	m_Texture = m_DefaultTex;
 	return true;
 }
