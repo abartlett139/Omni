@@ -6,7 +6,7 @@
 class Knight : public Character
 {
 public:
-	Knight();
+	Knight( LPDIRECT3DDEVICE9 Device );
 	~Knight();
 
 	bool Initialize();

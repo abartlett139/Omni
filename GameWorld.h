@@ -13,7 +13,7 @@
 class GameWorld : public GameState
 {
 public:
-	GameWorld();
+	GameWorld( LPDIRECT3DDEVICE9 Device );
 	~GameWorld();
 
 	bool Init();
@@ -30,8 +30,8 @@ public:
 	Terrain *terrain = 0;
 
 	Knight knight;
-	Dragon dragon;
-	Witch witch;
+	//Dragon dragon;
+	//Witch witch;
 
 	Mesh moat;
 

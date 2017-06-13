@@ -8,7 +8,8 @@
 class GameState
 {
 public:
-	GameState();
+    LPDIRECT3DDEVICE9 m_Device;
+	GameState( LPDIRECT3DDEVICE9 Device );
 	~GameState();
 
 	virtual bool Init() = 0;

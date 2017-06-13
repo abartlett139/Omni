@@ -3,7 +3,7 @@
 #include "UIControls.h"
 #include "UIWrappers.h"	
 
-MainMenu::MainMenu( LPDIRECT3DDEVICE9 Device)
+MainMenu::MainMenu( LPDIRECT3DDEVICE9 Device ): GameState{ Device }
 {
 	m_Init = false;
 	m_Device = Device;
@@ -68,7 +68,16 @@ void MainMenu::Enter()
 
 void MainMenu::Render()
 {
-	wc->OnRender();
+    m_Device->Clear( 0, NULL, D3DCLEAR_TARGET, D3DCOLOR_XRGB( 255, 255, 255 ), 1.0F, 0 );
+
+    //begin the scene
+    if( SUCCEEDED( m_Device->BeginScene( ) ) )
+    {
+        wc->OnRender();
+        m_Device->EndScene( );
+    }
+    //present the back buffer contents to the display
+    m_Device->Present( NULL, NULL, NULL, NULL );
 }
 
 void MainMenu::Update(UINT msg, WPARAM wParam, LPARAM lParam, void * Data)

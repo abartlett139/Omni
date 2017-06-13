@@ -1,6 +1,6 @@
 #include "GameState.h"
 
-GameState::GameState()
+GameState::GameState( LPDIRECT3DDEVICE9 Device ) : m_Device(Device )
 {
 }
 

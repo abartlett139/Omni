@@ -84,20 +84,21 @@ bool Graphics::Render()
     m_Keyboard->Update( );
 
    //clear back buffer
-    m_Device->Clear( 0, NULL, D3DCLEAR_TARGET, D3DCOLOR_XRGB( 255, 255, 255 ), 1.0F, 0 );
+    //m_Device->Clear( 0, NULL, D3DCLEAR_TARGET, D3DCOLOR_XRGB( 255, 255, 255 ), 1.0F, 0 );
 
-    //begin the scene
-    if( SUCCEEDED( m_Device->BeginScene( ) ) )
-    {
+    ////begin the scene
+    //if( SUCCEEDED( m_Device->BeginScene( ) ) )
+    //{
 		m_CurrentState->Render();
         //sprt->DrawTexture( tex );
         //end the scene
-        m_Device->EndScene( );
-    }
-    //present the back buffer contents to the display
-    m_Device->Present( NULL, NULL, NULL, NULL );
+    //    m_Device->EndScene( );
+    //}
+    ////present the back buffer contents to the display
+    //m_Device->Present( NULL, NULL, NULL, NULL );
 	return false;
 }
+
 
 Graphics::Graphics()
 {
@@ -164,15 +165,18 @@ bool Graphics::Initialized(int height, int width, HINSTANCE hInstance)
     ZeroMemory(&d3dpp, sizeof(d3dpp)); //clear structure for use
     d3dpp.BackBufferWidth = width;
     d3dpp.BackBufferHeight = height;
-    d3dpp.BackBufferFormat = D3DFMT_A8R8G8B8;
+    d3dpp.BackBufferFormat = D3DFMT_UNKNOWN;
+    //d3dpp.BackBufferFormat = D3DFMT_A8R8G8B8;//this is the original setting before adding the animation code
     d3dpp.BackBufferCount = 1;
     d3dpp.MultiSampleType = D3DMULTISAMPLE_NONE;
     d3dpp.MultiSampleQuality = 0;
-    d3dpp.SwapEffect = D3DSWAPEFFECT_COPY;
+    d3dpp.SwapEffect = D3DSWAPEFFECT_DISCARD;
+    //d3dpp.SwapEffect = D3DSWAPEFFECT_COPY; //this is the original setting before adding the animation code
     d3dpp.hDeviceWindow = hWnd;
     d3dpp.Windowed = TRUE;
     d3dpp.EnableAutoDepthStencil = TRUE;
-    d3dpp.AutoDepthStencilFormat = D3DFMT_D24S8;
+    //d3dpp.AutoDepthStencilFormat = D3DFMT_D24S8;//this is the original setting before adding the animation code
+    d3dpp.AutoDepthStencilFormat = D3DFMT_D16;
     d3dpp.Flags = 0;
     d3dpp.FullScreen_RefreshRateInHz = D3DPRESENT_RATE_DEFAULT;
     d3dpp.PresentationInterval = D3DPRESENT_INTERVAL_IMMEDIATE;
@@ -189,12 +193,32 @@ bool Graphics::Initialized(int height, int width, HINSTANCE hInstance)
             return false;
         }
     }
+    m_Device->SetRenderState( D3DRS_ZENABLE, D3DZB_TRUE );
+
+    // Setup basic render state
+    m_Device->SetRenderState( D3DRS_LIGHTING, TRUE );
+    m_Device->SetRenderState( D3DRS_DITHERENABLE, TRUE );
+    m_Device->SetRenderState( D3DRS_SPECULARENABLE, FALSE );
+    m_Device->SetRenderState( D3DRS_ZENABLE, TRUE );
+    m_Device->SetRenderState( D3DRS_CULLMODE, D3DCULL_CCW );
+    m_Device->SetRenderState( D3DRS_AMBIENT, 0x99999999 );
+    m_Device->SetRenderState( D3DRS_NORMALIZENORMALS, TRUE );
+
+    // Setup states effecting texture rendering:
+    m_Device->SetTextureStageState( 0, D3DTSS_COLOROP, D3DTOP_MODULATE );
+    m_Device->SetTextureStageState( 0, D3DTSS_COLORARG1, D3DTA_TEXTURE );
+    m_Device->SetTextureStageState( 0, D3DTSS_COLORARG2, D3DTA_CURRENT );
+    m_Device->SetTextureStageState( 0, D3DTSS_ALPHAOP, D3DTOP_MODULATE );
+    m_Device->SetTextureStageState( 0, D3DTSS_ALPHAARG1, D3DTA_TEXTURE );
+    m_Device->SetTextureStageState( 0, D3DTSS_ALPHAARG2, D3DTA_DIFFUSE );
+    m_Device->SetSamplerState( 0, D3DSAMP_MAGFILTER, D3DTEXF_LINEAR );
+    m_Device->SetSamplerState( 0, D3DSAMP_MINFILTER, D3DTEXF_LINEAR );
 
 	m_Input = new Input(hInstance, hWnd);
 	m_Keyboard = m_Input->CreateKeyboard();
 	m_Mouse = m_Input->CreateMouse(m_Device, false);
 	m_MainMenu = new MainMenu(m_Device);
-	m_GameWorld = new GameWorld();
+	m_GameWorld = new GameWorld(m_Device);
 	m_GameWorld->Init();
 	m_MainMenu->Init();
 	m_CurrentState = m_MainMenu;
@@ -227,23 +251,11 @@ void Graphics::Shutdown()
 		delete m_GameWorld;
 }
 
-bool Graphics::Frame()
-{
-	return false;
-}
-
 void Graphics::RecvMessages(UINT msg, WPARAM wParam, LPARAM lParam, void * Data)
 {
 	m_CurrentState->Update(msg, wParam, lParam, Data);
 }
 
-void Graphics::BeginScene(float, float, float, float)
-{
-}
-
-void Graphics::EndScene()
-{
-}
 
 void Graphics::SetScreenRect()
 {

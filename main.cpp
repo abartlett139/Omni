@@ -2,6 +2,8 @@
 #include "GameTimer.h"
 #include <time.h>
 #include "Graphics.h"
+// Resolve linker error for dxerr.lib, which is an old library compiled in vs2012
+int (WINAPIV * __vsnprintf)(char *, size_t, const char*, va_list) = _vsnprintf;
 
 //Hi Amy, how is it going?
 

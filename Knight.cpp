@@ -2,8 +2,9 @@
 
 
 
-Knight::Knight()
+Knight::Knight( LPDIRECT3DDEVICE9 Device ): Character{ Device }
 {
+    LoadXFile( "models/bones_all.x", 0 );
 }
 
 
@@ -22,7 +23,7 @@ bool Knight::Initialize()
 	_pos = { 900.0f, 0.0f, -900.0f };
 
 	//	initialize the physical mesh object
-	characterMesh.Initialize("models/knight.x");
+	//characterMesh.Initialize("models/knight.x");
 
 	//	set the scale
 	D3DXMatrixScaling(&S, 1.0f, 1.0f, 1.0f);
@@ -32,19 +33,23 @@ bool Knight::Initialize()
 
 void Knight::Render()
 {
-	IDirect3DDevice9* Device = graphics.GetDevice();
+    if( m_Avatar )
+    {
+        //	the position and rotation translation matrix is the inverse of the characters's view matrix
+        getViewMatrix( &T );
+        //D3DXMatrixInverse( &T, NULL, &T );
+        P = S*T;
+       // m_Device->SetTransform( D3DTS_WORLD, &P );
+        m_Device->SetTransform( D3DTS_VIEW, &P );
+        //characterMesh.Render();
+        m_Avatar->FrameMove( timer.DeltaTime( ), &P );
+        m_Avatar->Render( );
 
-	//	the position and rotation translation matrix is the inverse of the characters's view matrix
-	getViewMatrix(&T);
-	D3DXMatrixInverse(&T, NULL, &T);
-	P = S*T;
-	Device->SetTransform(D3DTS_WORLD, &P);
+        //	update the bounding box coordinates to match the mesh
+        D3DXVec3TransformCoord( &box.MIN, &m_Avatar->min, &P );
+        D3DXVec3TransformCoord( &box.MAX, &m_Avatar->max, &P );
 
-	characterMesh.Render();
-
-	//	update the bounding box coordinates to match the mesh
-	D3DXVec3TransformCoord(&box.MIN, &characterMesh.min, &P);
-	D3DXVec3TransformCoord(&box.MAX, &characterMesh.max, &P);
+    }
 }
 
 void Knight::Update()

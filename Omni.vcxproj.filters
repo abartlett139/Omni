@@ -67,6 +67,8 @@
     <ClCompile Include="Witch.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="AnimationX.cpp" />
+    <ClCompile Include="Utility.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="AnimatedMesh.h">
@@ -135,6 +137,8 @@
     <ClInclude Include="Witch.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="AnimationX.h" />
+    <ClInclude Include="Utility.h" />
   </ItemGroup>
   <ItemGroup>
     <Image Include="button.png">
