@@ -53,7 +53,7 @@ LRESULT CALLBACK D3D::MsgProc( HWND hWnd, UINT msg, WPARAM wParam, LPARAM lParam
     case WM_KEYUP:
     case WM_KEYDOWN:
 #ifndef NDEBUG
-        printf( "Key Event: %d, %d\n", wParam, lParam );
+        printf( "Key Event: %d, %d\n", (int)wParam, (int)lParam );
 #endif
     case WM_LBUTTONUP:
     case WM_LBUTTONDOWN:
@@ -84,7 +84,7 @@ int WINAPI WinMain( HINSTANCE hInstance, HINSTANCE hPrevinstances, LPSTR cmdLine
 
     // cast the state types from generic GameState to their true state
     // reinterpret_cast<GameWorld&>(gameWorld);
-    srand( time( NULL ) );
+    srand( (unsigned int)time( NULL ) );
 
     // these next few lines create and attach a console
     // to this process.  note that each process is only allowed one console.
@@ -123,7 +123,7 @@ int WINAPI WinMain( HINSTANCE hInstance, HINSTANCE hPrevinstances, LPSTR cmdLine
 
     fclose( console_log );
 
-    return msg.wParam;
+    return (int)msg.wParam;
 }
 
 ///move on to the graphics class

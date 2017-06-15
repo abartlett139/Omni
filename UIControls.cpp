@@ -120,8 +120,8 @@ bool LabelControl::OnRender( )
 {
     if( m_Font )
     {
-        RECT l_Temp{ m_Position.x,m_Position.y, m_Position.x + GetWidth( ), m_Position.y + (GetHeight( ) - 40) };
-        m_Font->DrawText( NULL, m_Caption, strlen( m_Caption ), &l_Temp, m_Format, m_Color );
+        RECT l_Temp{ (LONG)m_Position.x,(LONG)m_Position.y, (LONG)m_Position.x + (LONG)GetWidth( ), (LONG)m_Position.y + LONG(GetHeight( ) - 40) };
+        m_Font->DrawText( NULL, m_Caption, (INT)strlen( m_Caption ), &l_Temp, m_Format, m_Color );
     }
     return true;
 }
@@ -184,7 +184,7 @@ bool ButtonControl::OnRender( )
 
 void ButtonControl::OnMouseDown( int Button, int x, int y )
 {
-    if( CursorIntersect( x, y ) && (Button == WM_LBUTTONDOWN) )
+    if( CursorIntersect( (FLOAT)x, (FLOAT)y ) && (Button == WM_LBUTTONDOWN) )
     {
         graphics.m_CurrentState->Exit( m_ChangeState );
     }

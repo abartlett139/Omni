@@ -111,7 +111,7 @@ UIBase * UIBase::PostToAll( UINT msg, WPARAM wParam, LPARAM lParam, void * Data 
 
 UIBase * UIBase::PostToAllReverse(UINT msg, WPARAM wParam, LPARAM lParam, void * Data)
 {
-	for (UINT i = m_vControl.size()-1; i >0; i--)//goes backwards through the vector excluding the first element which is a pointer to the parent
+	for (UINT i = (UINT)m_vControl.size()-1; i >0; i--)//goes backwards through the vector excluding the first element which is a pointer to the parent
 	{
 		m_vControl[i]->PostToAllReverse(msg, wParam, lParam, Data);
 	}

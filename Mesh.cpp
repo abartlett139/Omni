@@ -12,7 +12,7 @@ Mesh::Mesh()
 Mesh::~Mesh()
 {
 	D3D::Release<ID3DXMesh*>(mesh);
-	for (int i = 0; i < numMtrls; i++) {
+	for (unsigned int i = 0; i < numMtrls; i++) {
 		textures[i]->Release();
 	}
 }
@@ -27,7 +27,7 @@ bool Mesh::Initialize(char * fileName)
 		MessageBox(NULL, "Failed to load mesh", "Error with mesh", MB_OK);
 	if (mtrlBuffer != 0 && numMtrls != 0) {
 		D3DXMATERIAL* tempMat = (D3DXMATERIAL*)mtrlBuffer->GetBufferPointer();
-		for (int i = 0; i < numMtrls; i++) {
+		for (unsigned int i = 0; i < numMtrls; i++) {
 			tempMat[i].MatD3D.Ambient = tempMat[i].MatD3D.Specular;
 			materials.push_back(tempMat[i].MatD3D);
 

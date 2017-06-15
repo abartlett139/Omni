@@ -155,7 +155,7 @@ Mouse::~Mouse( )
 HRESULT Mouse::Update( )
 {
 	HRESULT Result = E_FAIL;
-	long OldX, OldY;
+	//long OldX, OldY;
 	bool Pressed = this->IsButtonPressed(0);
 	m_Changed = false;
 

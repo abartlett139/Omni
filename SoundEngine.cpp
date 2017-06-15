@@ -48,6 +48,7 @@ int SoundEngine::Initialize()
 
 	Load("audio/Some-Dreamy-Place.wav", true);
 	Load("audio/Trouble-in-the-Kingdom.wav", true);
+    return 0;
 }
 
 void SoundEngine::PlayMusic(int soundNdx)

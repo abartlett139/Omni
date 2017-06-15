@@ -22,7 +22,7 @@ public:
 
 	bool isAuto;
 	int currentState;
-	virtual enum STATES;
+	//virtual enum STATES;
 
 	float speed, strafeSpeed, turnSpeed;
 };
