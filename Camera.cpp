@@ -1,5 +1,5 @@
 #include "Camera.h"
-
+#include <stdio.h>
 Camera::Camera()
 {
 	_cameraType = AIRCRAFT;
@@ -82,6 +82,7 @@ void Camera::fly(float units)
 void Camera::pitch(float angle)
 {
 	D3DXMATRIX T;
+    printf( "pitch %f \n", angle );
 	D3DXMatrixRotationAxis(&T, &_right, angle);
 
 	// rotate _up and _look around _right vector
@@ -95,6 +96,7 @@ void Camera::yaw(float angle)
 
 	// rotate around world y (0, 1, 0) always for land object
 	//if (_cameraType == LANDOBJECT)
+
 	D3DXMatrixRotationY(&T, angle);
 
 	// rotate around own up vector for aircraft

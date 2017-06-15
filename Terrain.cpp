@@ -33,8 +33,8 @@ Terrain::Terrain(
 	}
 
 	// scale heights
-	for (int i = _heightmap.size() - 1; i >= 0; i--)
-		_heightmap[i] = _heightmap[i] * heightScale;
+	for (int i = (int)_heightmap.size() - 1; i >= 0; i--)
+		_heightmap[i] = (int)(_heightmap[i] * heightScale);
 
 	// compute the vertices
 	if (!computeVertices())
@@ -298,9 +298,9 @@ bool Terrain::lightTerrain(D3DXVECTOR3* directionToLight)
 		0);         // no lock flags specified
 
 	DWORD* imageData = (DWORD*)lockedRect.pBits;
-	for (int i = 0; i < textureDesc.Height; i++)
+	for (unsigned int i = 0; i < textureDesc.Height; i++)
 	{
-		for (int j = 0; j < textureDesc.Width; j++)
+		for (unsigned int j = 0; j < textureDesc.Width; j++)
 		{
 			// index into texture, note we use the pitch and divide by
 			// four since the pitch is given in bytes and there are
@@ -329,13 +329,13 @@ bool Terrain::lightTerrain(D3DXVECTOR3* directionToLight)
 float Terrain::computeShade(int cellRow, int cellCol, D3DXVECTOR3* directionToLight)
 {
 	// get heights of three vertices on the quad
-	float heightA = getHeightmapEntry(cellRow, cellCol);
-	float heightB = getHeightmapEntry(cellRow, cellCol + 1);
-	float heightC = getHeightmapEntry(cellRow + 1, cellCol);
+	float heightA = (float)(getHeightmapEntry(cellRow, cellCol));
+	float heightB = (float)(getHeightmapEntry(cellRow, cellCol + 1));
+	float heightC = (float)(getHeightmapEntry(cellRow + 1, cellCol));
 
 	// build two vectors on the quad
-	D3DXVECTOR3 u(_cellSpacing, heightB - heightA, 0.0f);
-	D3DXVECTOR3 v(0.0f, heightC - heightA, -_cellSpacing);
+	D3DXVECTOR3 u((FLOAT)_cellSpacing, (FLOAT)heightB - (FLOAT)heightA, 0.0f);
+	D3DXVECTOR3 v(0.0f, (FLOAT)(heightC - heightA), (FLOAT)-_cellSpacing);
 
 	// find the normal by taking the cross product of two
 	// vectors on the quad.
@@ -410,10 +410,10 @@ float Terrain::getHeight(float x, float z)
 	//  *---*
 	//  C   D
 
-	float A = getHeightmapEntry(row, col);
-	float B = getHeightmapEntry(row, col + 1);
-	float C = getHeightmapEntry(row + 1, col);
-	float D = getHeightmapEntry(row + 1, col + 1);
+	float A = (float)getHeightmapEntry( (int)row, (int)col);
+	float B = (float)getHeightmapEntry( (int)row, (int)col + 1);
+	float C = (float)getHeightmapEntry( (int)row + 1, (int)col);
+	float D = (float)getHeightmapEntry( (int)row + 1, (int)col + 1);
 
 	//
 	// Find the triangle we are in:

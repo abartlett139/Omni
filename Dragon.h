@@ -11,7 +11,8 @@ public:
 
 	bool Initialize();
 	void Render();
-	void Update();
+    void GetMessages( UINT msg, WPARAM wParam, LPARAM lParam, void * Data );
+    void Update( );
 	void Reset();
 
 	D3DXMATRIX getRearView();

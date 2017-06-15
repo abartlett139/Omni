@@ -10,32 +10,33 @@
 #include "Dragon.h"
 #include "Witch.h"
 
-class GameWorld : public GameState
+class GameWorld: public GameState
 {
 public:
-	GameWorld();
-	~GameWorld();
+    GameWorld( );
+    ~GameWorld( );
 
-	bool Init();
-	void Enter();
-	void Render();
-	void Update(UINT msg, WPARAM wParam, LPARAM lParam, void * Data);
-	void Exit(GameState *nextState);
+    bool Init( );
+    void Enter( );
+    void Render( );
+    void Update( );
+    void Exit( GameState *nextState );
+    void ProcessMessages( UINT msg, WPARAM wParam, LPARAM lParam, void * Data );
 
-	D3DLIGHT9 worldLight;
-	D3DLIGHT9 spotLight;
-	D3DLIGHT9 pointLight;
+    D3DLIGHT9 worldLight;
+    D3DLIGHT9 spotLight;
+    D3DLIGHT9 pointLight;
 
-	Skybox skybox;
-	Terrain *terrain = 0;
+    Skybox skybox;
+    Terrain *terrain = 0;
 
-	Knight knight;
-	Dragon dragon;
-	Witch witch;
+    Knight knight;
+    Dragon dragon;
+    Witch witch;
 
-	Mesh moat;
+    Mesh moat;
 
-	ID3DXFont *font;
+    ID3DXFont *font;
 
 
 };

@@ -47,7 +47,7 @@ void Dragon::Render()
 	D3DXVec3TransformCoord(&box.MAX, &characterMesh.max, &P);
 }
 
-void Dragon::Update()
+void Dragon::GetMessages( UINT msg, WPARAM wParam, LPARAM lParam, void * Data )
 {
 	//	update third person camera position (rear view)
 	thirdPersonCamera._pos = ((-_look * 100.0f) + (_up * 50.0f)) + _pos;
@@ -83,6 +83,10 @@ void Dragon::Update()
 		//	do ai for dragon here
 		//	maybe walk back and forth or whatever
 	}
+}
+
+void Dragon::Update( )
+{
 }
 
 void Dragon::Reset()

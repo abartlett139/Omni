@@ -14,7 +14,7 @@ public:
 	virtual void Render() = 0;
 	virtual void Update() = 0;
 	virtual void Reset() = 0;
-
+    virtual void GetMessages( UINT msg, WPARAM wParam, LPARAM lParam, void * Data ) = 0;
 	Mesh characterMesh;
 	D3D::BoundingBox box;
 
