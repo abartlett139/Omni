@@ -70,6 +70,7 @@ public:
     HRESULT LoadFromFile(LPSTR Path);
 	DWORD GetWidth() { return m_Info.Width; }
 	DWORD GetHeight() { return m_Info.Height; }
+	D3DXIMAGE_INFO GetImageInfo() { return m_Info; }
 };
 
 class Sprite

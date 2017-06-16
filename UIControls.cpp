@@ -260,6 +260,7 @@ SlideBar::SlideBar( UIBase * parent, int vecPos, D3DXVECTOR2 Position, LPDIRECT3
     m_SlideDefault = NULL;
     m_SlideOver = NULL;
     m_Over = false;
+	m_ButtonDown = false;
     m_Format = DT_VCENTER| DT_CENTER;
     m_Position = Position;
     m_CapPos = Position;
@@ -288,7 +289,7 @@ void SlideBar::OnMouseDown( int Button, int x, int y )
     if( CursorIntersect( (FLOAT)x, (FLOAT)y ) && (Button == WM_LBUTTONDOWN) )
     {
         printf( "mouse x: %d \n   slide pos x: %f \n", x, m_SlidePos.x );
-        m_SlidePos.x = x;
+		m_ButtonDown = true;
     }
 }
 
@@ -299,6 +300,17 @@ void SlideBar::OnMouseMove( int x, int y )
     {
         m_Over = true;
         SetTexture( m_SlideOver );
+		if (m_ButtonDown)
+		{
+			RECT l_sRect = m_Texture->GetRect();//get slider info
+			RECT l_bRect = m_Bar->GetRect();
+			if ((l_sRect.left > l_bRect.left) && (l_sRect.right < l_bRect.right))
+				m_Position.x = (float)x;
+			if (l_sRect.left < l_bRect.left)
+				l_sRect.left = l_bRect.left +5;
+			if(l_sRect.right > l_bRect.right)
+				l_sRect.right = l_bRect.right - 5;
+		}
     }
     else
     {
@@ -309,6 +321,7 @@ void SlideBar::OnMouseMove( int x, int y )
 
 void SlideBar::OnMouseUp( int Button, int x, int y )
 {
+	m_ButtonDown = false;
 }
 
 

@@ -82,14 +82,13 @@ public:
 class SlideBar: public UIBase
 {
 private:
-    void init( const D3DXVECTOR3& pos, const D3DXVECTOR3& text_pos, const D3DCOLOR& col );
     LPDIRECT3DDEVICE9 m_Device;
     HFONT m_Font;
     Texture* m_Bar;
     Texture* m_SlideDefault;
     Texture* m_SlideOver;
     bool m_Over;
-
+	bool m_ButtonDown;
     LabelControl* m_Caption;
     DWORD      m_Format;
     RECT       m_CapRect;

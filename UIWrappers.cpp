@@ -95,12 +95,6 @@ Texture::Texture(LPDIRECT3DDEVICE9 pDevice)
     SetRotationCenter(Vec);
     SetScaling(VecS);
     SetTranslation(Vec);
-    RECT rect;
-    rect.bottom = 500;
-    rect.left = 0;
-    rect.right = 500;
-    rect.top = 0;
-    SetRect( rect );
 	m_Info;
 }
 
