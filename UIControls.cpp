@@ -224,9 +224,9 @@ bool ButtonControl::SetTextures( Texture * fileDefault, Texture * fileOver )
         SetWidthHeight( fileOver->GetWidth( ), fileOver->GetHeight( ) );
         //m_OverTex->SetTranslation(m_Position);
     }
-    m_Rect.left   = 0;
-    m_Rect.top    = 0;
-    m_Rect.right  = GetWidth( );
+    m_Rect.left = 0;
+    m_Rect.top = 0;
+    m_Rect.right = GetWidth( );
     m_Rect.bottom = GetHeight( );
     m_OverTex->SetRect( m_Rect );
     //m_DefaultTex->SetRect(m_Rect);
@@ -260,12 +260,11 @@ SlideBar::SlideBar( UIBase * parent, int vecPos, D3DXVECTOR2 Position, LPDIRECT3
     m_SlideDefault = NULL;
     m_SlideOver = NULL;
     m_Over = false;
-	m_ButtonDown = false;
-    m_Format = DT_VCENTER| DT_CENTER;
+    m_ButtonDown = false;
+    m_Format = DT_VCENTER | DT_CENTER;
     m_Position = Position;
     m_CapPos = Position;
     m_BarPos = Position;
-    m_SlidePos = Position;
 }
 SlideBar::~SlideBar( )
 {
@@ -288,40 +287,39 @@ void SlideBar::OnMouseDown( int Button, int x, int y )
 {
     if( CursorIntersect( (FLOAT)x, (FLOAT)y ) && (Button == WM_LBUTTONDOWN) )
     {
-        printf( "mouse x: %d \n   slide pos x: %f \n", x, m_SlidePos.x );
-		m_ButtonDown = true;
+        printf( "mouse x: %d \n   slide pos x: %f \n", x, m_Position.x );
+        m_ButtonDown = true;
     }
 }
 
 void SlideBar::OnMouseMove( int x, int y )
 {
-
-    if( CursorIntersect( float( x ), float( y ) ) )
+    if( CursorIntersect( float( x ), float( y ) ) || m_ButtonDown )
     {
+        printf( "m_ButtonDown %d \n", m_ButtonDown );
+        printf( "m_Position.x: %f \n", m_Position.x );
         m_Over = true;
         SetTexture( m_SlideOver );
-		if (m_ButtonDown)
-		{
-			RECT l_sRect = m_Texture->GetRect();//get slider info
-			RECT l_bRect = m_Bar->GetRect();
-			if ((l_sRect.left > l_bRect.left) && (l_sRect.right < l_bRect.right))
-				m_Position.x = (float)x;
-			if (l_sRect.left < l_bRect.left)
-				l_sRect.left = l_bRect.left +5;
-			if(l_sRect.right > l_bRect.right)
-				l_sRect.right = l_bRect.right - 5;
-		}
+        if( m_ButtonDown )
+        {
+                m_Position.x = (FLOAT)x;
+            if( m_Position.x  < m_BarPos.x )
+                m_Position.x = (FLOAT)(m_BarPos.x + 5);
+            if( (m_Position.x + (FLOAT)GetWidth()) > (m_BarPos.x + (FLOAT)m_Bar->GetWidth()) )
+                m_Position.x = (FLOAT)((m_BarPos.x + (FLOAT)m_Bar->GetWidth( )) -(FLOAT)(GetWidth()+ 5));
+        }
     }
     else
     {
-        m_Over = false;
+        m_ButtonDown = false;
         SetTexture( m_SlideDefault );
     }
 }
 
 void SlideBar::OnMouseUp( int Button, int x, int y )
 {
-	m_ButtonDown = false;
+    if( Button == WM_LBUTTONUP )
+        m_ButtonDown = false;
 }
 
 
@@ -343,16 +341,15 @@ bool SlideBar::SetTextures( Texture * Bar, Texture * SlideUp, Texture * SlideDow
 
     //get a RECT to draw the caption in
     m_CapRect.left = 0;
-    m_CapRect.top =0;
-    m_CapRect.right = m_Bar->GetWidth( );
+    m_CapRect.top = 0;
+    m_CapRect.right = 100;
     m_CapRect.bottom = m_Bar->GetHeight( );
 
     //compute individual positions
     //the width of the bar should be big enough to hold the caption
     //we move it to the left of the slide bar by subtracting the width
-    m_CapPos.x = m_BarPos.x - m_Bar->GetWidth( ); 
-    m_CapPos.y = m_BarPos.y;
-    m_SlidePos.x = m_BarPos.x + (m_Bar->GetWidth( ) / 2);//put the slider in the middle of the bar
+    m_CapPos.x = (m_BarPos.x -100);
+    m_Position.x = m_BarPos.x + ((m_Bar->GetWidth( ) / 2) - (m_SlideDefault->GetWidth( ) / 2));//put the slider in the middle of the bar
     //m_Bar->SetRect( m_CapRect );
     m_Texture = m_SlideDefault;
     return true;
@@ -369,16 +366,13 @@ void SlideBar::SetCaption( char * Caption )
     m_Caption->SetCaption( Caption );
     m_Caption->SetSprite( m_Sprite );
     m_Caption->SetPosition( m_CapPos );
-    m_Caption->SetWidthHeight( m_Bar->GetWidth( ), m_Bar->GetHeight( ) );
+    m_Caption->SetWidthHeight( 100, m_Bar->GetHeight( ) );
 }
 
 void SlideBar::OnLostFocus( )
 {
+    m_ButtonDown = false;
 }
-
-//void SlideBar::SetSlidePosition( int Position )
-//{
-//}
 
 //---------------------------------------------------------------Health Bar---------------------------------------------------------------------
 HealthBar::HealthBar( UIBase * parent, int vecPos, D3DXVECTOR2 Position, LPDIRECT3DDEVICE9 Device ):UIBase( parent, vecPos )

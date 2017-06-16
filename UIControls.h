@@ -92,7 +92,7 @@ private:
     LabelControl* m_Caption;
     DWORD      m_Format;
     RECT       m_CapRect;
-    D3DXVECTOR2 m_BarPos, m_SlidePos, m_CapPos;
+    D3DXVECTOR2 m_BarPos, m_CapPos;
 public:
     SlideBar( UIBase* parent, int vecPos, D3DXVECTOR2 Position, LPDIRECT3DDEVICE9 Device );
     ~SlideBar( );
@@ -105,7 +105,6 @@ public:
     bool SetTextures( Texture* Bar, Texture* SlideUp, Texture* SlideDown );
     void SetCaption( char* Caption );
     void OnLostFocus( );
-    void SetSlidePosition( int Position );
 };
 
 //--------------------------------------------------------------Health-------------------------------------------------
