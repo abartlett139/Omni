@@ -377,30 +377,64 @@ void SlideBar::OnLostFocus( )
 //---------------------------------------------------------------Health Bar---------------------------------------------------------------------
 HealthBar::HealthBar( UIBase * parent, int vecPos, D3DXVECTOR2 Position, LPDIRECT3DDEVICE9 Device ):UIBase( parent, vecPos )
 {
+	m_Device = Device;
+	m_Font = NULL;
+	m_BackTex = NULL;
+	m_Position = Position;
+	m_FillAmount = 1.0f;
 }
 
 HealthBar::~HealthBar( )
 {
+	DeleteObject(m_Font);
+	if (m_Caption)
+		delete m_Caption;
 }
 
 bool HealthBar::OnRender( )
 {
-    return false;
+	m_Sprite->DrawTexture(m_BackTex, m_Position);
+	m_Sprite->DrawTexture(m_Texture, m_Position);
+	if (m_Caption)
+	{
+		m_Caption->OnRender();
+	}
+	return false;
 }
 
 bool HealthBar::SetTextures( Texture * Background, Texture * Fill )
 {
-    return false;
+	if (!m_Texture)
+	{
+		m_Texture = Fill;
+		SetWidthHeight(m_Texture->GetWidth(), m_Texture->GetHeight());
+	}
+	if (!m_BackTex)
+	{
+		m_BackTex = Background;
+	}
+	return true;
 }
 
 void HealthBar::SetCaption( char * Caption )
 {
+	LOGFONT lf;
+	if (m_Caption)
+		delete m_Caption;
+
+	SystemParametersInfo(SPI_GETICONTITLELOGFONT, sizeof(lf), &lf, 0);
+	m_Caption = new LabelControl(GetThis(), 1, lf, m_CapRect, m_Device);
+	m_Caption->SetCaption(Caption);
+	m_Caption->SetSprite(m_Sprite);
+	m_Caption->SetPosition(m_CapPos);
+	m_Caption->SetWidthHeight(100, m_Texture->GetHeight());
 }
 
 void HealthBar::OnLostFocus( )
 {
 }
 
-void HealthBar::SetFill( int Percent )
+void HealthBar::SetFill( float Percent )
 {
+	m_Texture->SetScaling(D3DXVECTOR2{ Percent, 1.0f });
 }

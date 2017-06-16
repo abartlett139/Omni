@@ -187,6 +187,10 @@ bool Graphics::Initialized( int height, int width, HINSTANCE hInstance )
 
     m_MainMenu = new MainMenu( m_Device );
     m_GameWorld = new GameWorld( );
+	m_Story = new Story(m_Device);
+	m_Credits = new Credits(m_Device);
+	m_Options = new Options(m_Device);
+	m_Story->Init();
     m_GameWorld->Init( );
     m_MainMenu->Init( );
     m_CurrentState = m_MainMenu;

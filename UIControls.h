@@ -114,9 +114,9 @@ class HealthBar: public UIBase
     HFONT m_Font;
     LabelControl* m_Caption;
     Texture* m_BackTex;
-    Texture* m_FillTex;
     RECT m_CapRect;
-    int m_FillAmount;
+    float m_FillAmount;
+	D3DXVECTOR2  m_CapPos;
 public:
     HealthBar( UIBase* parent, int vecPos, D3DXVECTOR2 Position, LPDIRECT3DDEVICE9 Device );
     ~HealthBar( );
@@ -129,7 +129,7 @@ public:
     bool SetTextures( Texture* Background, Texture* Fill );
     void SetCaption( char* Caption );
     void OnLostFocus( );
-    void SetFill( int Percent );
+    void SetFill( float Percent );
 };
 #endif // !UICONTROLS_H
 

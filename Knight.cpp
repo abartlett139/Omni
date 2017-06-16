@@ -58,19 +58,19 @@ void Knight::GetMessages( UINT msg, WPARAM wParam, LPARAM lParam, void * Data )
 {
     if( !isAuto )
     {
-        int l_deltaYaw = 0, l_deltaPitch = 0;
+        //int l_deltaYaw = 0, l_deltaPitch = 0;
 
-        m_prevPitch = m_CurrentPitch;
-        m_prevYaw = m_CurrentYaw;
+        //m_prevPitch = m_CurrentPitch;
+        //m_prevYaw = m_CurrentYaw;
 
-        m_CurrentYaw = GET_Y_LPARAM( lParam );
-        m_CurrentPitch = GET_X_LPARAM( lParam );
-        
-        l_deltaPitch =  m_CurrentPitch- m_prevPitch;
-        l_deltaYaw= m_CurrentYaw- m_prevYaw ;
-        //this is code to use the message handler, maybe later
-        yaw( timer.DeltaTime( )*l_deltaPitch );
-        pitch( timer.DeltaTime( )*l_deltaYaw );
+        //m_CurrentYaw = GET_Y_LPARAM( lParam );
+        //m_CurrentPitch = GET_X_LPARAM( lParam );
+        //
+        //l_deltaPitch =  m_CurrentPitch- m_prevPitch;
+        //l_deltaYaw= m_CurrentYaw- m_prevYaw ;
+        ////this is code to use the message handler, maybe later
+        //yaw( timer.DeltaTime( )*l_deltaPitch );
+        //pitch( timer.DeltaTime( )*l_deltaYaw );
 
         //switch( msg )
         //{
@@ -155,18 +155,18 @@ void Knight::GetMessages( UINT msg, WPARAM wParam, LPARAM lParam, void * Data )
         //}
 
         //using asynckeystate...
-		//if (GetAsyncKeyState(VK_RIGHT) & 0x8000f) {
-		//	yaw(timer.DeltaTime()* turnSpeed);
-		//}
-		//if (GetAsyncKeyState(VK_LEFT) & 0x8000f) {
-		//	yaw(-timer.DeltaTime() * turnSpeed);
-		//}
-		//if (GetAsyncKeyState(VK_UP) & 0x8000f) {
-		//	pitch(-timer.DeltaTime()* turnSpeed);
-		//}
-		//if (GetAsyncKeyState(VK_DOWN) & 0x8000f) {
-		//	pitch(timer.DeltaTime() * turnSpeed);
-		//}
+		if (GetAsyncKeyState(VK_RIGHT) & 0x8000f) {
+			yaw(timer.DeltaTime()* turnSpeed);
+		}
+		if (GetAsyncKeyState(VK_LEFT) & 0x8000f) {
+			yaw(-timer.DeltaTime() * turnSpeed);
+		}
+		if (GetAsyncKeyState(VK_UP) & 0x8000f) {
+			pitch(-timer.DeltaTime()* turnSpeed);
+		}
+		if (GetAsyncKeyState(VK_DOWN) & 0x8000f) {
+			pitch(timer.DeltaTime() * turnSpeed);
+		}
 		if (GetAsyncKeyState('W') & 0x8000f) {
 			walk(timer.DeltaTime() * speed);
 		}

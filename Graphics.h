@@ -143,7 +143,7 @@ public:
     D3DPRESENT_PARAMETERS d3dpp; //create a struct ot hold device ingormation
     RECT m_ScreneRect;
     IDirect3DSurface9* m_Cursor;
-    GameState* m_MainMenu, *m_GameWorld, *m_CurrentState, *m_PreviousState;
+    GameState* m_MainMenu, *m_GameWorld, *m_Story, *m_CurrentState, *m_PreviousState, *m_Credits, *m_Options;
     Graphics( );
     ~Graphics( );
     bool Initialized( int height, int width, HINSTANCE hInstance );
