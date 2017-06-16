@@ -56,8 +56,6 @@ void Knight::Update( )
 
 void Knight::GetMessages( UINT msg, WPARAM wParam, LPARAM lParam, void * Data )
 {
-
-
     if( !isAuto )
     {
         int l_deltaYaw = 0, l_deltaPitch = 0;
@@ -185,8 +183,7 @@ void Knight::GetMessages( UINT msg, WPARAM wParam, LPARAM lParam, void * Data )
 	//else {
 		//	do ai for knight here
 		//	maybe strafe back and forth or whatever
-	//}
-	
+	//}	
 }
 
 void Knight::Reset()

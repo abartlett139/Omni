@@ -34,6 +34,9 @@ bool MainMenu::Init( )
         m_Background = new Texture( m_Device, "menuBackground.png", D3DXVECTOR2{ 0,0 }, 0, D3DXVECTOR2{ 0,0 }, D3DXVECTOR2{ 1,1 } );
         m_ButtonDefault = new Texture( m_Device, "button.png", D3DXVECTOR2{ 0,0 }, 0, D3DXVECTOR2{ 0,0 }, D3DXVECTOR2{ 1,1 } );
         m_ButtonOver = new Texture( m_Device, "buttonOver.png", D3DXVECTOR2{ 0,0 }, 0, D3DXVECTOR2{ 0,0 }, D3DXVECTOR2{ 1,1 } );
+        m_SliderOver = new Texture( m_Device, "sliderHandleOver.png", D3DXVECTOR2{ 0,0 }, 0, D3DXVECTOR2{ 0,0 }, D3DXVECTOR2{ 1,1 } );
+        m_SliderDefault = new Texture( m_Device, "sliderHandle.png", D3DXVECTOR2{ 0,0 }, 0, D3DXVECTOR2{ 0,0 }, D3DXVECTOR2{ 1,1 } );
+        m_SlideBar = new Texture( m_Device, "slideBar.png", D3DXVECTOR2{ 0,0 }, 0, D3DXVECTOR2{ 0,0 }, D3DXVECTOR2{ 1,1 } );
         wc = new WindowControl( NULL, NULL );
         wc->SetSprite( m_Sprite );
         wc->SetTexture( m_Background );
@@ -46,12 +49,17 @@ bool MainMenu::Init( )
         wc->AddChildControl( temp );
         temp = NULL;
 
-        temp = new ButtonControl( wc->GetThis( ), 1, D3DXVECTOR2{ 100,600 }, m_Device );
+        temp = new ButtonControl( wc->GetThis( ), 2, D3DXVECTOR2{ 100,600 }, m_Device );
         temp->SetTextures( m_ButtonDefault, m_ButtonOver );
         temp->SetCaption( "Credits" );
         temp->SetChangeState( graphics.m_GameWorld );
         wc->AddChildControl( temp );
 
+        SlideBar* tempSlide;
+        tempSlide = new SlideBar( wc->GetThis( ), 3, D3DXVECTOR2{ 100,300 }, m_Device );
+        tempSlide->SetTextures( m_SlideBar, m_SliderDefault, m_SliderOver );
+        tempSlide->SetCaption( "Volume" );
+        wc->AddChildControl( tempSlide );
         m_Init = true;
     }
     return m_Init;
@@ -78,6 +86,7 @@ void MainMenu::Render( )
 
 void MainMenu::Update( )
 {
+
     return;
 }
 

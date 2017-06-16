@@ -120,7 +120,7 @@ bool LabelControl::OnRender( )
 {
     if( m_Font )
     {
-        RECT l_Temp{ (LONG)m_Position.x,(LONG)m_Position.y, (LONG)m_Position.x + (LONG)GetWidth( ), (LONG)m_Position.y + LONG(GetHeight( ) - 40) };
+        RECT l_Temp{ (LONG)m_Position.x,(LONG)m_Position.y, (LONG)m_Position.x + (LONG)GetWidth( ), (LONG)m_Position.y + LONG( GetHeight( ) - 40 ) };
         m_Font->DrawText( NULL, m_Caption, (INT)strlen( m_Caption ), &l_Temp, m_Format, m_Color );
     }
     return true;
@@ -224,9 +224,9 @@ bool ButtonControl::SetTextures( Texture * fileDefault, Texture * fileOver )
         SetWidthHeight( fileOver->GetWidth( ), fileOver->GetHeight( ) );
         //m_OverTex->SetTranslation(m_Position);
     }
-    m_Rect.left = 0;
-    m_Rect.top = 0;
-    m_Rect.right = GetWidth( );
+    m_Rect.left   = 0;
+    m_Rect.top    = 0;
+    m_Rect.right  = GetWidth( );
     m_Rect.bottom = GetHeight( );
     m_OverTex->SetRect( m_Rect );
     //m_DefaultTex->SetRect(m_Rect);
@@ -249,5 +249,151 @@ void ButtonControl::SetCaption( char * Caption )
 }
 
 void ButtonControl::OnLostFocus( )
+{
+}
+//---------------------------------------------------------------Slide Bar---------------------------------------------------------------------
+SlideBar::SlideBar( UIBase * parent, int vecPos, D3DXVECTOR2 Position, LPDIRECT3DDEVICE9 Device ):UIBase( parent, vecPos )
+{
+    m_Device = Device;
+    m_Font = NULL;
+    m_Bar = NULL;
+    m_SlideDefault = NULL;
+    m_SlideOver = NULL;
+    m_Over = false;
+    m_Format = DT_VCENTER| DT_CENTER;
+    m_Position = Position;
+    m_CapPos = Position;
+    m_BarPos = Position;
+    m_SlidePos = Position;
+}
+SlideBar::~SlideBar( )
+{
+    DeleteObject( m_Font );
+    if( m_Caption )
+        delete m_Caption;
+}
+bool SlideBar::OnRender( )
+{
+    m_Sprite->DrawTexture( m_Bar, m_BarPos );
+    m_Sprite->DrawTexture( m_Texture, m_Position );
+    if( m_Caption )
+    {
+        m_Caption->OnRender( );
+    }
+    return false;
+}
+
+void SlideBar::OnMouseDown( int Button, int x, int y )
+{
+    if( CursorIntersect( (FLOAT)x, (FLOAT)y ) && (Button == WM_LBUTTONDOWN) )
+    {
+        printf( "mouse x: %d \n   slide pos x: %f \n", x, m_SlidePos.x );
+        m_SlidePos.x = x;
+    }
+}
+
+void SlideBar::OnMouseMove( int x, int y )
+{
+
+    if( CursorIntersect( float( x ), float( y ) ) )
+    {
+        m_Over = true;
+        SetTexture( m_SlideOver );
+    }
+    else
+    {
+        m_Over = false;
+        SetTexture( m_SlideDefault );
+    }
+}
+
+void SlideBar::OnMouseUp( int Button, int x, int y )
+{
+}
+
+
+bool SlideBar::SetTextures( Texture * Bar, Texture * SlideUp, Texture * SlideDown )
+{
+    if( !m_SlideDefault )
+    {
+        m_SlideDefault = SlideUp;
+        SetWidthHeight( SlideUp->GetWidth( ), SlideUp->GetHeight( ) );
+    }
+    if( !m_SlideOver )
+    {
+        m_SlideOver = SlideDown;
+    }
+    if( !m_Bar )
+    {
+        m_Bar = Bar;
+    }
+
+    //get a RECT to draw the caption in
+    m_CapRect.left = 0;
+    m_CapRect.top =0;
+    m_CapRect.right = m_Bar->GetWidth( );
+    m_CapRect.bottom = m_Bar->GetHeight( );
+
+    //compute individual positions
+    //the width of the bar should be big enough to hold the caption
+    //we move it to the left of the slide bar by subtracting the width
+    m_CapPos.x = m_BarPos.x - m_Bar->GetWidth( ); 
+    m_CapPos.y = m_BarPos.y;
+    m_SlidePos.x = m_BarPos.x + (m_Bar->GetWidth( ) / 2);//put the slider in the middle of the bar
+    //m_Bar->SetRect( m_CapRect );
+    m_Texture = m_SlideDefault;
+    return true;
+}
+
+void SlideBar::SetCaption( char * Caption )
+{
+    LOGFONT lf;
+    if( m_Caption )
+        delete m_Caption;
+
+    SystemParametersInfo( SPI_GETICONTITLELOGFONT, sizeof( lf ), &lf, 0 );
+    m_Caption = new LabelControl( GetThis( ), 1, lf, m_CapRect, m_Device );
+    m_Caption->SetCaption( Caption );
+    m_Caption->SetSprite( m_Sprite );
+    m_Caption->SetPosition( m_CapPos );
+    m_Caption->SetWidthHeight( m_Bar->GetWidth( ), m_Bar->GetHeight( ) );
+}
+
+void SlideBar::OnLostFocus( )
+{
+}
+
+//void SlideBar::SetSlidePosition( int Position )
+//{
+//}
+
+//---------------------------------------------------------------Health Bar---------------------------------------------------------------------
+HealthBar::HealthBar( UIBase * parent, int vecPos, D3DXVECTOR2 Position, LPDIRECT3DDEVICE9 Device ):UIBase( parent, vecPos )
+{
+}
+
+HealthBar::~HealthBar( )
+{
+}
+
+bool HealthBar::OnRender( )
+{
+    return false;
+}
+
+bool HealthBar::SetTextures( Texture * Background, Texture * Fill )
+{
+    return false;
+}
+
+void HealthBar::SetCaption( char * Caption )
+{
+}
+
+void HealthBar::OnLostFocus( )
+{
+}
+
+void HealthBar::SetFill( int Percent )
 {
 }

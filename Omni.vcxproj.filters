@@ -67,6 +67,9 @@
     <ClCompile Include="Witch.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="FileIOHelper.cpp">
+      <Filter>UI Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="AnimatedMesh.h">
@@ -134,6 +137,9 @@
     </ClInclude>
     <ClInclude Include="Witch.h">
       <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="FileIOHelper.h">
+      <Filter>UI Files</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

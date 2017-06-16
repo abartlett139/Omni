@@ -20,6 +20,9 @@ private:
     Texture* m_ButtonOver;
     Texture* m_ButtonDefault;
     Texture* m_Background;
+    Texture* m_SliderOver;
+    Texture* m_SliderDefault;
+    Texture* m_SlideBar;
     WindowControl* wc;
 public:
     MainMenu( LPDIRECT3DDEVICE9 Device );
