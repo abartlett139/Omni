@@ -88,6 +88,9 @@ private:
 	Texture* m_ButtonOver;
 	Texture* m_ButtonDefault;
 	Texture* m_Background;
+	Texture* m_SlideBar;
+	Texture* m_Slider;
+	Texture* m_SliderOver;
 	WindowControl* wc;
 public:
 	Options(LPDIRECT3DDEVICE9 Device);

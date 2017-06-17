@@ -1,6 +1,6 @@
 #include "Dragon.h"
-
-
+#include <DirectXMath.h>
+#include <DirectXCollision.h>
 
 Dragon::Dragon()
 {
@@ -87,12 +87,38 @@ void Dragon::GetMessages( UINT msg, WPARAM wParam, LPARAM lParam, void * Data )
 
 void Dragon::Update( )
 {
+	if(isAuto)
+		ChaseState();
+
 }
 
 void Dragon::Reset()
 {
 	//	set start position
 	_pos = { -900.0f, 0.0f, 900.0f };
+}
+
+void Dragon::IdleState()
+{
+	D3DXVECTOR3 test;
+}
+
+void Dragon::ChaseState()
+{
+	D3DXVECTOR3 l_TempDirection{ 0,0,0 }, l_TempNormal{ 0,0,0 };
+	D3DXVECTOR3 l_KnightLoc{ 0,0,0 };
+	m_KnightPointer->getPosition(&l_KnightLoc);
+	D3DXVec3Subtract(&l_TempDirection, &l_KnightLoc, &_pos);
+	D3DXVec3Normalize(&l_TempDirection, &l_TempDirection);
+	_pos += l_TempDirection*speed;
+}
+
+void Dragon::AttackState()
+{
+}
+
+void Dragon::FleeState()
+{
 }
 
 D3DXMATRIX Dragon::getRearView()

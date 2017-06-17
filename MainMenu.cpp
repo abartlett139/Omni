@@ -332,6 +332,9 @@ bool Options::Init()
 		m_Background = new Texture(m_Device, "menuBackground.png", D3DXVECTOR2{ 0,0 }, 0, D3DXVECTOR2{ 0,0 }, D3DXVECTOR2{ 1,1 });
 		m_ButtonDefault = new Texture(m_Device, "button.png", D3DXVECTOR2{ 0,0 }, 0, D3DXVECTOR2{ 0,0 }, D3DXVECTOR2{ 1,1 });
 		m_ButtonOver = new Texture(m_Device, "buttonOver.png", D3DXVECTOR2{ 0,0 }, 0, D3DXVECTOR2{ 0,0 }, D3DXVECTOR2{ 1,1 });
+		m_SlideBar = new Texture(m_Device, "slideBar.png", D3DXVECTOR2{ 0,0 }, 0, D3DXVECTOR2{ 0,0 }, D3DXVECTOR2{ 1,1 });
+		m_Slider = new Texture(m_Device, "sliderHandle.png", D3DXVECTOR2{ 0,0 }, 0, D3DXVECTOR2{ 0,0 }, D3DXVECTOR2{ 1,1 });
+		m_SliderOver = new Texture(m_Device, "sliderHandleOver.png", D3DXVECTOR2{ 0,0 }, 0, D3DXVECTOR2{ 0,0 }, D3DXVECTOR2{ 1,1 });
 		//m_TextBox->SetTranslation(D3DXVECTOR2{ (FLOAT)((graphics.d3dpp.BackBufferWidth / 2) - (m_TextBox->GetWidth() / 2)),(FLOAT)100 });
 		wc = new WindowControl(NULL, NULL);
 		wc->SetSprite(m_Sprite);
@@ -352,6 +355,12 @@ bool Options::Init()
 		temp->SetCaption("Main Menu");
 		temp->SetChangeState(graphics.m_MainMenu);
 		wc->AddChildControl(temp);
+
+		SlideBar* tempS;
+		tempS = new SlideBar(wc->GetThis(), 2, D3DXVECTOR2{ (FLOAT)((graphics.d3dpp.BackBufferWidth / 2) - (m_SlideBar->GetWidth() / 2)),(FLOAT)700 }, m_Device);
+		tempS->SetTextures(m_SlideBar, m_Slider, m_SliderOver);
+		tempS->SetCaption("Volume");
+		wc->AddChildControl(tempS);
 		m_Init = true;
 	}
 	return m_Init;

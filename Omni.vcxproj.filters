@@ -70,6 +70,7 @@
     <ClCompile Include="FileIOHelper.cpp">
       <Filter>UI Files</Filter>
     </ClCompile>
+    <ClCompile Include="Vector3D.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="AnimatedMesh.h">
@@ -141,6 +142,7 @@
     <ClInclude Include="FileIOHelper.h">
       <Filter>UI Files</Filter>
     </ClInclude>
+    <ClInclude Include="Vector3D.h" />
   </ItemGroup>
   <ItemGroup>
     <Image Include="button.png">
