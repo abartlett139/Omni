@@ -158,6 +158,10 @@ void GameWorld::ProcessMessages( UINT msg, WPARAM wParam, LPARAM lParam, void * 
     dragon.GetMessages( msg, wParam, lParam, Data );
     witch.GetMessages( msg, wParam, lParam, Data );
 }
+void GameWorld::OnLostDevice(  )
+{
+    D3D::Delete<Terrain*>( terrain );
+}
 
 void GameWorld::Exit( GameState * nextState )
 {

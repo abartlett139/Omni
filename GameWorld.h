@@ -23,6 +23,8 @@ public:
     void Exit( GameState *nextState );
     void ProcessMessages( UINT msg, WPARAM wParam, LPARAM lParam, void * Data );
 
+    void OnLostDevice( );
+
     D3DLIGHT9 worldLight;
     D3DLIGHT9 spotLight;
     D3DLIGHT9 pointLight;

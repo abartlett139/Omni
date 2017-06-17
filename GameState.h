@@ -17,8 +17,8 @@ public:
     virtual void ProcessMessages( UINT msg, WPARAM wParam, LPARAM lParam, void * Data ) = 0;
     virtual void Update( ) = 0;
     virtual void Exit( GameState *nextState ) = 0;
-
-    bool isInit, changeState;
+    virtual void OnLostDevice( )=0;
+    bool m_Init, changeState;
     int musicType;
 };
 

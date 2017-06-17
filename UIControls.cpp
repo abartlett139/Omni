@@ -11,9 +11,10 @@ WindowControl::WindowControl( UIBase * parent, int vecPos ): UIBase( parent, vec
 
 WindowControl::~WindowControl( )
 {
-    if( GetTexture( ) )
+    if( m_Texture->GetTexture() )
         delete GetTexture( );
-
+    if( m_vControl.size( ) > 1 )
+        m_vControl.erase(m_vControl.begin(), m_vControl.end() );
 }
 
 bool WindowControl::OnRender( )

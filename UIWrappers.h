@@ -53,6 +53,7 @@ public:
     Texture(LPDIRECT3DDEVICE9 pDevice, LPSTR Path,  D3DXVECTOR2 RotationCenter, FLOAT Rotation, D3DXVECTOR2 Translation, D3DXVECTOR2 Scaling);
     void InitTexture( D3DXVECTOR2 RotationCenter, FLOAT Rotation, D3DXVECTOR2 Translation, D3DXVECTOR2 Scaling);
     ~Texture();
+    void Release( );
     LPDIRECT3DTEXTURE9 GetTexture()const { return m_Texture; }
     void SetTexture(LPDIRECT3DTEXTURE9 Texture) { m_Texture = Texture; }
     LPDIRECT3DDEVICE9 GetDevice() const { return m_pDevice; }

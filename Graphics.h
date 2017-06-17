@@ -137,12 +137,13 @@ private:
     D3DXMATRIX m_worldMatrix;
     D3DXMATRIX m_orthoMatrix;
     //Input * m_Input;
-    Sprite* sprt;
     Texture* tex;
 public:
     D3DPRESENT_PARAMETERS d3dpp; //create a struct ot hold device ingormation
+    D3DPRESENT_PARAMETERS d3dppFULL; //create a struct ot hold device ingormation
     RECT m_ScreneRect;
     IDirect3DSurface9* m_Cursor;
+    Sprite* m_Sprite;
     GameState* m_MainMenu, *m_GameWorld, *m_Story, *m_CurrentState, *m_PreviousState, *m_Credits, *m_Options;
     Graphics( );
     ~Graphics( );

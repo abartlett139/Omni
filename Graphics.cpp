@@ -184,23 +184,25 @@ bool Graphics::Initialized( int height, int width, HINSTANCE hInstance )
             return false;
         }
     }
+    m_Sprite = new Sprite( m_Device );
 
     m_MainMenu = new MainMenu( m_Device );
     m_GameWorld = new GameWorld( );
 	m_Story = new Story(m_Device);
 	m_Credits = new Credits(m_Device);
 	m_Options = new Options(m_Device);
-	m_Story->Init();
-    m_GameWorld->Init( );
+	//m_Story->Init();
+    //m_GameWorld->Init( );
     m_MainMenu->Init( );
     m_CurrentState = m_MainMenu;
+    m_PreviousState = m_MainMenu;
     //load image iformation
-    D3DXIMAGE_INFO ImageInfo;
-    D3DXGetImageInfoFromFile( "cursor2.png", &ImageInfo );
-    m_Device->CreateOffscreenPlainSurface( ImageInfo.Height, ImageInfo.Width, ImageInfo.Format, D3DPOOL_DEFAULT, &m_Cursor, NULL );
-    D3DXLoadSurfaceFromFile( m_Cursor, NULL, NULL, "cursor2.png", NULL, D3DX_FILTER_NONE, D3DCOLOR_XRGB( 255, 255, 255 ), &ImageInfo );
-    m_Device->SetCursorProperties( 0, 0, m_Cursor );
-    m_Device->SetCursorPosition( 0, 0, D3DCURSOR_IMMEDIATE_UPDATE );
+    //D3DXIMAGE_INFO ImageInfo;
+    //D3DXGetImageInfoFromFile( "cursor2.png", &ImageInfo );
+    //m_Device->CreateOffscreenPlainSurface( ImageInfo.Height, ImageInfo.Width, ImageInfo.Format, D3DPOOL_DEFAULT, &m_Cursor, NULL );
+    //D3DXLoadSurfaceFromFile( m_Cursor, NULL, NULL, "cursor2.png", NULL, D3DX_FILTER_NONE, D3DCOLOR_XRGB( 255, 255, 255 ), &ImageInfo );
+    //m_Device->SetCursorProperties( 0, 0, m_Cursor );
+    //m_Device->SetCursorPosition( 0, 0, D3DCURSOR_IMMEDIATE_UPDATE );
     return TRUE;
 }
 
@@ -213,8 +215,8 @@ void Graphics::Shutdown( )
     }
     if( tex )
         delete tex;
-    if( sprt )
-        delete sprt;
+    if( m_Sprite )
+        delete m_Sprite;
     if( m_MainMenu )
         delete m_MainMenu;
     if( m_GameWorld )
@@ -224,7 +226,7 @@ void Graphics::Shutdown( )
 //this is basically the update function for the graphics class, it passes on message data to the State Machine Update functions
 void Graphics::RecvMessages( UINT msg, WPARAM wParam, LPARAM lParam, void * Data )
 {
-    m_CurrentState->ProcessMessages( msg, wParam, lParam, Data );
+        m_CurrentState->ProcessMessages( msg, wParam, lParam, Data );
 }
 
 //changes the h/w of the screen when the screen is maximized or returned to windows mode

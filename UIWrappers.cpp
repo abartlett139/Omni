@@ -1,5 +1,5 @@
 #include "UIWrappers.h"
-
+#include "Graphics.h"
 Surface::Surface(LPDIRECT3DDEVICE9 pDevice)
 {
     this->SetDevice(pDevice);
@@ -118,12 +118,17 @@ Texture::~Texture()
     if (m_Texture != NULL)
         SafeRelease(m_Texture);
 }
+void Texture::Release( )
+{
+    if( m_Texture != NULL )
+        SafeRelease( m_Texture );
+}
 
 HRESULT Texture::LoadFromFile(LPSTR Path)
 {
     if (m_Texture != NULL)
-        m_Texture->Release();
-	if (SUCCEEDED(D3DXGetImageInfoFromFile(Path, &m_Info)))
+        SafeRelease( m_Texture );
+    if (SUCCEEDED(D3DXGetImageInfoFromFile(Path, &m_Info)))
 	{
 	
 		m_SrcRect.top = 0;
@@ -177,11 +182,12 @@ HRESULT Sprite::DrawBackground(Texture* Tex)
 		ZeroMemory(&m_scale, sizeof(D3DXVECTOR2));
 		m_scale.x = (FLOAT(Tex->GetRect().right)/ FLOAT(Tex->GetWidth()));
 		m_scale.y = (FLOAT(Tex->GetRect().bottom)/ FLOAT(Tex->GetHeight()));
-		D3DXMatrixTransformation2D(&Mat, NULL, 0, &m_scale, &Tex->GetRotationCenter(), Tex->GetRotation(), &Tex->GetTranslation());
+		//D3DXMatrixTransformation2D(&Mat, NULL, 0, &m_scale, &Tex->GetRotationCenter(), Tex->GetRotation(), &Tex->GetTranslation());
+        D3DXMatrixTransformation2D( &Mat, NULL, 0, &m_scale, &Tex->GetRotationCenter( ), Tex->GetRotation( ), &Tex->GetTranslation( ) );
 
 		m_Sprite->Begin(D3DXSPRITE_ALPHABLEND);
 		m_Sprite->SetTransform(&Mat);
-		HRESULT Result = m_Sprite->Draw(Tex->GetTexture(), NULL, NULL, NULL, 0xFFFFFFFF);
+		HRESULT Result = m_Sprite->Draw(Tex->GetTexture(), &graphics.m_ScreneRect, NULL, NULL, 0xFFFFFFFF);
 		m_Sprite->End();
 		return Result;
 	}

@@ -8,7 +8,6 @@ MainMenu::MainMenu( LPDIRECT3DDEVICE9 Device )
     m_Init = false;
     m_Device = Device;
     m_Sprite = NULL;
-    m_Sprite = new Sprite( m_Device );
 }
 
 MainMenu::~MainMenu( )
@@ -21,8 +20,6 @@ MainMenu::~MainMenu( )
         delete m_ButtonDefault;
     if( m_ButtonOver )
         delete m_ButtonOver;
-    if( m_ButtonOver )
-        delete m_ButtonOver;
     if( wc )
         delete wc;
 }
@@ -31,10 +28,11 @@ bool MainMenu::Init( )
 {
     if( !m_Init )
     {
+        wc = new WindowControl( NULL, NULL );
+        m_Sprite = graphics.m_Sprite;
         m_Background = new Texture( m_Device, "menuBackground.png", D3DXVECTOR2{ 0,0 }, 0, D3DXVECTOR2{ 0,0 }, D3DXVECTOR2{ 1,1 } );
         m_ButtonDefault = new Texture( m_Device, "button.png", D3DXVECTOR2{ 0,0 }, 0, D3DXVECTOR2{ 0,0 }, D3DXVECTOR2{ 1,1 } );
         m_ButtonOver = new Texture( m_Device, "buttonOver.png", D3DXVECTOR2{ 0,0 }, 0, D3DXVECTOR2{ 0,0 }, D3DXVECTOR2{ 1,1 } );
-		wc = new WindowControl( NULL, NULL );
         wc->SetSprite( m_Sprite );
         wc->SetTexture( m_Background );
         wc->SetRect( graphics.m_ScreneRect );
@@ -73,6 +71,8 @@ bool MainMenu::Init( )
 
 void MainMenu::Enter( )
 {
+    //if( graphics.m_PreviousState != graphics.m_CurrentState )
+    //    graphics.m_PreviousState->OnLostDevice();
     if( !m_Init )
     {
         m_Init = Init( );
@@ -96,15 +96,29 @@ void MainMenu::Update( )
     return;
 }
 
+void MainMenu::OnLostDevice( )
+{
+    m_Sprite = NULL;
+    m_Init = false;
+    //if( m_Background )
+    //    delete m_Background;
+    //if( m_ButtonDefault )
+    //    delete m_ButtonDefault;
+    //if( m_ButtonOver )
+    //    delete m_ButtonOver;
+    if( wc )
+        delete wc;
+}
+
 void MainMenu::ProcessMessages( UINT msg, WPARAM wParam, LPARAM lParam, void * Data )
 {
     //wc->PostMessage(WM_PAINT, wParam, lParam, NULL);
-    wc->PostMessage( msg, wParam, lParam, NULL );
+        wc->PostMessage( msg, wParam, lParam, NULL );
 }
 
 void MainMenu::Exit( GameState * nextState )
 {
-    graphics.m_CurrentState = graphics.m_PreviousState;
+    graphics.m_PreviousState=graphics.m_CurrentState;
     graphics.m_CurrentState = nextState;
     graphics.m_CurrentState->Enter( );
 }
@@ -119,8 +133,6 @@ Story::Story(LPDIRECT3DDEVICE9 Device)
 
 Story::~Story()
 {
-	if (m_Sprite)
-		delete m_Sprite;
 	if (m_Background)
 		delete m_Background;
 	if (m_ButtonDefault)
@@ -148,15 +160,15 @@ bool Story::Init()
 		wc->SetRect(graphics.m_ScreneRect);
 
 
-		ButtonControl* temp;
-		temp = new ButtonControl(wc->GetThis(), 1, D3DXVECTOR2{ (FLOAT)((graphics.d3dpp.BackBufferWidth * 0.75f) - (m_ButtonDefault->GetWidth() / 2)),(FLOAT)800 }, m_Device);
+		ButtonControl* temp = NULL;
+		temp = new ButtonControl(wc->GetThis(), 1, D3DXVECTOR2{ (FLOAT)((graphics.d3dpp.BackBufferWidth * 0.85f) - (m_ButtonDefault->GetWidth() / 2)),(FLOAT)700 }, m_Device);
 		temp->SetTextures(m_ButtonDefault, m_ButtonOver);
 		temp->SetCaption("Play Game");
 		temp->SetChangeState(graphics.m_GameWorld);
 		wc->AddChildControl(temp);
 		temp = NULL;
 
-		temp = new ButtonControl(wc->GetThis(), 2, D3DXVECTOR2{ (FLOAT)((graphics.d3dpp.BackBufferWidth *0.25f) - (m_ButtonDefault->GetWidth() / 2)),(FLOAT)800}, m_Device);
+		temp = new ButtonControl(wc->GetThis(), 2, D3DXVECTOR2{ (FLOAT)((graphics.d3dpp.BackBufferWidth *0.15f) - (m_ButtonDefault->GetWidth() / 2)),(FLOAT)700}, m_Device);
 		temp->SetTextures(m_ButtonDefault, m_ButtonOver);
 		temp->SetCaption("Main Menu");
 		temp->SetChangeState(graphics.m_MainMenu);
@@ -171,7 +183,9 @@ bool Story::Init()
 
 void Story::Enter()
 {
-	if (!m_Init)
+    //if( graphics.m_PreviousState != graphics.m_CurrentState )
+    //    graphics.m_PreviousState->OnLostDevice( );
+    if (!m_Init)
 	{
 		m_Init = Init();
 	}
@@ -182,10 +196,10 @@ void Story::Render()
 	m_Device->Clear(0, 0, D3DCLEAR_TARGET | D3DCLEAR_ZBUFFER | D3DCLEAR_STENCIL, COLOR_WINDOW, 1.0f, 0);
 	m_Device->BeginScene();
 
-	wc->OnRender();
-	m_File->Render(m_Sprite->GetSprite());
-	m_Sprite->DrawTexture(m_TextBox, D3DXVECTOR2{ (FLOAT)((graphics.d3dpp.BackBufferWidth / 2) - (m_TextBox->GetWidth() / 2)),(FLOAT)100 });
-	m_Device->EndScene();
+	//m_Sprite->DrawTexture(m_TextBox, D3DXVECTOR2{ (FLOAT)((graphics.d3dpp.BackBufferWidth / 2) - (m_TextBox->GetWidth() / 2)),(FLOAT)100 });
+ //   m_File->Render( m_Sprite->GetSprite( ) );
+    wc->OnRender( );
+    m_Device->EndScene();
 	m_Device->Present(NULL, NULL, NULL, NULL);
 }
 
@@ -194,11 +208,24 @@ void Story::Update()
 	return;
 }
 
+void Story::OnLostDevice( )
+{
+    //if( m_Background )
+    //    delete m_Background;
+    //if( m_ButtonDefault )
+    //    delete m_ButtonDefault;
+    //if( m_ButtonOver )
+    //    delete m_ButtonOver;
+    m_Init = false;
+    if( wc )
+        delete wc;
+}
+
 void Story::Exit(GameState * nextState)
 {
-	graphics.m_CurrentState = graphics.m_PreviousState;
-	graphics.m_CurrentState = nextState;
-	graphics.m_CurrentState->Enter();
+    graphics.m_PreviousState = graphics.m_CurrentState;
+    graphics.m_CurrentState = nextState;
+    graphics.m_CurrentState->Enter( );
 }
 
 void Story::ProcessMessages(UINT msg, WPARAM wParam, LPARAM lParam, void * Data)
@@ -222,8 +249,6 @@ Credits::~Credits()
 		delete m_Background;
 	if (m_ButtonDefault)
 		delete m_ButtonDefault;
-	if (m_ButtonOver)
-		delete m_ButtonOver;
 	if (m_TextBox)
 		delete m_TextBox;
 	if (wc)
@@ -246,14 +271,14 @@ bool Credits::Init()
 
 
 		ButtonControl* temp;
-		temp = new ButtonControl(wc->GetThis(), 1, D3DXVECTOR2{ (FLOAT)((graphics.d3dpp.BackBufferWidth * 0.75f) - (m_ButtonDefault->GetWidth() / 2)),(FLOAT)800 }, m_Device);
+		temp = new ButtonControl(wc->GetThis(), 1, D3DXVECTOR2{ (FLOAT)((graphics.d3dpp.BackBufferWidth * 0.75f) - (m_ButtonDefault->GetWidth() / 2)),(FLOAT)700 }, m_Device);
 		temp->SetTextures(m_ButtonDefault, m_ButtonOver);
 		temp->SetCaption("Play Game");
 		temp->SetChangeState(graphics.m_GameWorld);
 		wc->AddChildControl(temp);
 		temp = NULL;
 
-		temp = new ButtonControl(wc->GetThis(),2, D3DXVECTOR2{ (FLOAT)((graphics.d3dpp.BackBufferWidth *0.25f) - (m_ButtonDefault->GetWidth() / 2)),(FLOAT)800 }, m_Device);
+		temp = new ButtonControl(wc->GetThis(),2, D3DXVECTOR2{ (FLOAT)((graphics.d3dpp.BackBufferWidth *0.25f) - (m_ButtonDefault->GetWidth() / 2)),(FLOAT)700 }, m_Device);
 		temp->SetTextures(m_ButtonDefault, m_ButtonOver);
 		temp->SetCaption("Main Menu");
 		temp->SetChangeState(graphics.m_MainMenu);
@@ -268,7 +293,9 @@ bool Credits::Init()
 
 void Credits::Enter()
 {
-	if (!m_Init)
+    //if( graphics.m_PreviousState != graphics.m_CurrentState )
+    //    graphics.m_PreviousState->OnLostDevice( );
+    if (!m_Init)
 	{
 		m_Init = Init();
 	}
@@ -279,10 +306,10 @@ void Credits::Render()
 	m_Device->Clear(0, 0, D3DCLEAR_TARGET | D3DCLEAR_ZBUFFER | D3DCLEAR_STENCIL, COLOR_WINDOW, 1.0f, 0);
 	m_Device->BeginScene();
 
-	wc->OnRender();
 	m_File->Render(m_Sprite->GetSprite());
 	m_Sprite->DrawTexture(m_TextBox, D3DXVECTOR2{ (FLOAT)((graphics.d3dpp.BackBufferWidth / 2) - (m_TextBox->GetWidth() / 2)),(FLOAT)100 });
-	m_Device->EndScene();
+    wc->OnRender( );
+    m_Device->EndScene();
 	m_Device->Present(NULL, NULL, NULL, NULL);
 }
 
@@ -291,11 +318,28 @@ void Credits::Update()
 	return;
 }
 
+void Credits::OnLostDevice( )
+{
+    m_Sprite = NULL;
+    //if( m_Background )
+    //    delete m_Background;
+    //if( m_ButtonDefault )
+    //    delete m_ButtonDefault;
+    //if( m_ButtonOver )
+    //    delete m_ButtonOver;
+    m_Init = false;
+    if( m_TextBox )
+        delete m_TextBox;
+    if( wc )
+        delete wc;
+}
+
 void Credits::Exit(GameState * nextState)
 {
-	graphics.m_CurrentState = graphics.m_PreviousState;
-	graphics.m_CurrentState = nextState;
-	graphics.m_CurrentState->Enter();
+    graphics.m_PreviousState = graphics.m_CurrentState;
+    graphics.m_CurrentState = nextState;
+    graphics.m_PreviousState->OnLostDevice( );
+    graphics.m_CurrentState->Enter( );
 }
 
 void Credits::ProcessMessages(UINT msg, WPARAM wParam, LPARAM lParam, void * Data)
@@ -368,7 +412,9 @@ bool Options::Init()
 
 void Options::Enter()
 {
-	if (!m_Init)
+    //if( graphics.m_PreviousState != graphics.m_CurrentState )
+    //    graphics.m_PreviousState->OnLostDevice( );
+    if (!m_Init)
 	{
 		m_Init = Init();
 	}
@@ -390,11 +436,26 @@ void Options::Update()
 	return;
 }
 
+void Options::OnLostDevice( )
+{
+    m_Sprite = NULL;
+    //if( m_Background )
+    //    delete m_Background;
+    //if( m_ButtonDefault )
+    //    delete m_ButtonDefault;
+    //if( m_ButtonOver )
+    //    delete m_ButtonOver;
+    m_Init = false;
+    if( wc )
+        delete wc;
+}
+
 void Options::Exit(GameState * nextState)
 {
-	graphics.m_CurrentState = graphics.m_PreviousState;
-	graphics.m_CurrentState = nextState;
-	graphics.m_CurrentState->Enter();
+    graphics.m_PreviousState = graphics.m_CurrentState;
+    graphics.m_CurrentState = nextState;
+    graphics.m_PreviousState->OnLostDevice( );
+    graphics.m_CurrentState->Enter( );
 }
 
 void Options::ProcessMessages(UINT msg, WPARAM wParam, LPARAM lParam, void * Data)

@@ -74,7 +74,7 @@ void FileIOHelper::Render(LPD3DXSPRITE sprite)
 	
 		for (unsigned int i = 0; i < m_text.size(); i++)
 		{
-			m_font->DrawText(NULL, m_text[i].c_str(), -1, &temp, m_format, D3DCOLOR_XRGB( 255, 255, 0 ) );
+			m_font->DrawText( sprite, m_text[i].c_str(), -1, &temp, m_format, D3DCOLOR_XRGB( 255, 255, 0 ) );
 			//D3DXMatrixTranslation(&textPos, m_textRect.left, m_textRect.bottom, 0);
 			temp.top += 20;
 			temp.bottom += 20;

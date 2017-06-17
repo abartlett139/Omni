@@ -50,7 +50,6 @@ bool UIBase::PostMessage( UINT msg, WPARAM wParam, LPARAM lParam, void * Data )
         }
 		else
 		{
-            m_Focus = false;
 			OnMouseMove(LOWORD(lParam), HIWORD(lParam));
 			return false;
 		}

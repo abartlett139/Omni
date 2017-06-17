@@ -15,7 +15,6 @@ class MainMenu: public GameState
 {
 private:
     LPDIRECT3DDEVICE9 m_Device;
-    bool m_Init;
     Sprite* m_Sprite;
     Texture* m_ButtonOver;
     Texture* m_ButtonDefault;
@@ -29,6 +28,7 @@ public:
     void Enter( );
     void Render( );
     void Update( );
+    void OnLostDevice( );
     void Exit( GameState* nextState );
     void ProcessMessages( UINT msg, WPARAM wParam, LPARAM lParam, void * Data );
 };
@@ -37,7 +37,6 @@ class Story : public GameState
 {
 private:
 	LPDIRECT3DDEVICE9 m_Device;
-	bool m_Init;
 	Sprite* m_Sprite;
 	Texture* m_ButtonOver;
 	Texture* m_ButtonDefault;
@@ -52,7 +51,8 @@ public:
 	void Enter();
 	void Render();
 	void Update();
-	void Exit(GameState* nextState);
+    void OnLostDevice( );
+    void Exit(GameState* nextState);
 	void ProcessMessages(UINT msg, WPARAM wParam, LPARAM lParam, void * Data);
 };
 
@@ -60,7 +60,6 @@ class Credits : public GameState
 {
 private:
 	LPDIRECT3DDEVICE9 m_Device;
-	bool m_Init;
 	Sprite* m_Sprite;
 	Texture* m_ButtonOver;
 	Texture* m_ButtonDefault;
@@ -75,7 +74,8 @@ public:
 	void Enter();
 	void Render();
 	void Update();
-	void Exit(GameState* nextState);
+    void OnLostDevice( );
+    void Exit(GameState* nextState);
 	void ProcessMessages(UINT msg, WPARAM wParam, LPARAM lParam, void * Data);
 };
 
@@ -83,7 +83,6 @@ class Options : public GameState
 {
 private:
 	LPDIRECT3DDEVICE9 m_Device;
-	bool m_Init;
 	Sprite* m_Sprite;
 	Texture* m_ButtonOver;
 	Texture* m_ButtonDefault;
@@ -99,7 +98,8 @@ public:
 	void Enter();
 	void Render();
 	void Update();
-	void Exit(GameState* nextState);
+    void OnLostDevice( );
+    void Exit(GameState* nextState);
 	void ProcessMessages(UINT msg, WPARAM wParam, LPARAM lParam, void * Data);
 };
 

@@ -11,7 +11,7 @@ GameTimer timer;
 SoundEngine *soundEngine = new SoundEngine( );
 
 FILE* console_log;
-
+HRESULT hr = NULL;
 ///WinProc
 ///this class is declared in the D3D namspace(this function must be declared globally,
 ///so it must be a part of the namespace and not a member of the graphics class),
@@ -33,10 +33,18 @@ LRESULT CALLBACK D3D::MsgProc( HWND hWnd, UINT msg, WPARAM wParam, LPARAM lParam
         case SIZE_MAXIMIZED:///you know what this does since I basically stole this code from your final project
             if( !(graphics.d3dpp.Windowed) )
                 break;
+            SetWindowLong( hWnd, GWL_STYLE, WS_POPUP | WS_VISIBLE );
+            graphics.d3dpp.Windowed = false;
             graphics.d3dpp.BackBufferWidth = GetSystemMetrics( SM_CXSCREEN );
             graphics.d3dpp.BackBufferHeight = GetSystemMetrics( SM_CYSCREEN );
-            graphics.SetScreenRect( );
+            graphics.d3dpp.BackBufferCount = 1;
             graphics.d3dpp.Windowed = false;
+            graphics.SetScreenRect( );
+            //graphics.m_Cursor->Release( );
+            //graphics.m_CurrentState->OnLostDevice();
+            //if( FAILED( graphics.GetDevice( )->Reset( &graphics.d3dpp ) ) )
+            //    MessageBox( NULL, "reset d3dpp failed", NULL, NULL );
+            //graphics.m_CurrentState->Enter( );
             break;
         case SIZE_RESTORED:///ditto
             //	set windowed to true
@@ -47,8 +55,8 @@ LRESULT CALLBACK D3D::MsgProc( HWND hWnd, UINT msg, WPARAM wParam, LPARAM lParam
             break;
         }break;
     case WM_SETCURSOR:
-        SetCursor( NULL );
-        return graphics.GetDevice( )->ShowCursor( true );
+       // SetCursor( NULL );
+        //return graphics.GetDevice( )->ShowCursor( true );
         break;
     case WM_KEYUP:
     case WM_KEYDOWN:
@@ -60,6 +68,7 @@ LRESULT CALLBACK D3D::MsgProc( HWND hWnd, UINT msg, WPARAM wParam, LPARAM lParam
     case WM_MOUSEMOVE:
         if( wParam == VK_ESCAPE )
             DestroyWindow( hWnd );
+        printf( "mouse x: %f  \n mouse y: %f \n", (float)LOWORD( lParam ), (float)HIWORD( lParam ) );
         ///The graphics class receives the messages and sends them on to the state machine
         ///in the UIBase class, this is done in the PostMessage function.  All of the classes
         ///in the UIControl files are derived from the UIBase class.  The functions called within
