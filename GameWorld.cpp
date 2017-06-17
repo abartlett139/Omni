@@ -4,6 +4,10 @@
 
 GameWorld::GameWorld( )
 {
+	// reset() transfers the pointer to the shared_ptr class to manage
+	// Can not use std::make_shared<IXAnimator> directly because IXAnimator is a virtual base class 
+	// and not meant to be created except through the factory function below
+	xAnimator.reset( CreateXAnimator( graphics.GetDevice( ) ) );
 }
 
 
@@ -47,7 +51,8 @@ bool GameWorld::Init( )
     knight.Initialize( );
     dragon.Initialize( );
     witch.Initialize( );
-	dragon.SetEnemy(&knight);
+	skele.Initialize( xAnimator );
+	// dragon.SetEnemy(&knight);
     moat.Initialize( "models/moat.x" );
 	castle.Initialize("models/castle.x");
 
@@ -103,7 +108,6 @@ void GameWorld::Render( )
         D3DXMatrixIdentity( &I );
         terrain->draw( &I, false );
 
-
         //	render knight
         knight.Render( );
 
@@ -112,6 +116,9 @@ void GameWorld::Render( )
 
         //	render witch
         witch.Render( );
+
+		//	render witch
+		skele.Render();
 
         D3DXMATRIX moatScale, moatPos;
         D3DXMatrixScaling( &moatScale, 100.0f, 100.0f, 100.0f );
@@ -146,10 +153,13 @@ void GameWorld::Update( )
     knight.Update( );
     dragon.Update( );
     witch.Update( );
+	skele.Update( );
+
     //	update character y positions so they don't go beneath the terrain
     knight._pos.y = terrain->getHeight( knight._pos.x, knight._pos.z );
     dragon._pos.y = terrain->getHeight( dragon._pos.x, dragon._pos.z );
     witch._pos.y = terrain->getHeight( witch._pos.x, witch._pos.z );
+	skele._pos.y = terrain->getHeight( skele._pos.x, skele._pos.z );
 }
 
 void GameWorld::ProcessMessages( UINT msg, WPARAM wParam, LPARAM lParam, void * Data )
@@ -157,6 +167,7 @@ void GameWorld::ProcessMessages( UINT msg, WPARAM wParam, LPARAM lParam, void * 
     knight.GetMessages( msg, wParam, lParam, Data );
     dragon.GetMessages( msg, wParam, lParam, Data );
     witch.GetMessages( msg, wParam, lParam, Data );
+	skele.GetMessages( msg, wParam, lParam, Data );
 }
 
 void GameWorld::Exit( GameState * nextState )
@@ -173,6 +184,7 @@ void GameWorld::Exit( GameState * nextState )
     knight.Reset( );
     dragon.Reset( );
     witch.Reset( );
+	skele.Reset();
 
     soundEngine->StopMusic( );
 

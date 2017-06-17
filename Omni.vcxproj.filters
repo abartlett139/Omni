@@ -71,6 +71,9 @@
       <Filter>UI Files</Filter>
     </ClCompile>
     <ClCompile Include="Vector3D.cpp" />
+    <ClCompile Include="Skele.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="AnimatedMesh.h">
@@ -143,6 +146,15 @@
       <Filter>UI Files</Filter>
     </ClInclude>
     <ClInclude Include="Vector3D.h" />
+    <ClInclude Include="3rd-party\xanimator\include\XAnimator_lib.h">
+      <Filter>xanimator</Filter>
+    </ClInclude>
+    <ClInclude Include="3rd-party\xanimator\include\XAnimatorTypes.h">
+      <Filter>xanimator</Filter>
+    </ClInclude>
+    <ClInclude Include="Skele.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Image Include="button.png">
@@ -173,6 +185,9 @@
     </Filter>
     <Filter Include="UI Files\Images">
       <UniqueIdentifier>{59764ba8-ab82-4ba1-97d5-35f185b97017}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="xanimator">
+      <UniqueIdentifier>{f38cfcc8-eb18-42e8-8dfa-88d5af686c1e}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
 </Project>

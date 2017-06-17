@@ -52,9 +52,10 @@ LRESULT CALLBACK D3D::MsgProc( HWND hWnd, UINT msg, WPARAM wParam, LPARAM lParam
         break;
     case WM_KEYUP:
     case WM_KEYDOWN:
-#ifndef NDEBUG
-        printf( "Key Event: %d, %d\n", (int)wParam, (int)lParam );
-#endif
+	case WM_CHAR:
+//#ifndef NDEBUG
+//        printf( "Key Event: %d, %d\n", (int)wParam, (int)lParam );
+//#endif
     case WM_LBUTTONUP:
     case WM_LBUTTONDOWN:
     case WM_MOUSEMOVE:
@@ -86,8 +87,7 @@ int WINAPI WinMain( HINSTANCE hInstance, HINSTANCE hPrevinstances, LPSTR cmdLine
     // reinterpret_cast<GameWorld&>(gameWorld);
     srand( (unsigned int)time( NULL ) );
 
-    // these next few lines create and attach a console
-    // to this process.  note that each process is only allowed one console.
+    // This creates and attaches a console, only enabled in debug builds
 #ifndef NDEBUG
     AllocConsole( );
     AttachConsole( GetCurrentProcessId( ) );

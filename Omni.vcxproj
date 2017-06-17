@@ -84,7 +84,8 @@
     </ClCompile>
     <Link>
       <GenerateDebugInformation>true</GenerateDebugInformation>
-      <AdditionalDependencies>d3d9.lib;dinput8.lib;dxguid.lib;dxerr.lib;legacy_stdio_definitions.lib;d3dx9.lib;xinput.lib;winmm.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>d3d9.lib;dinput8.lib;dxguid.lib;dxerr.lib;legacy_stdio_definitions.lib;d3dx9.lib;xinput.lib;winmm.lib;XAnimator_d32.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalLibraryDirectories>3rd-party\xanimator\lib;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
@@ -96,6 +97,7 @@
     <Link>
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <AdditionalDependencies>d3d9.lib;dinput8.lib;dxguid.lib;dxerr.lib;legacy_stdio_definitions.lib;d3dx9.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalLibraryDirectories>3rd-party\xanimator\lib;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
@@ -110,7 +112,8 @@
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
       <OptimizeReferences>true</OptimizeReferences>
-      <AdditionalDependencies>d3d9.lib;dinput8.lib;dxguid.lib;dxerr.lib;legacy_stdio_definitions.lib;d3dx9.lib;xinput.lib;winmm.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>d3d9.lib;dinput8.lib;dxguid.lib;dxerr.lib;legacy_stdio_definitions.lib;d3dx9.lib;xinput.lib;winmm.lib;XAnimator_32.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalLibraryDirectories>3rd-party\xanimator\lib;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
@@ -125,6 +128,7 @@
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
       <OptimizeReferences>true</OptimizeReferences>
+      <AdditionalLibraryDirectories>3rd-party\xanimator\lib;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
@@ -144,6 +148,7 @@
     <ClCompile Include="MainMenu.cpp" />
     <ClCompile Include="Mesh.cpp" />
     <ClCompile Include="PSYS.cpp" />
+    <ClCompile Include="Skele.cpp" />
     <ClCompile Include="Skybox.cpp" />
     <ClCompile Include="SoundEngine.cpp" />
     <ClCompile Include="Terrain.cpp" />
@@ -154,6 +159,8 @@
     <ClCompile Include="Witch.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="3rd-party\xanimator\include\XAnimatorTypes.h" />
+    <ClInclude Include="3rd-party\xanimator\include\XAnimator_lib.h" />
     <ClInclude Include="AnimatedMesh.h" />
     <ClInclude Include="AnimatedMeshHierarchy.h" />
     <ClInclude Include="Camera.h" />
@@ -169,6 +176,7 @@
     <ClInclude Include="MainMenu.h" />
     <ClInclude Include="Mesh.h" />
     <ClInclude Include="PSYS.h" />
+    <ClInclude Include="Skele.h" />
     <ClInclude Include="Skybox.h" />
     <ClInclude Include="SoundEngine.h" />
     <ClInclude Include="Terrain.h" />
