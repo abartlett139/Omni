@@ -94,6 +94,10 @@ int WINAPI WinMain( HINSTANCE hInstance, HINSTANCE hPrevinstances, LPSTR cmdLine
     freopen_s( &console_log, "CON", "w", stdout );
 
     printf( "Omni Debug Console v0.0.1!\n" );
+	printf("Key Legend:\n");
+	printf("\t 'w','a','s','d' controls knight movement\n");
+	printf("\t 'z','x','c','v','b' changes skeleton animations\n");
+	printf("\t ',' (comma),'.' (period) dragon chases knight or goes idle\n");
 #endif
 
     g_init = graphics.Initialized( screenHeight, screenWidth, hInstance );///initialize the graphics class 

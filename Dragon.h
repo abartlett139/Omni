@@ -27,6 +27,10 @@ public:
 	D3DXMATRIX getSideView();
 
 	Camera thirdPersonCamera;
+
+	// Enum describing the current motivation of the dragon
+	enum Mood { idle, chase, attack, flee } m_mood;
+
 };
 
 #endif

@@ -52,7 +52,7 @@ bool GameWorld::Init( )
     dragon.Initialize( );
     witch.Initialize( );
 	skele.Initialize( xAnimator );
-	// dragon.SetEnemy(&knight);
+	dragon.SetEnemy(&knight);
     moat.Initialize( "models/moat.x" );
 	castle.Initialize("models/castle.x");
 
