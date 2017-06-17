@@ -35,8 +35,12 @@ public:
     Witch witch;
 
     Mesh moat;
+	Mesh castle;
 
     ID3DXFont *font;
+
+	ID3DXSprite *sprite;
+	IDirect3DTexture9* treeTexture;
 
 
 };

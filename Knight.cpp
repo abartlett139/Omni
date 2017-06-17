@@ -15,9 +15,9 @@ Knight::~Knight()
 bool Knight::Initialize()
 {
 	//	set speed variables
-	speed = 10000.0f;
-	strafeSpeed = 10000.0f;
-	turnSpeed = 200.0f;
+	speed = 100.0f;
+	strafeSpeed = 100.0f;
+	turnSpeed = 2.0f;
 
 	//	set start position
 	_pos = { 900.0f, 0.0f, -900.0f };
