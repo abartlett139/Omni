@@ -96,7 +96,7 @@ HRESULT Keyboard::Update()
 Mouse::Mouse( LPDIRECT3DDEVICE9 pDevice, LPDIRECTINPUT8 pInput, HWND hWnd,
               bool Exclusive/*, D3DDISPLAYMODE Mode*/ ): m_pInputDevice( NULL )
 {
-    m_Device = NULL;
+    Device = NULL;
     //Initial cursor position
     m_iX = 0;
     m_iY = 0;
@@ -104,7 +104,7 @@ Mouse::Mouse( LPDIRECT3DDEVICE9 pDevice, LPDIRECTINPUT8 pInput, HWND hWnd,
     if( pInput&&pDevice )
     {
         HRESULT Result = E_FAIL;
-        m_Device = pDevice;
+        Device = pDevice;
         Result = pInput->CreateDevice( GUID_SysMouse, &m_pInputDevice, NULL );
         if( FAILED( Result ) )
             return;
@@ -131,10 +131,10 @@ Mouse::Mouse( LPDIRECT3DDEVICE9 pDevice, LPDIRECTINPUT8 pInput, HWND hWnd,
 	      D3DXIMAGE_INFO ImageInfo;
         //load image iformation
         D3DXGetImageInfoFromFile( "cursor.png", &ImageInfo );
-        m_Device->CreateOffscreenPlainSurface( ImageInfo.Height, ImageInfo.Width, ImageInfo.Format, D3DPOOL_DEFAULT, &m_Cursor, NULL );
+        Device->CreateOffscreenPlainSurface( ImageInfo.Height, ImageInfo.Width, ImageInfo.Format, D3DPOOL_DEFAULT, &m_Cursor, NULL );
         D3DXLoadSurfaceFromFile( m_Cursor, NULL, NULL, "cursor.png", NULL, D3DX_FILTER_NONE, D3DCOLOR_XRGB( 255, 255, 255 ), &ImageInfo );
-        m_Device->SetCursorProperties( 0, 0, m_Cursor );
-        m_Device->SetCursorPosition( 0, 0, D3DCURSOR_IMMEDIATE_UPDATE );
+        Device->SetCursorProperties( 0, 0, m_Cursor );
+        Device->SetCursorPosition( 0, 0, D3DCURSOR_IMMEDIATE_UPDATE );
         m_Changed = false;
         m_Buttons = false;
     }
@@ -208,15 +208,15 @@ HRESULT Mouse::SetMouseCursor( char * FilePath, UINT x, UINT y, int Type )
 
 void Mouse::SetCursorImage( int Type )
 {
-	m_Device->SetCursorProperties(m_iX, m_iX, m_Cursor);
+	Device->SetCursorProperties(m_iX, m_iX, m_Cursor);
 }
 
 void Mouse::SetCursorPosition( int x, int y )
 {
-	m_Device->SetCursorPosition(x, y, 0);
+	Device->SetCursorPosition(x, y, 0);
 }
 
 HRESULT Mouse::SetCursorVisible( bool Show )
 {
-    return m_Device->ShowCursor(Show);
+    return Device->ShowCursor(Show);
 }

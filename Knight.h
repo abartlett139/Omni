@@ -3,24 +3,26 @@
 
 #include "Character.h"
 
-class Knight: public Character
-{
+class Knight : public Character {
 public:
-    Knight( );
-    ~Knight( );
 
-    bool Initialize( );
-    void Render( );
-    void Update( );
-    void Reset( );
-    void GetMessages( UINT msg, WPARAM wParam, LPARAM lParam, void * Data );
-    D3DXMATRIX getRearView( );
-    D3DXMATRIX getSideView( );
+	Knight();
+	~Knight();
+	bool Initialize(Terrain *terrainPTR);
+	void Render();
+	void Update();
+	void Reset();
+	void GetMessages(UINT msg, WPARAM wParam, LPARAM lParam, void * Data);
 
-    Camera thirdPersonCamera;
 
-    int m_prevYaw, m_prevPitch, m_CurrentYaw, m_CurrentPitch;
+	D3DXMATRIX getRearView();
 
+	Camera thirdPersonCamera;
+
+	Terrain * terrain;
 };
+
+
+
 
 #endif

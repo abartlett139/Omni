@@ -20,7 +20,7 @@ Mesh::~Mesh()
 bool Mesh::Initialize(char * fileName)
 {
 	HRESULT hr = 0;
-	IDirect3DDevice9* Device = graphics.GetDevice();
+	//	IDirect3DDevice9* Device = graphics.GetDevice();
 
 	hr = D3DXLoadMeshFromX(fileName, D3DXMESH_MANAGED, Device, &adjBuffer, &mtrlBuffer, 0, &numMtrls, &mesh);
 	if (FAILED(hr))
@@ -57,7 +57,7 @@ bool Mesh::Initialize(char * fileName)
 
 bool Mesh::Render()
 {
-	IDirect3DDevice9* Device = graphics.GetDevice();
+	//	IDirect3DDevice9* Device = graphics.GetDevice();
 	Device->SetRenderState(D3DRS_ALPHABLENDENABLE, true);
 	Device->SetRenderState(D3DRS_SRCBLEND, D3DBLEND_SRCALPHA);
 	Device->SetRenderState(D3DRS_DESTBLEND, D3DBLEND_INVSRCALPHA);

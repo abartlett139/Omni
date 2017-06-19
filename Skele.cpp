@@ -9,7 +9,7 @@ Skele::~Skele( )
 }
 
 // We are not using this, but have to override it from base class
-bool Skele::Initialize()
+bool Skele::Initialize(Terrain *terrain)
 {
 	return false;
 }
@@ -37,16 +37,11 @@ bool Skele::Initialize(std::shared_ptr<IXAnimator> xAnimator)
     //	set the scale
     D3DXMatrixScaling( &S, 7.0f, 7.0f, 7.0f );
 
-    magic = new PSYS::ParticleGun( this );
-    magic->Init( "particles/flare.dds" );
-
     return true;
 }
 
 void Skele::Render( )
 {
-    //	render particle effect
-    //magic->Render( );
 
     //	the position and rotation translation matrix is the inverse of the characters's view matrix
     getViewMatrix( &T );
@@ -67,8 +62,6 @@ void Skele::Update( )
     //	update third person camera position (rear view)
     thirdPersonCamera._pos = ((-_look * 20.0) + (_up * 10.0f)) + _pos;
 
-    //	update particle effect
-    //magic->Update( );
 }
 
 void Skele::GetMessages( UINT msg, WPARAM wParam, LPARAM lParam, void * Data )

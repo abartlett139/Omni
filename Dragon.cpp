@@ -12,7 +12,7 @@ Dragon::~Dragon()
 {
 }
 
-bool Dragon::Initialize()
+bool Dragon::Initialize(Terrain * terrain)
 {
 	//	set speed variables
 	speed = 5.0f;
@@ -43,7 +43,7 @@ void Dragon::Render()
 	D3DXMatrixInverse(&T, NULL, &T);
 	P = rotation_fix*S*T;
 
-	IDirect3DDevice9* Device = graphics.GetDevice();
+	//	IDirect3DDevice9* Device = graphics.GetDevice();
 	Device->SetTransform(D3DTS_WORLD, &P);
 
 	characterMesh.Render();

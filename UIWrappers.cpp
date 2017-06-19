@@ -1,8 +1,8 @@
 #include "UIWrappers.h"
 
-Surface::Surface(LPDIRECT3DDEVICE9 pDevice)
+Surface::Surface()
 {
-    this->SetDevice(pDevice);
+   // this->SetDevice(pDevice);
     this->SetSurface(NULL);
     //m_BackBuffer = new Surface(pDevice);
     m_SourceRect = NULL;
@@ -17,7 +17,7 @@ Surface::~Surface()
 
 HRESULT Surface::CreateSurface(UINT Width, UINT Height, D3DFORMAT Format, D3DPOOL Pool)
 {
-    return m_pDevice->CreateOffscreenPlainSurface(Width, Height, Format, Pool, &m_Surface, NULL);
+    return Device->CreateOffscreenPlainSurface(Width, Height, Format, Pool, &m_Surface, NULL);
 }
 
 HRESULT Surface::LoadFromFile(LPSTR Path)
@@ -40,10 +40,11 @@ HRESULT Surface::LoadFromFile(LPSTR Path)
 
 HRESULT Surface::MakeBackBuffer(void)
 {
-    if (m_pDevice)
+    if (Device)
     {
         SafeRelease(m_BackBuffer->m_Surface);
-        return m_pDevice->GetBackBuffer(0, 0, D3DBACKBUFFER_TYPE_MONO, &m_BackBuffer->m_Surface);
+		D3D::Release(m_BackBuffer->m_Surface);
+        return Device->GetBackBuffer(0, 0, D3DBACKBUFFER_TYPE_MONO, &m_BackBuffer->m_Surface);
     }
     return E_NOTIMPL;
 }
@@ -51,13 +52,13 @@ HRESULT Surface::MakeBackBuffer(void)
 HRESULT Surface::UpdateSurface(Surface * Source, RECT * pSourceRect, int x, int y)
 {
     m_SourceRect = pSourceRect;
-    if ((m_pDevice) && (Source))
+    if ((Device) && (Source))
     {
         POINT Point;
         Point.x = x;
         Point.y = y;
 
-        return m_pDevice->UpdateSurface(Source->GetSurface(), pSourceRect, m_Surface, &Point);
+        return Device->UpdateSurface(Source->GetSurface(), pSourceRect, m_Surface, &Point);
     }
     else 
         return E_FAIL;
@@ -65,12 +66,12 @@ HRESULT Surface::UpdateSurface(Surface * Source, RECT * pSourceRect, int x, int 
 
 HRESULT Surface::CopySurface(IDirect3DSurface9 * CopyTo, RECT CopyFromRect, int x, int y)
 {
-	if ((m_pDevice) && (CopyTo))
+	if ((Device) && (CopyTo))
 	{
 		POINT l_Point;
 		l_Point.x = x;
 		l_Point.y = y;
-		return m_pDevice->UpdateSurface(m_Surface, &CopyFromRect, CopyTo, &l_Point);
+		return Device->UpdateSurface(m_Surface, &CopyFromRect, CopyTo, &l_Point);
 	}
 	return E_FAIL;
 }
@@ -80,7 +81,7 @@ void Surface::Render(void)
     m_BackBuffer->UpdateSurface(this, m_SourceRect, 0, 0);
 }
 ///---------------------------------------------------------------------------------Texture wrapper-----------------------------------------------------------------------
-Texture::Texture(LPDIRECT3DDEVICE9 pDevice)
+Texture::Texture()
 {
     D3DXVECTOR2 Vec;
     D3DXVECTOR2 VecS ;
@@ -89,7 +90,7 @@ Texture::Texture(LPDIRECT3DDEVICE9 pDevice)
     VecS.x = 1;
     VecS.y = 1;
 
-    SetDevice(pDevice);
+    //	SetDevice(pDevice);
     SetTexture(NULL);
     SetRotation(0.0f);
     SetRotationCenter(Vec);
@@ -98,9 +99,9 @@ Texture::Texture(LPDIRECT3DDEVICE9 pDevice)
 	m_Info;
 }
 
-Texture::Texture(LPDIRECT3DDEVICE9 pDevice, LPSTR Path, D3DXVECTOR2 RotationCenter, FLOAT Rotation, D3DXVECTOR2 Translation, D3DXVECTOR2 Scaling)
+Texture::Texture(LPSTR Path, D3DXVECTOR2 RotationCenter, FLOAT Rotation, D3DXVECTOR2 Translation, D3DXVECTOR2 Scaling)
 {
-    SetDevice(pDevice);
+    //	SetDevice(pDevice);
 	LoadFromFile(Path);
     InitTexture( RotationCenter,  Rotation,  Translation,  Scaling);
 }
@@ -130,7 +131,7 @@ HRESULT Texture::LoadFromFile(LPSTR Path)
 		m_SrcRect.left = 0;
 		m_SrcRect.bottom = m_Info.Height;
 		m_SrcRect.right = m_Info.Width;
-		return D3DXCreateTextureFromFileEx(m_pDevice, Path, D3DX_DEFAULT_NONPOW2, D3DX_DEFAULT_NONPOW2,
+		return D3DXCreateTextureFromFileEx(Device, Path, D3DX_DEFAULT_NONPOW2, D3DX_DEFAULT_NONPOW2,
 			D3DX_DEFAULT, 0, m_Info.Format, D3DPOOL_MANAGED, D3DX_DEFAULT, D3DX_DEFAULT, 0, NULL, NULL, &m_Texture);
 	}
 
@@ -139,10 +140,10 @@ HRESULT Texture::LoadFromFile(LPSTR Path)
 
 ///----------------------------------------------------------------------Sprite Wrapper-------------------------------------------------------------------------------
 
-Sprite::Sprite(LPDIRECT3DDEVICE9 pDevice)
+Sprite::Sprite()
 {
-    SetDevice(pDevice);
-    D3DXCreateSprite(m_pDevice, &m_Sprite);
+    //	SetDevice(pDevice);
+    D3DXCreateSprite(Device, &m_Sprite);
 }
 
 Sprite::~Sprite()

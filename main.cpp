@@ -3,7 +3,7 @@
 #include <time.h>
 #include "Graphics.h"
 
-//Hi Amy, how is it going?
+IDirect3DDevice9* Device;
 
 Graphics graphics;
 bool g_init = false;
@@ -48,10 +48,13 @@ LRESULT CALLBACK D3D::MsgProc( HWND hWnd, UINT msg, WPARAM wParam, LPARAM lParam
         }break;
     case WM_SETCURSOR:
         SetCursor( NULL );
-        return graphics.GetDevice( )->ShowCursor( true );
+       //	 return graphics.GetDevice( )->ShowCursor( true );
+		Device->ShowCursor(true);
         break;
     case WM_KEYUP:
     case WM_KEYDOWN:
+		if (wParam == VK_ESCAPE)
+			DestroyWindow(hWnd);
 	case WM_CHAR:
 //#ifndef NDEBUG
 //        printf( "Key Event: %d, %d\n", (int)wParam, (int)lParam );
@@ -59,8 +62,6 @@ LRESULT CALLBACK D3D::MsgProc( HWND hWnd, UINT msg, WPARAM wParam, LPARAM lParam
     case WM_LBUTTONUP:
     case WM_LBUTTONDOWN:
     case WM_MOUSEMOVE:
-        if( wParam == VK_ESCAPE )
-            DestroyWindow( hWnd );
         ///The graphics class receives the messages and sends them on to the state machine
         ///in the UIBase class, this is done in the PostMessage function.  All of the classes
         ///in the UIControl files are derived from the UIBase class.  The functions called within
@@ -68,7 +69,7 @@ LRESULT CALLBACK D3D::MsgProc( HWND hWnd, UINT msg, WPARAM wParam, LPARAM lParam
         ///and are implemented by the derived classes.
         if( g_init )
             graphics.RecvMessages( msg, wParam, lParam, NULL );
-        return 0;
+		break;
     default:
         break;
 

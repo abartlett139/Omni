@@ -1,22 +1,22 @@
 #include "FileIOHelper.h"
 
 
-FileIOHelper::FileIOHelper(IDirect3DDevice9 * Device, std::string filename, RECT rect) :
-	m_dev(Device), m_filename(filename), m_textRect(rect)
+FileIOHelper::FileIOHelper(std::string filename, RECT rect) :
+	m_filename(filename), m_textRect(rect)
 {
 	m_format |= DT_LEFT|DT_TOP;
-	D3DXCreateFont(m_dev, 50, 15, FW_BOLD, 0, FALSE,
+	D3DXCreateFont(Device, 50, 15, FW_BOLD, 0, FALSE,
 		DEFAULT_CHARSET, OUT_DEFAULT_PRECIS,
 		DEFAULT_QUALITY, DEFAULT_PITCH, TEXT("Arial"),
 		&m_font);
 }
 
-FileIOHelper::FileIOHelper(IDirect3DDevice9 * Device, std::string filename, RECT rect, 
+FileIOHelper::FileIOHelper(std::string filename, RECT rect, 
 	LPSTR fontName, int height, int width, UINT weight, DWORD format):
-	m_dev(Device), m_filename(filename), m_textRect(rect), m_format(format)
+	m_filename(filename), m_textRect(rect), m_format(format)
 
 {
-	D3DXCreateFont(m_dev, height, width, weight, 0, FALSE,
+	D3DXCreateFont(Device, height, width, weight, 0, FALSE,
 		DEFAULT_CHARSET, OUT_DEFAULT_PRECIS,
 		DEFAULT_QUALITY, DEFAULT_PITCH, TEXT(fontName),
 		&m_font);

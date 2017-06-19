@@ -14,7 +14,7 @@ class FileIOHelper;
 class MainMenu: public GameState
 {
 private:
-    LPDIRECT3DDEVICE9 m_Device;
+    //	
     bool m_Init;
     Sprite* m_Sprite;
     Texture* m_ButtonOver;
@@ -23,7 +23,7 @@ private:
 
     WindowControl* wc;
 public:
-    MainMenu( LPDIRECT3DDEVICE9 Device );
+    MainMenu();
     ~MainMenu( );
     bool Init( );
     void Enter( );
@@ -36,7 +36,7 @@ public:
 class Story : public GameState
 {
 private:
-	LPDIRECT3DDEVICE9 m_Device;
+	//
 	bool m_Init;
 	Sprite* m_Sprite;
 	Texture* m_ButtonOver;
@@ -46,7 +46,7 @@ private:
 	FileIOHelper* m_File;
 	WindowControl* wc;
 public:
-	Story(LPDIRECT3DDEVICE9 Device);
+	Story();
 	~Story();
 	bool Init();
 	void Enter();
@@ -59,7 +59,7 @@ public:
 class Credits : public GameState
 {
 private:
-	LPDIRECT3DDEVICE9 m_Device;
+	
 	bool m_Init;
 	Sprite* m_Sprite;
 	Texture* m_ButtonOver;
@@ -69,7 +69,7 @@ private:
 	FileIOHelper* m_File;
 	WindowControl* wc;
 public:
-	Credits(LPDIRECT3DDEVICE9 Device);
+	Credits();
 	~Credits();
 	bool Init();
 	void Enter();
@@ -82,7 +82,7 @@ public:
 class Options : public GameState
 {
 private:
-	LPDIRECT3DDEVICE9 m_Device;
+	
 	bool m_Init;
 	Sprite* m_Sprite;
 	Texture* m_ButtonOver;
@@ -93,7 +93,7 @@ private:
 	Texture* m_SliderOver;
 	WindowControl* wc;
 public:
-	Options(LPDIRECT3DDEVICE9 Device);
+	Options();
 	~Options();
 	bool Init();
 	void Enter();

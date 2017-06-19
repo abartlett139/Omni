@@ -11,7 +11,7 @@ Witch::~Witch( )
 {
 }
 
-bool Witch::Initialize( )
+bool Witch::Initialize(Terrain * terrain )
 {
     //	set speed variables
     speed = 50.0f;
@@ -22,7 +22,7 @@ bool Witch::Initialize( )
     _pos = { 900.0f, 0.0f, 900.0f };
 
     //	initialize the physical mesh object
-    characterMesh.Initialize( "models/princess.x" );
+    characterMesh.Initialize( "models/enchantress.x" );
 
     //	set the scale
     D3DXMatrixScaling( &S, 1.0f, 1.0f, 1.0f );
@@ -37,7 +37,7 @@ void Witch::Render( )
 {
     //	render particle effect
     magic->Render( );
-    IDirect3DDevice9* Device = graphics.GetDevice( );
+    //	IDirect3DDevice9* Device = graphics.GetDevice( );
 
     //	the position and rotation translation matrix is the inverse of the characters's view matrix
     getViewMatrix( &T );

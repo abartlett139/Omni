@@ -77,7 +77,7 @@ void Terrain::setHeightmapEntry(int row, int col, int value)
 bool Terrain::computeVertices()
 {
 	HRESULT hr = 0;
-	IDirect3DDevice9* Device = graphics.GetDevice();
+	//	IDirect3DDevice9* Device = graphics.GetDevice();
 
 	hr = Device->CreateVertexBuffer(
 		_numVertices * sizeof(D3D::EVertex),
@@ -136,7 +136,7 @@ bool Terrain::computeVertices()
 bool Terrain::computeIndices()
 {
 	HRESULT hr = 0;
-	IDirect3DDevice9* Device = graphics.GetDevice();
+	//	IDirect3DDevice9* Device = graphics.GetDevice();
 
 	hr = Device->CreateIndexBuffer(
 		_numTriangles * 3 * sizeof(DWORD), // 3 indices per triangle
@@ -182,7 +182,7 @@ bool Terrain::computeIndices()
 bool Terrain::loadTexture(std::string fileName)
 {
 	HRESULT hr = 0;
-	IDirect3DDevice9* Device = graphics.GetDevice();
+	//	IDirect3DDevice9* Device = graphics.GetDevice();
 
 	hr = D3DXCreateTextureFromFile(
 		Device,
@@ -206,7 +206,7 @@ bool Terrain::genTexture(D3DXVECTOR3* directionToLight)
 	// texel for each quad cell
 	int texWidth = _numCellsPerRow;
 	int texHeight = _numCellsPerCol;
-	IDirect3DDevice9* Device = graphics.GetDevice();
+	//	IDirect3DDevice9* Device = graphics.GetDevice();
 
 	// create an empty texture
 	hr = D3DXCreateTexture(
@@ -457,7 +457,7 @@ float Terrain::getHeight(float x, float z)
 bool Terrain::draw(D3DXMATRIX* world, bool drawTris)
 {
 	HRESULT hr = 0;
-	IDirect3DDevice9* Device = graphics.GetDevice();
+	//	IDirect3DDevice9* Device = graphics.GetDevice();
 
 	if (Device)
 	{

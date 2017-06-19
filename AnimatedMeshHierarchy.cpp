@@ -54,7 +54,7 @@ HRESULT AnimatedMeshHierarchy::CreateMeshContainer(LPCSTR Name, CONST D3DXMESHDA
 
 	ZeroMemory(newMeshContainer->exTextures, sizeof(LPDIRECT3DTEXTURE9) * newMeshContainer->NumMaterials);
 
-	IDirect3DDevice9* Device = graphics.GetDevice();
+	//	IDirect3DDevice9* Device = graphics.GetDevice();
 
 	//	load textrues and copy materials over
 	//	else if there are no materials, create one

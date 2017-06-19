@@ -10,7 +10,7 @@ public:
     Witch( );
     ~Witch( );
 
-    bool Initialize( );
+    bool Initialize(Terrain * terrain);
     void Render( );
     void Update( );
     void GetMessages( UINT msg, WPARAM wParam, LPARAM lParam, void * Data );

@@ -8,7 +8,7 @@ class Dragon : public Character
 public:
 	Dragon();
 	~Dragon();
-	bool Initialize();
+	bool Initialize(Terrain *terrain);
 	void Render();
     void GetMessages( UINT msg, WPARAM wParam, LPARAM lParam, void * Data );
     void Update( );

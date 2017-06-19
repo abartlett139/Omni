@@ -13,6 +13,7 @@
 #include "Witch.h"
 #include "Skele.h"
 #include "3rd-party\xanimator\include\XAnimator_lib.h"
+#include "Bridge.h"
 
 class GameWorld: public GameState
 {
@@ -44,17 +45,21 @@ public:
 
     ID3DXFont *font;
 
+
+	//	for tree sprites
 	ID3DXSprite *sprite;
 	IDirect3DTexture9* treeTexture;
+	D3DXMATRIX t;
+
 
 	// The gameworld is a good place to hold the master reference to the .x model & animation library,
 	// since all models in the game world will probably need a reference to it
 	// We use a shared_ptr to manage the lifetime of the x model & animation library, to reduce confusion
 	// about who the owner of the library should be as there will be many references to it
-	std::shared_ptr<IXAnimator> xAnimator;
+	std::shared_ptr<IXAnimator> XAnimator;
 
+	Bridge bridge;
 
-	D3DXMATRIX t;
 
 };
 

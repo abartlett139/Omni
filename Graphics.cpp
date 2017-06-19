@@ -50,7 +50,7 @@ D3DLIGHT9 D3D::InitSpotLight( D3DXVECTOR3 * position, D3DXVECTOR3 * direction, D
     return light;
 }
 
-IDirect3DTexture9 * D3D::LoadTexture(IDirect3DDevice9 * Device, char * fileName)
+IDirect3DTexture9 * D3D::LoadTexture(char * fileName)
 {
 	D3DXIMAGE_INFO imageInfo;
 	IDirect3DTexture9* texture = NULL;
@@ -93,7 +93,7 @@ bool Graphics::Render( )
 
     //m_Mouse->Update( );
     //m_Keyboard->Update( );
-    return false;
+    return true;
 }
 
 void Graphics::Update( )
@@ -104,7 +104,7 @@ void Graphics::Update( )
 Graphics::Graphics( )
 {
     m_MainMenu = NULL, m_GameWorld = NULL, m_CurrentState = NULL, m_PreviousState = NULL;
-    m_Device = NULL;
+    //	Device = NULL;
     m_D3DInterface = NULL;
     tex = NULL;
 }
@@ -155,7 +155,7 @@ bool Graphics::Initialized( int height, int width, HINSTANCE hInstance )
     if( !m_D3DInterface )
         return false;
 
-    int vp = 0;
+    int vp = 0;		
     if( caps.DevCaps & D3DDEVCAPS_HWTRANSFORMANDLIGHT )
         vp = D3DCREATE_HARDWARE_VERTEXPROCESSING;
     else
@@ -179,13 +179,13 @@ bool Graphics::Initialized( int height, int width, HINSTANCE hInstance )
     d3dpp.FullScreen_RefreshRateInHz = D3DPRESENT_RATE_DEFAULT;
     d3dpp.PresentationInterval = D3DPRESENT_INTERVAL_IMMEDIATE;
 
-    hr = m_D3DInterface->CreateDevice( D3DADAPTER_DEFAULT, D3DDEVTYPE_HAL, hWnd, vp, &d3dpp, &m_Device );
+    hr = m_D3DInterface->CreateDevice( D3DADAPTER_DEFAULT, D3DDEVTYPE_HAL, hWnd, vp, &d3dpp, &Device );
 
     if( FAILED( hr ) )
     {
         d3dpp.AutoDepthStencilFormat = D3DFMT_D16;
 
-        hr = m_D3DInterface->CreateDevice( D3DADAPTER_DEFAULT, D3DDEVTYPE_HAL, hWnd, vp, &d3dpp, &m_Device );
+        hr = m_D3DInterface->CreateDevice( D3DADAPTER_DEFAULT, D3DDEVTYPE_HAL, hWnd, vp, &d3dpp, &Device );
 
         if( FAILED( hr ) )
         {
@@ -194,11 +194,11 @@ bool Graphics::Initialized( int height, int width, HINSTANCE hInstance )
         }
     }
 
-    m_MainMenu = new MainMenu( m_Device );
-    m_GameWorld = new GameWorld( );
-	m_Story = new Story(m_Device);
-	m_Credits = new Credits(m_Device);
-	m_Options = new Options(m_Device);
+    m_MainMenu = new MainMenu();
+    m_GameWorld = new GameWorld();
+	m_Story = new Story();
+	m_Credits = new Credits();
+	m_Options = new Options();
 	m_Story->Init();
     m_GameWorld->Init( );
     m_MainMenu->Init( );
@@ -206,19 +206,19 @@ bool Graphics::Initialized( int height, int width, HINSTANCE hInstance )
     //load image iformation
     D3DXIMAGE_INFO ImageInfo;
     D3DXGetImageInfoFromFile( "cursor2.png", &ImageInfo );
-    m_Device->CreateOffscreenPlainSurface( ImageInfo.Height, ImageInfo.Width, ImageInfo.Format, D3DPOOL_DEFAULT, &m_Cursor, NULL );
+    Device->CreateOffscreenPlainSurface( ImageInfo.Height, ImageInfo.Width, ImageInfo.Format, D3DPOOL_DEFAULT, &m_Cursor, NULL );
     D3DXLoadSurfaceFromFile( m_Cursor, NULL, NULL, "cursor2.png", NULL, D3DX_FILTER_NONE, D3DCOLOR_XRGB( 255, 255, 255 ), &ImageInfo );
-    m_Device->SetCursorProperties( 0, 0, m_Cursor );
-    m_Device->SetCursorPosition( 0, 0, D3DCURSOR_IMMEDIATE_UPDATE );
+    Device->SetCursorProperties( 0, 0, m_Cursor );
+    Device->SetCursorPosition( 0, 0, D3DCURSOR_IMMEDIATE_UPDATE );
     return TRUE;
 }
 
 void Graphics::Shutdown( )
 {
-    if( m_Device )
+    /*if( Device )
     {
-        m_Device->Release( );
-        m_Device = 0;
+        Device->Release( );
+        Device = 0;
     }
     if( tex )
         delete tex;
@@ -227,7 +227,18 @@ void Graphics::Shutdown( )
     if( m_MainMenu )
         delete m_MainMenu;
     if( m_GameWorld )
-        delete m_GameWorld;
+        delete m_GameWorld;*/
+
+	D3D::Release(Device);
+	//D3D::Delete(tex);
+	//D3D::Delete(sprt);
+	//D3D::Delete(m_MainMenu);
+	//D3D::Delete(m_Options);
+	//D3D::Delete(m_Credits);
+	//D3D::Delete(m_Story);
+	//D3D::Delete(m_PreviousState);
+	//D3D::Delete(m_CurrentState);
+	//D3D::Delete(m_GameWorld);
 }
 
 //this is basically the update function for the graphics class, it passes on message data to the State Machine Update functions

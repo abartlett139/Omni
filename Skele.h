@@ -15,7 +15,7 @@ public:
     ~Skele( );
 
 	// We are not using this, but have to override it from base class
-	bool Initialize( );
+	bool Initialize( Terrain * terrain);
 
 	// This initialize takes the animator object from the game world, and initializes
 	// our own member copy

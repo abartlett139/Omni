@@ -7,7 +7,8 @@ GameWorld::GameWorld( )
 	// reset() transfers the pointer to the shared_ptr class to manage
 	// Can not use std::make_shared<IXAnimator> directly because IXAnimator is a virtual base class 
 	// and not meant to be created except through the factory function below
-	xAnimator.reset( CreateXAnimator( graphics.GetDevice( ) ) );
+	//	xAnimator.reset( CreateXAnimator( graphics.GetDevice( ) ) );
+	XAnimator.reset(CreateXAnimator(Device));
 }
 
 
@@ -18,7 +19,7 @@ GameWorld::~GameWorld( )
 
 bool GameWorld::Init( )
 {
-    IDirect3DDevice9* Device = graphics.GetDevice( );
+   // IDirect3DDevice9* Device = graphics.GetDevice( );
 
     //	directional light
     worldLight = D3D::InitDirectionalLight( &D3DXVECTOR3( 0.0f, -1.0f, 0.0f ), (D3DXCOLOR*)&D3D::WHITE );
@@ -45,16 +46,17 @@ bool GameWorld::Init( )
     //	initialize terrain
     terrain = new Terrain( "textures/newHeightmap.raw", 2001, 2001, 1, 0.2f );
     terrain->genTexture( &D3DXVECTOR3( 0.0, -1.0f, 0.0f ) );
-    terrain->loadTexture( "textures/newTexture.png" );
+    terrain->loadTexture( "textures/terrain.png" );
 
     //	initialize game objects
-    knight.Initialize( );
-    dragon.Initialize( );
-    witch.Initialize( );
-	skele.Initialize( xAnimator );
+	knight.Initialize(terrain );
+    dragon.Initialize(terrain );
+    witch.Initialize(terrain );
+	skele.Initialize( XAnimator );
 	dragon.SetEnemy(&knight);
     moat.Initialize( "models/moat.x" );
 	castle.Initialize("models/castle.x");
+	bridge.Init();
 
     knight.isAuto = false;
 
@@ -67,8 +69,7 @@ bool GameWorld::Init( )
 	Device->SetSamplerState(0, D3DSAMP_MIPFILTER, D3DTEXF_ANISOTROPIC);
 
 
-	//	D3DXCreateTextureFromFile(Device, "textures/tree.png", &treeTexture);
-	treeTexture = D3D::LoadTexture(Device, "textures/tree2.png");
+	treeTexture = D3D::LoadTexture("textures/tree3.png");
 
     //	set music type
     musicType = soundEngine->GAME_BACKGROUND;
@@ -84,7 +85,7 @@ void GameWorld::Enter( )
 
     //	set projection matrix
     D3DXMATRIX P;
-    IDirect3DDevice9* Device = graphics.GetDevice( );
+    //	IDirect3DDevice9* Device = graphics.GetDevice( );
 
     D3DXMatrixPerspectiveFovLH( &P, D3DX_PI / 4, screenWidth / screenHeight, 1.0f, 3000.0f );
     Device->SetTransform( D3DTS_PROJECTION, &P );
@@ -94,14 +95,14 @@ void GameWorld::Render( )
 {
 
     //	set view matrix
-    IDirect3DDevice9* Device = graphics.GetDevice( );
+   //	 IDirect3DDevice9* Device = graphics.GetDevice( );
 
     if( Device )
     {
 
         Device->Clear( 0, 0, D3DCLEAR_TARGET | D3DCLEAR_ZBUFFER | D3DCLEAR_STENCIL, COLOR_WINDOW, 1.0f, 0 );
         Device->BeginScene( );
-        Device->SetTransform( D3DTS_VIEW, &knight.getRearView( ) );
+       // Device->SetTransform( D3DTS_VIEW, &knight.getRearView( ) );
 
         //	render skybox
         D3DXMATRIX W;
@@ -140,15 +141,17 @@ void GameWorld::Render( )
 		castle.Render();
 		
 
+		bridge.Render();
+
 
 		D3DXMATRIX treeMatrix, treeScale;
-		D3DXMatrixScaling(&treeScale, .3, .3, .3);
+		D3DXMatrixScaling(&treeScale, .3f, .3f, .3f);
 		D3DXMatrixTranslation(&treeMatrix, 3.0f, 3.0f, 3.0f);
 		t = knight.getRearView();
 		for (int i = 0; i < 20; i++) {
-			sprite->SetWorldViewLH(&(treeScale), &t);
+			sprite->SetWorldViewLH(&treeScale, &t);
 			sprite->Begin(D3DXSPRITE_BILLBOARD | D3DXSPRITE_ALPHABLEND);
-			sprite->Draw(treeTexture, NULL, &D3DXVECTOR3(405 / 2, 0, 0), &D3DXVECTOR3(100 * i * 3, terrain->getHeight(100 * i, -990)*3, -990 * 3), D3D::WHITE);
+			sprite->Draw(treeTexture, NULL, &D3DXVECTOR3(202.5f, 0.0f, 0.0f), &D3DXVECTOR3((float)(100 * i * 3), (float)(terrain->getHeight(100 * i, -990)*3), (float)(-990 * 3)), D3D::WHITE);
 			sprite->End();
 		}
 
@@ -165,24 +168,24 @@ void GameWorld::Update( )
 	skele.Update( );
 
     //	update character y positions so they don't go beneath the terrain
-    knight._pos.y = terrain->getHeight( knight._pos.x, knight._pos.z );
-    dragon._pos.y = terrain->getHeight( dragon._pos.x, dragon._pos.z );
-    witch._pos.y = terrain->getHeight( witch._pos.x, witch._pos.z );
-	skele._pos.y = terrain->getHeight( skele._pos.x, skele._pos.z );
+  //	  knight._pos.y = terrain->getHeight( knight._pos.x, knight._pos.z );
+   //	 dragon._pos.y = terrain->getHeight( dragon._pos.x, dragon._pos.z );
+   //	 witch._pos.y = terrain->getHeight( witch._pos.x, witch._pos.z );
+	//	skele._pos.y = terrain->getHeight( skele._pos.x, skele._pos.z );
 }
 
 void GameWorld::ProcessMessages( UINT msg, WPARAM wParam, LPARAM lParam, void * Data )
 {
-    knight.GetMessages( msg, wParam, lParam, Data );
-    dragon.GetMessages( msg, wParam, lParam, Data );
-    witch.GetMessages( msg, wParam, lParam, Data );
-	skele.GetMessages( msg, wParam, lParam, Data );
+   //	 knight.GetMessages( msg, wParam, lParam, Data );
+   //	 dragon.GetMessages( msg, wParam, lParam, Data );
+   // witch.GetMessages( msg, wParam, lParam, Data );
+	//skele.GetMessages( msg, wParam, lParam, Data );
 }
 
 void GameWorld::Exit( GameState * nextState )
 {
     //	reset the projection and view matrices to the default
-    IDirect3DDevice9* Device = graphics.GetDevice( );
+    //	IDirect3DDevice9* Device = graphics.GetDevice( );
 
     D3DXMATRIX I;
     D3DXMatrixIdentity( &I );

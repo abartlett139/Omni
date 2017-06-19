@@ -134,6 +134,7 @@
   <ItemGroup>
     <ClCompile Include="AnimatedMesh.cpp" />
     <ClCompile Include="AnimatedMeshHierarchy.cpp" />
+    <ClCompile Include="Bridge.cpp" />
     <ClCompile Include="Camera.cpp" />
     <ClCompile Include="Character.cpp" />
     <ClCompile Include="Dragon.cpp" />
@@ -163,6 +164,7 @@
     <ClInclude Include="3rd-party\xanimator\include\XAnimator_lib.h" />
     <ClInclude Include="AnimatedMesh.h" />
     <ClInclude Include="AnimatedMeshHierarchy.h" />
+    <ClInclude Include="Bridge.h" />
     <ClInclude Include="Camera.h" />
     <ClInclude Include="Character.h" />
     <ClInclude Include="Dragon.h" />

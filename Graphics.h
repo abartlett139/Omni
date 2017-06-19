@@ -1,4 +1,3 @@
-#pragma once
 #ifndef OMNI_GRAPHICS_H
 #define OMNI_GRAPHICS_H
 
@@ -15,6 +14,8 @@ class Keyboard;
 class Sprite;
 class Texture;
 class GameState;
+
+extern IDirect3DDevice9* Device;
 
 namespace D3D
 {
@@ -41,7 +42,7 @@ namespace D3D
     D3DLIGHT9 InitPointLight( D3DXVECTOR3* position, D3DXCOLOR* color );
     D3DLIGHT9 InitSpotLight( D3DXVECTOR3* position, D3DXVECTOR3* direction, D3DXCOLOR* color );
 
-    IDirect3DTexture9 * LoadTexture(IDirect3DDevice9* Device, char * fileName);
+    IDirect3DTexture9 * LoadTexture(char * fileName);
 
 
 
@@ -90,7 +91,15 @@ namespace D3D
             return 0.5f*(MIN + MAX);
         }
 
-        bool isPointInside( D3DXVECTOR3 &p );
+		bool isPointInside(D3DXVECTOR3 &p) {
+
+		}
+
+		bool isCollision(BoundingBox *box) {
+			if (isPointInside(box->MIN) || isPointInside(box->MAX))
+				return true;
+			return false;
+		}
 
         D3DXVECTOR3 MIN, MAX;
     };
@@ -118,13 +127,15 @@ namespace D3D
     {
         if( t )
         {
-            delete t;
-            t = 0;
+           delete  t;
+           t = 0;
         }
     }
 
 
 }
+
+
 
 class Graphics
 {
@@ -132,7 +143,7 @@ private:
     bool m_vsync_enabled;
     int m_viideoCardMemrory;
     char m_videoCardDexcription[ 128 ];
-    LPDIRECT3DDEVICE9 m_Device;
+	// LPDIRECT3DDEVICE9 Device;
     LPDIRECT3D9 m_D3DInterface;
     D3DXMATRIX m_projectionMatrix;
     D3DXMATRIX m_worldMatrix;
@@ -153,7 +164,7 @@ public:
     bool Render( );
     void Update( );
     void SetScreenRect( );
-    LPDIRECT3DDEVICE9 GetDevice( ) { return m_Device; }
+   // LPDIRECT3DDEVICE9 GetDevice( ) { return Device; }
     void GetProjectionMatrix( D3DXMATRIX& projMat ) { projMat = m_projectionMatrix; }
     void GetWorldMatrix( D3DXMATRIX& worldMat ) { worldMat = m_worldMatrix; }
     void GetOrthoMatrix( D3DXMATRIX& orthoMat ) { orthoMat = m_orthoMatrix; }

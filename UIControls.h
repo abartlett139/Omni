@@ -1,8 +1,9 @@
-#pragma once
 #ifndef UICONTROLS_H
 #define UICONTROLS_H
+
 #include "UIBase.h"
 #include "GameState.h"
+
 class WindowControl: public UIBase
 {
 private:
@@ -37,7 +38,7 @@ private:
     bool m_ButtonLabel;
     RECT m_Rect;
 public:
-    LabelControl( UIBase* parent, int vecPos, LOGFONT Font, RECT Rect, LPDIRECT3DDEVICE9 Device );
+    LabelControl( UIBase* parent, int vecPos, LOGFONT Font, RECT Rect);
     ~LabelControl( );
     bool OnRender( );
     void OnMouseDown( int Button, int x, int y );
@@ -59,11 +60,10 @@ class ButtonControl: public UIBase
     Texture* m_DefaultTex;
     Texture* m_OverTex;
     bool m_Over;
-    LPDIRECT3DDEVICE9 m_Device;
     RECT m_Rect;
     GameState* m_ChangeState;
 public:
-    ButtonControl( UIBase* parent, int vecPos, D3DXVECTOR2 Position, LPDIRECT3DDEVICE9 Device );
+    ButtonControl( UIBase* parent, int vecPos, D3DXVECTOR2 Position);
     ~ButtonControl( );
     bool OnRender( );
     void OnMouseDown( int Button, int x, int y );
@@ -82,7 +82,7 @@ public:
 class SlideBar: public UIBase
 {
 private:
-    LPDIRECT3DDEVICE9 m_Device;
+    
     HFONT m_Font;
     Texture* m_Bar;
     Texture* m_SlideDefault;
@@ -94,7 +94,7 @@ private:
     RECT       m_CapRect;
     D3DXVECTOR2 m_BarPos, m_CapPos;
 public:
-    SlideBar( UIBase* parent, int vecPos, D3DXVECTOR2 Position, LPDIRECT3DDEVICE9 Device );
+    SlideBar( UIBase* parent, int vecPos, D3DXVECTOR2 Position );
     ~SlideBar( );
     bool OnRender( );
     void OnMouseDown( int Button, int x, int y );
@@ -110,7 +110,7 @@ public:
 //--------------------------------------------------------------Health-------------------------------------------------
 class HealthBar: public UIBase
 {
-    LPDIRECT3DDEVICE9 m_Device;
+    
     HFONT m_Font;
     LabelControl* m_Caption;
     Texture* m_BackTex;
@@ -118,7 +118,7 @@ class HealthBar: public UIBase
     float m_FillAmount;
 	D3DXVECTOR2  m_CapPos;
 public:
-    HealthBar( UIBase* parent, int vecPos, D3DXVECTOR2 Position, LPDIRECT3DDEVICE9 Device );
+    HealthBar( UIBase* parent, int vecPos, D3DXVECTOR2 Position);
     ~HealthBar( );
     bool OnRender( );
     void OnMouseDown( int Button, int x, int y ) { return; }

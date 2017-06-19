@@ -98,7 +98,7 @@ bool WindowControl::LoadCanvasFromFile( char * File )
 }
 ///----------------------------------------------------------------Label--------------------------------------------------------
 
-LabelControl::LabelControl( UIBase * parent, int vecPos, LOGFONT Font, RECT Rect, LPDIRECT3DDEVICE9 Device ): UIBase( parent, vecPos ), m_Rect( Rect )
+LabelControl::LabelControl( UIBase * parent, int vecPos, LOGFONT Font, RECT Rect): UIBase( parent, vecPos ), m_Rect( Rect )
 {
     D3DXCreateFont( Device, Font.lfWidth, Font.lfHeight, Font.lfWeight, 1, Font.lfItalic,
                     Font.lfCharSet, Font.lfOutPrecision, Font.lfQuality, Font.lfPitchAndFamily, Font.lfFaceName, &m_Font );
@@ -154,9 +154,8 @@ void LabelControl::SetCaption( char * Caption )
         strcpy_s( m_Caption, " " );
 }
 ///--------------------------------------------------------------Buttons-----------------------------------------
-ButtonControl::ButtonControl( UIBase * parent, int vecPos, D3DXVECTOR2 Position, LPDIRECT3DDEVICE9 Device ):UIBase( parent, vecPos )
+ButtonControl::ButtonControl( UIBase * parent, int vecPos, D3DXVECTOR2 Position ):UIBase( parent, vecPos )
 {
-    m_Device = Device;
     m_Over = false;
     m_Caption = NULL;
     m_Position = Position;
@@ -241,7 +240,7 @@ void ButtonControl::SetCaption( char * Caption )
         delete m_Caption;
 
     SystemParametersInfo( SPI_GETICONTITLELOGFONT, sizeof( lf ), &lf, 0 );
-    m_Caption = new LabelControl( GetThis( ), 1, lf, m_Rect, m_Device );
+    m_Caption = new LabelControl( GetThis( ), 1, lf, m_Rect );
     m_Caption->SetCaption( Caption );
     m_Caption->SetSprite( m_Sprite );
     m_Caption->SetPosition( m_Position );
@@ -252,9 +251,8 @@ void ButtonControl::OnLostFocus( )
 {
 }
 //---------------------------------------------------------------Slide Bar---------------------------------------------------------------------
-SlideBar::SlideBar( UIBase * parent, int vecPos, D3DXVECTOR2 Position, LPDIRECT3DDEVICE9 Device ):UIBase( parent, vecPos )
+SlideBar::SlideBar( UIBase * parent, int vecPos, D3DXVECTOR2 Position):UIBase( parent, vecPos )
 {
-    m_Device = Device;
     m_Font = NULL;
     m_Bar = NULL;
     m_SlideDefault = NULL;
@@ -362,7 +360,7 @@ void SlideBar::SetCaption( char * Caption )
         delete m_Caption;
 
     SystemParametersInfo( SPI_GETICONTITLELOGFONT, sizeof( lf ), &lf, 0 );
-    m_Caption = new LabelControl( GetThis( ), 1, lf, m_CapRect, m_Device );
+    m_Caption = new LabelControl( GetThis( ), 1, lf, m_CapRect);
     m_Caption->SetCaption( Caption );
     m_Caption->SetSprite( m_Sprite );
     m_Caption->SetPosition( m_CapPos );
@@ -375,9 +373,8 @@ void SlideBar::OnLostFocus( )
 }
 
 //---------------------------------------------------------------Health Bar---------------------------------------------------------------------
-HealthBar::HealthBar( UIBase * parent, int vecPos, D3DXVECTOR2 Position, LPDIRECT3DDEVICE9 Device ):UIBase( parent, vecPos )
+HealthBar::HealthBar( UIBase * parent, int vecPos, D3DXVECTOR2 Position):UIBase( parent, vecPos )
 {
-	m_Device = Device;
 	m_Font = NULL;
 	m_BackTex = NULL;
 	m_Position = Position;
@@ -423,7 +420,7 @@ void HealthBar::SetCaption( char * Caption )
 		delete m_Caption;
 
 	SystemParametersInfo(SPI_GETICONTITLELOGFONT, sizeof(lf), &lf, 0);
-	m_Caption = new LabelControl(GetThis(), 1, lf, m_CapRect, m_Device);
+	m_Caption = new LabelControl(GetThis(), 1, lf, m_CapRect);
 	m_Caption->SetCaption(Caption);
 	m_Caption->SetSprite(m_Sprite);
 	m_Caption->SetPosition(m_CapPos);

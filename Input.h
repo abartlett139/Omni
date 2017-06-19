@@ -7,16 +7,7 @@
 #include <dinput.h>
 #include "UIWrappers.h"
 #include <vector>
-//#include "Graphics.h"
-//template <class T>
-//void SafeRelease(T*& pT)
-//{
-//    if (pT)
-//    {
-//        pT->Release();
-//        pT = NULL;
-//    }
-//}
+
 
 class Keyboard;
 class Mouse;
@@ -53,7 +44,7 @@ class Mouse
 	//Surface* m_Surf;
 	IDirect3DSurface9* m_Cursor;
     LPDIRECTINPUTDEVICE8 m_pInputDevice;
-    LPDIRECT3DDEVICE9 m_Device;
+    LPDIRECT3DDEVICE9 Device;
     DIMOUSESTATE m_State;
     LONG m_iX;
     LONG m_iY;

@@ -63,7 +63,7 @@ void AnimatedMesh::DrawMeshContainer(LPD3DXMESHCONTAINER meshContainerBase, LPD3
 
 	D3D::D3DXMESHCONTAINER_EXTENDED *meshContainer = (D3D::D3DXMESHCONTAINER_EXTENDED*)meshContainerBase;
 
-	IDirect3DDevice9* Device = graphics.GetDevice();
+	//	IDirect3DDevice9* Device = graphics.GetDevice();
 	Device->SetTransform(D3DTS_WORLD, &frame->exCombinedTransformationMatrix);
 
 	for (unsigned int iMaterial = 0; iMaterial < meshContainer->NumMaterials; iMaterial++) {
@@ -88,7 +88,7 @@ void AnimatedMesh::SetupBoneMatrices(D3D::D3DXFRAME_EXTENDED * pFrame, LPD3DXMAT
 			D3DVERTEXELEMENT9 Declaration[MAX_FVF_DECL_SIZE];
 			pMesh->MeshData.pMesh->GetDeclaration(Declaration);
 
-			IDirect3DDevice9* Device = graphics.GetDevice();
+			//	IDirect3DDevice9* Device = graphics.GetDevice();
 			pMesh->MeshData.pMesh->CloneMesh(D3DXMESH_MANAGED, Declaration, Device, &pMesh->exSkinMesh);
 
 			m_maxBones = max(m_maxBones, (int)pMesh->pSkinInfo->GetNumBones());
@@ -113,7 +113,7 @@ bool AnimatedMesh::Load(char * fileName)
 {
 	AnimatedMeshHierarchy *memoryAllocator = new AnimatedMeshHierarchy;
 
-	IDirect3DDevice9* Device = graphics.GetDevice();
+	//	IDirect3DDevice9* Device = graphics.GetDevice();
 	D3DXLoadMeshHierarchyFromX(fileName, D3DXMESH_MANAGED, Device, memoryAllocator, NULL, &m_frameRoot, &m_animController);
 
 	delete memoryAllocator;
