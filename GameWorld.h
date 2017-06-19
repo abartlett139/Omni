@@ -53,6 +53,9 @@ public:
 	// about who the owner of the library should be as there will be many references to it
 	std::shared_ptr<IXAnimator> xAnimator;
 
+
+	D3DXMATRIX t;
+
 };
 
 #endif

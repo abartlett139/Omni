@@ -61,7 +61,14 @@ bool GameWorld::Init( )
 
 	D3DXCreateSprite(Device, &sprite);
 
-	D3DXCreateTextureFromFile(Device, "textures/tree.png", &treeTexture);
+
+	Device->SetSamplerState(0, D3DSAMP_MAGFILTER, D3DTEXF_ANISOTROPIC);
+	Device->SetSamplerState(0, D3DSAMP_MINFILTER, D3DTEXF_ANISOTROPIC);
+	Device->SetSamplerState(0, D3DSAMP_MIPFILTER, D3DTEXF_ANISOTROPIC);
+
+
+	//	D3DXCreateTextureFromFile(Device, "textures/tree.png", &treeTexture);
+	treeTexture = D3D::LoadTexture(Device, "textures/tree2.png");
 
     //	set music type
     musicType = soundEngine->GAME_BACKGROUND;
@@ -131,17 +138,19 @@ void GameWorld::Render( )
 		D3DXMatrixTranslation(&castlePos, 500.0f, terrain->getHeight(800.0f, 800.0f), 800.0f);
 		Device->SetTransform(D3DTS_WORLD, &(castleScale*castlePos));
 		castle.Render();
+		
 
 
-		D3DXMATRIX treeMatrix;
-		for (int i = 0; i < 10; i++) {
-			D3DXMatrixTranslation(&treeMatrix, 100 * i, terrain->getHeight(10 * i, -990), -990);
-			sprite->SetWorldViewLH(&I, &knight.getRearView());
+		D3DXMATRIX treeMatrix, treeScale;
+		D3DXMatrixScaling(&treeScale, .3, .3, .3);
+		D3DXMatrixTranslation(&treeMatrix, 3.0f, 3.0f, 3.0f);
+		t = knight.getRearView();
+		for (int i = 0; i < 20; i++) {
+			sprite->SetWorldViewLH(&(treeScale), &t);
 			sprite->Begin(D3DXSPRITE_BILLBOARD | D3DXSPRITE_ALPHABLEND);
-			sprite->Draw(treeTexture, NULL, NULL, &D3DXVECTOR3(100*i, terrain->getHeight(10*i, -990), -990), D3D::WHITE);
+			sprite->Draw(treeTexture, NULL, &D3DXVECTOR3(405 / 2, 0, 0), &D3DXVECTOR3(100 * i * 3, terrain->getHeight(100 * i, -990)*3, -990 * 3), D3D::WHITE);
 			sprite->End();
 		}
-		
 
         Device->EndScene( );
         Device->Present( 0, 0, 0, 0 );

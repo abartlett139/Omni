@@ -50,6 +50,15 @@ D3DLIGHT9 D3D::InitSpotLight( D3DXVECTOR3 * position, D3DXVECTOR3 * direction, D
     return light;
 }
 
+IDirect3DTexture9 * D3D::LoadTexture(IDirect3DDevice9 * Device, char * fileName)
+{
+	D3DXIMAGE_INFO imageInfo;
+	IDirect3DTexture9* texture = NULL;
+	D3DXGetImageInfoFromFile(fileName, &imageInfo);
+	D3DXCreateTextureFromFileEx(Device, fileName, imageInfo.Width, imageInfo.Height, 0, D3DUSAGE_DYNAMIC, D3DFMT_A8R8G8B8, D3DPOOL_DEFAULT, D3DX_FILTER_POINT, D3DX_FILTER_POINT, 0, &imageInfo, NULL, &texture);
+	return texture;
+}
+
 D3DLIGHT9 D3D::InitPointLight( D3DXVECTOR3 * position, D3DXCOLOR * color )
 {
     D3DLIGHT9 light;

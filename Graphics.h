@@ -4,8 +4,9 @@
 
 #include <d3d9.h>
 #include <d3dx9.h>
-#define screenWidth 1600
-#define screenHeight 900
+
+#define screenWidth 1024
+#define screenHeight 768
 
 // Forward declerations to eliminate header file cycles
 class Input;
@@ -40,7 +41,7 @@ namespace D3D
     D3DLIGHT9 InitPointLight( D3DXVECTOR3* position, D3DXCOLOR* color );
     D3DLIGHT9 InitSpotLight( D3DXVECTOR3* position, D3DXVECTOR3* direction, D3DXCOLOR* color );
 
-    // IDirect3DTexture9 * LoadTexture(char * fileName);
+    IDirect3DTexture9 * LoadTexture(IDirect3DDevice9* Device, char * fileName);
 
 
 
