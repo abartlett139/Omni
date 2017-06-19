@@ -9,7 +9,8 @@ class Character : public Camera {
 public:
 	Character();
 	~Character();
-
+	enum state { IDLE, CHASE, FLEE, ATTACK };
+	int m_State;
 	virtual bool Initialize() = 0;
 	virtual void Render() = 0;
 	virtual void Update() = 0;

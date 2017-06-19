@@ -2,8 +2,9 @@
 #include <DirectXMath.h>
 #include <DirectXCollision.h>
 
-Dragon::Dragon(): m_KnightPointer( nullptr ), m_mood( idle )
+Dragon::Dragon(): m_KnightPointer( nullptr )
 {
+	Dragon::m_State = IDLE;
 }
 
 
@@ -65,12 +66,12 @@ void Dragon::GetMessages( UINT msg, WPARAM wParam, LPARAM lParam, void * Data )
 			switch (wParam)
 			{
 			case ',':
-				m_mood = Dragon::idle;
+				m_State = Dragon::IDLE;
 				printf("Dragon taking a smoke break, sharpening her claws\n");
 				break;
 			case '.':
 				printf("Dragon hungry; chasing silly knight\n");
-				m_mood = Dragon::chase;
+				m_State = Dragon::CHASE;
 				break;
 			default:
 				break;
@@ -85,12 +86,27 @@ void Dragon::GetMessages( UINT msg, WPARAM wParam, LPARAM lParam, void * Data )
 
 void Dragon::Update( )
 {
+	//printf("Dragon: x %f, y %f", _pos.x, _pos.y);
+
 	if (isAuto)
 	{
-		if (m_mood == Dragon::idle)
+		switch (m_State)
+		{
+		case IDLE:
 			IdleState();
-		else if( m_mood == Dragon::chase)
+			break;
+		case CHASE:
 			ChaseState();
+			break;
+		case FLEE:
+			FleeState();
+			break;
+		case ATTACK:
+			AttackState();
+			break;
+		default:
+			break;
+		}
 	}
 	else
 	{
@@ -109,11 +125,12 @@ void Dragon::IdleState()
 {
 	D3DXVECTOR3 l_KnightLoc{ 0,0,0 };
 	m_KnightPointer->getPosition(&l_KnightLoc);
-
+	//printf("Knight: x %f, y %f", l_KnightLoc.x, l_KnightLoc.y);
 	//Calculate vector pointing from dragon to knight	
 	D3DXVECTOR3 l_TempDirection{ 0,0,0 };
 	D3DXVec3Subtract(&l_TempDirection, &l_KnightLoc, &_pos);
 	D3DXVec3Normalize(&l_TempDirection, &l_TempDirection);
+	float l_dragon_knight_distance = D3DXVec3Length(&l_TempDirection);
 
 	D3DXVECTOR3 l_dragonLookDir{ 0,0,0 };
 	getLook(&l_dragonLookDir);
@@ -126,6 +143,14 @@ void Dragon::IdleState()
 	{
 		yaw(l_angle);
 	}
+	printf("Distance: %f \n", l_dragon_knight_distance);
+	printf("computed distance: %f", (2 * speed));
+	if (l_dragon_knight_distance <= (2 * speed))
+	{
+		m_State = CHASE;
+		printf("Dragon is idle!\n");
+	}
+
 
 }
 
@@ -143,8 +168,8 @@ void Dragon::ChaseState()
 
 		if(l_dragon_knight_distance <= (2*speed) )
 		{
-			m_mood = Dragon::idle;
-			printf("Dragon ate you; O' the indignity & travesty!\n");
+			m_State = FLEE;
+			printf("Dragon is chasing you!\n");
 		}
 
 		D3DXVec3Normalize(&l_TempDirection, &l_TempDirection);
@@ -158,6 +183,26 @@ void Dragon::AttackState()
 
 void Dragon::FleeState()
 {
+	if (m_KnightPointer)
+	{
+		D3DXVECTOR3 l_TempDirection{ 0,0,0 }, l_TempNormal{ 0,0,0 };
+		D3DXVECTOR3 l_KnightLoc{ 0,0,0 };
+		m_KnightPointer->getPosition(&l_KnightLoc);
+
+		//Calculate vector pointing from dragon to knight
+		D3DXVec3Subtract(&l_TempDirection, &l_KnightLoc, &_pos);
+		float l_dragon_knight_distance = D3DXVec3Length(&l_TempDirection);
+
+		if (l_dragon_knight_distance >= (2 * speed))
+		{
+			m_State = IDLE;
+			printf("Dragon ate you; O' the indignity & travesty!\n");
+		}
+
+		D3DXVec3Normalize(&l_TempDirection, &l_TempDirection);
+		_pos += l_TempDirection*-speed;
+	}
+
 }
 
 D3DXMATRIX Dragon::getRearView()

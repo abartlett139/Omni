@@ -8,7 +8,6 @@ class Dragon : public Character
 public:
 	Dragon();
 	~Dragon();
-
 	bool Initialize();
 	void Render();
     void GetMessages( UINT msg, WPARAM wParam, LPARAM lParam, void * Data );
@@ -29,7 +28,7 @@ public:
 	Camera thirdPersonCamera;
 
 	// Enum describing the current motivation of the dragon
-	enum Mood { idle, chase, attack, flee } m_mood;
+	//enum Mood { idle, chase, attack, flee } m_mood;
 
 };
 
