@@ -1,6 +1,6 @@
 #include "Skele.h"
 
-Skele::Skele( ): m_modelId( 0 ), m_file_path( "models/bones_all.x" )
+Skele::Skele( ): m_modelId( 0 ), m_file_path( "models/knightx.x" )
 {
 }
 

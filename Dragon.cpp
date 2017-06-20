@@ -1,10 +1,12 @@
 #include "Dragon.h"
 #include <DirectXMath.h>
 #include <DirectXCollision.h>
-
+//
 Dragon::Dragon(): m_KnightPointer( nullptr )
 {
 	Dragon::m_State = IDLE;
+	m_FleeTimer = 0.0f;
+	m_AttackTimer = 0.0f;
 }
 
 
@@ -168,10 +170,10 @@ void Dragon::ChaseState()
 
 		if(l_dragon_knight_distance <= (2*speed) )
 		{
-			m_State = FLEE;
+			m_State = ATTACK;
+			m_FleeTimer = timer.DeltaTime();
 			printf("Dragon is chasing you!\n");
 		}
-
 		D3DXVec3Normalize(&l_TempDirection, &l_TempDirection);
 		_pos += l_TempDirection*speed;
 	}
@@ -179,6 +181,41 @@ void Dragon::ChaseState()
 
 void Dragon::AttackState()
 {
+	if (m_KnightPointer)
+	{
+		D3DXVECTOR3 l_TempDirection{ 0,0,0 }, l_TempNormal{ 0,0,0 };
+		D3DXVECTOR3 l_KnightLoc{ 0,0,0 }, l_KnightDir{ 0,0,0 }, l_DragonLookPos{ 0,0,0 };
+		m_KnightPointer->getPosition(&l_KnightLoc);
+		D3DXVec3Subtract(&l_KnightDir, &l_KnightLoc, &_pos);
+
+		float l_dragon_knight_distance = D3DXVec3Length(&l_TempDirection);
+
+		D3DXVECTOR3 l_dragonLookDir{ 0,0,0 };
+		getLook(&l_dragonLookDir);
+		D3DXVec3Normalize(&l_dragonLookDir, &l_dragonLookDir);
+
+		float l_angle = D3DXVec3Dot(&l_dragonLookDir, &l_TempDirection);
+
+		//// turn dragon to face the knight, if the angle between the two is greater than a small theshold
+		//if (fabs(l_angle) >= 0.001f)
+		//{
+		//	yaw(l_angle);
+		//}
+
+		//take the cross product of the up vector and the direction vector
+		//that gives you the direction you want the dragon to go
+		D3DXVec3Cross(&l_TempDirection, &l_KnightDir, &_up);
+		if (m_AttackTimer < 3.0f)
+		{
+			D3DXVec3Normalize(&l_TempDirection, &l_TempDirection);
+			_pos += -l_TempDirection*speed/10;
+		}
+		else
+		{
+			yaw(l_angle);
+			_pos = l_KnightDir;
+		}
+	}
 }
 
 void Dragon::FleeState()
@@ -192,11 +229,12 @@ void Dragon::FleeState()
 		//Calculate vector pointing from dragon to knight
 		D3DXVec3Subtract(&l_TempDirection, &l_KnightLoc, &_pos);
 		float l_dragon_knight_distance = D3DXVec3Length(&l_TempDirection);
-
-		if (l_dragon_knight_distance >= (2 * speed))
+		float l_temp = (timer.DeltaTime()) - m_FleeTimer;
+		if ((l_dragon_knight_distance >= (5 * speed))&&(l_temp > .1))
 		{
 			m_State = IDLE;
 			printf("Dragon ate you; O' the indignity & travesty!\n");
+			m_FleeTimer = 0;
 		}
 
 		D3DXVec3Normalize(&l_TempDirection, &l_TempDirection);

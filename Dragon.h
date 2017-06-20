@@ -24,9 +24,10 @@ public:
 	void SetEnemy(Character* Enemy) { m_KnightPointer = Enemy; }
 	D3DXMATRIX getRearView();
 	D3DXMATRIX getSideView();
-
+	float m_FleeTimer;
+	float m_AttackTimer;
 	Camera thirdPersonCamera;
-
+	float m_Health;
 	// Enum describing the current motivation of the dragon
 	//enum Mood { idle, chase, attack, flee } m_mood;
 
