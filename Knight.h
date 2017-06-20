@@ -20,6 +20,8 @@ public:
 	Camera thirdPersonCamera;
 
 	Terrain * terrain;
+
+	bool isOnPlatform;
 };
 
 

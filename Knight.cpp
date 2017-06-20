@@ -70,22 +70,27 @@ void Knight::Update()
 
 		if (GetAsyncKeyState(VK_RIGHT) & 0x8000f) {
 			yaw(timer.DeltaTime()* turnSpeed);
-		}else
-		if (GetAsyncKeyState(VK_LEFT) & 0x8000f) {
-			yaw(-timer.DeltaTime() * turnSpeed);
-		}else
-		if (GetAsyncKeyState('W') & 0x8000f) {
-			walk(timer.DeltaTime() * speed);
-		}else
-		if (GetAsyncKeyState('S') & 0x8000f) {
-			walk(-timer.DeltaTime() * speed);
-		}else
-		if (GetAsyncKeyState('A') & 0x8000f) {
-			strafe(-timer.DeltaTime() * strafeSpeed);
-		}else
-		if (GetAsyncKeyState('D') & 0x8000f) {
-			strafe(timer.DeltaTime() * strafeSpeed);
 		}
+		else
+			if (GetAsyncKeyState(VK_LEFT) & 0x8000f) {
+				yaw(-timer.DeltaTime() * turnSpeed);
+			}
+			else
+				if (GetAsyncKeyState('W') & 0x8000f) {
+					walk(timer.DeltaTime() * speed);
+				}
+				else
+					if (GetAsyncKeyState('S') & 0x8000f) {
+						walk(-timer.DeltaTime() * speed);
+					}
+					else
+						if (GetAsyncKeyState('A') & 0x8000f) {
+							strafe(-timer.DeltaTime() * strafeSpeed);
+						}
+						else
+							if (GetAsyncKeyState('D') & 0x8000f) {
+								strafe(timer.DeltaTime() * strafeSpeed);
+							}
 
 
 
@@ -94,10 +99,17 @@ void Knight::Update()
 		if (currentState == JUMP) {
 			_pos.y += velocity.y*timer.DeltaTime();
 			velocity.y += -20.0f*timer.DeltaTime();
+			if (velocity.y <= 0.0f)
+				currentState = FALL;
 			if (_pos.y <= terrain->getHeight(_pos.x, _pos.z)) {
 				currentState = IDLE;
 				canJump = true;
 			}
+		}
+
+		if (currentState == FALL) {
+			_pos.y += velocity.y * timer.DeltaTime();
+			velocity.y += -20.0f*timer.DeltaTime();
 		}
 	}
 

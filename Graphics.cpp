@@ -124,7 +124,7 @@ bool Graphics::Initialized( int height, int width, HINSTANCE hInstance )
     wc.cbClsExtra = 0;
     wc.cbWndExtra = 0;
     wc.hInstance = hInstance;
-    wc.hIcon = NULL;
+    wc.hIcon = LoadIcon(0, IDI_APPLICATION);
     wc.hCursor = LoadCursor( 0, IDC_ARROW );
     wc.hbrBackground = (HBRUSH)GetStockObject( WHITE_BRUSH );
     wc.lpszMenuName = 0;
@@ -205,9 +205,9 @@ bool Graphics::Initialized( int height, int width, HINSTANCE hInstance )
     m_CurrentState = m_MainMenu;
     //load image iformation
     D3DXIMAGE_INFO ImageInfo;
-    D3DXGetImageInfoFromFile( "cursor2.png", &ImageInfo );
+    D3DXGetImageInfoFromFile( "textures/cursor.png", &ImageInfo );
     Device->CreateOffscreenPlainSurface( ImageInfo.Height, ImageInfo.Width, ImageInfo.Format, D3DPOOL_DEFAULT, &m_Cursor, NULL );
-    D3DXLoadSurfaceFromFile( m_Cursor, NULL, NULL, "cursor2.png", NULL, D3DX_FILTER_NONE, D3DCOLOR_XRGB( 255, 255, 255 ), &ImageInfo );
+    D3DXLoadSurfaceFromFile( m_Cursor, NULL, NULL, "textures/cursor.png", NULL, D3DX_FILTER_NONE, D3DCOLOR_XRGB( 255, 255, 255 ), &ImageInfo );
     Device->SetCursorProperties( 0, 0, m_Cursor );
     Device->SetCursorPosition( 0, 0, D3DCURSOR_IMMEDIATE_UPDATE );
     return TRUE;
@@ -230,15 +230,15 @@ void Graphics::Shutdown( )
         delete m_GameWorld;*/
 
 	D3D::Release(Device);
-	//D3D::Delete(tex);
-	//D3D::Delete(sprt);
-	//D3D::Delete(m_MainMenu);
-	//D3D::Delete(m_Options);
-	//D3D::Delete(m_Credits);
-	//D3D::Delete(m_Story);
-	//D3D::Delete(m_PreviousState);
-	//D3D::Delete(m_CurrentState);
-	//D3D::Delete(m_GameWorld);
+	/*D3D::Delete(tex);
+	D3D::Delete(sprt);
+	D3D::Delete(m_MainMenu);
+	D3D::Delete(m_Options);
+	D3D::Delete(m_Credits);
+	D3D::Delete(m_Story);
+	D3D::Delete(m_PreviousState);
+	D3D::Delete(m_CurrentState);
+	D3D::Delete(m_GameWorld);*/
 }
 
 //this is basically the update function for the graphics class, it passes on message data to the State Machine Update functions

@@ -14,6 +14,7 @@
 #include "Skele.h"
 #include "3rd-party\xanimator\include\XAnimator_lib.h"
 #include "Bridge.h"
+#include "StaticMesh.h"
 
 class GameWorld: public GameState
 {
@@ -59,7 +60,7 @@ public:
 	std::shared_ptr<IXAnimator> XAnimator;
 
 	Bridge bridge;
-
+	StaticMesh p, m;
 
 };
 

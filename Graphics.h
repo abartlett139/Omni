@@ -7,7 +7,7 @@
 #define screenWidth 1024
 #define screenHeight 768
 
-// Forward declerations to eliminate header file cycles
+// Forward declarations to eliminate header file cycles
 class Input;
 class Mouse;
 class Keyboard;

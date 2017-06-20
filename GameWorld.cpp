@@ -74,6 +74,11 @@ bool GameWorld::Init( )
     //	set music type
     musicType = soundEngine->GAME_BACKGROUND;
 
+	p.Initialize("models/bridge.x", 8.0f);
+	m.Initialize("models/moat.x", 100.0f);
+
+
+
     return true;
 }
 
@@ -128,11 +133,16 @@ void GameWorld::Render( )
 		//	render witch
 		skele.Render();
 
-        D3DXMATRIX moatScale, moatPos;
-        D3DXMatrixScaling( &moatScale, 100.0f, 100.0f, 100.0f );
-        D3DXMatrixTranslation( &moatPos, 0.0f, 10.0f, -300.0f );
-        Device->SetTransform( D3DTS_WORLD, &(moatScale * moatPos*I) );
-        moat.Render( );
+		//	give moat a wrapper class or something to render it as a static object
+		//	so it has a bounding box with the matrix transformation on it.
+        //	D3DXMATRIX moatScale, moatPos;
+        //	D3DXMatrixScaling( &moatScale, 100.0f, 100.0f, 100.0f );
+        //	D3DXMatrixTranslation( &moatPos, 0.0f, 10.0f, -300.0f );
+        //	Device->SetTransform( D3DTS_WORLD, &(moatScale * moatPos*I) );
+        //	moat.Render( );
+
+		m.Render(&D3DXVECTOR3(0.0f, 10.0f, -300.0f));
+		p.Render(&D3DXVECTOR3(-350.0f, 20.0f, -380.0f));
 
 		D3DXMATRIX castlePos, castleScale;
 		D3DXMatrixScaling(&castleScale, 25.0f, 25.0f, 25.0f);
@@ -167,10 +177,50 @@ void GameWorld::Update( )
     witch.Update( );
 	skele.Update( );
 
+	//	if the knight is over the moat
+	//if (m.PlatformCollision(&knight)) {
+	//	//	check to see if the knight is already on a platform
+	//	if (!knight.isOnPlatform) {
+	//		//	is the knight over the platform
+	//		if (p.PlatformCollision(&knight)) {
+	//			//	is the knight on the platform
+	//			if (knight._pos.y < p.box.MAX.y) {
+	//				knight._pos.y = p.box.MAX.y;
+	//				knight.isOnPlatform = true;
+	//			}
+	//		}
+	//		else if(knight._pos.y < terrain->getHeight(knight._pos.x, knight._pos.z)){
+	//			knight.currentState = Character::FALL;
+	//		}
+	//	}
+		//	2103948580
+		//	call and spam
+		//	endlessly
+	//}
+	//	check to see if the knight is in the moat
+	if (knight._pos.x <= moat.max.x && knight._pos.x >= moat.min.x && knight._pos.z <= moat.max.z && knight._pos.z >= moat.min.z) {
+		//	check to see if player is dead (if it's y position has touched the moat)
+		if (knight._pos.y <= moat.max.y) {
+			MessageBox(0, 0, 0, 0);
+		}
+		//	check to see if the player is on a bridge fragment
+		if (knight._pos.x <= bridge.box.MAX.x && knight._pos.x >= bridge.box.MIN.x && knight._pos.z <= bridge.box.MAX.z && knight._pos.z >= bridge.box.MIN.z) {
+			//	make sure the player stays on top of the bridge fragment
+			if (knight._pos.y <= bridge.box.MAX.y)
+					knight._pos.y = bridge.box.MAX.y;
+		}
+		//	if the knight is not on a bridge fragment, make him fall
+		else { knight.currentState = Character::FALL; }
+		}
+
+
+
+
+
     //	update character y positions so they don't go beneath the terrain
-  //	  knight._pos.y = terrain->getHeight( knight._pos.x, knight._pos.z );
-   //	 dragon._pos.y = terrain->getHeight( dragon._pos.x, dragon._pos.z );
-   //	 witch._pos.y = terrain->getHeight( witch._pos.x, witch._pos.z );
+	//	knight._pos.y = terrain->getHeight( knight._pos.x, knight._pos.z );
+	//	dragon._pos.y = terrain->getHeight( dragon._pos.x, dragon._pos.z );
+	//	witch._pos.y = terrain->getHeight( witch._pos.x, witch._pos.z );
 	//	skele._pos.y = terrain->getHeight( skele._pos.x, skele._pos.z );
 }
 

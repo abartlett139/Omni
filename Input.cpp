@@ -130,9 +130,9 @@ Mouse::Mouse( LPDIRECT3DDEVICE9 pDevice, LPDIRECTINPUT8 pInput, HWND hWnd,
 
 	      D3DXIMAGE_INFO ImageInfo;
         //load image iformation
-        D3DXGetImageInfoFromFile( "cursor.png", &ImageInfo );
+        D3DXGetImageInfoFromFile( "textures/cursor.png", &ImageInfo );
         Device->CreateOffscreenPlainSurface( ImageInfo.Height, ImageInfo.Width, ImageInfo.Format, D3DPOOL_DEFAULT, &m_Cursor, NULL );
-        D3DXLoadSurfaceFromFile( m_Cursor, NULL, NULL, "cursor.png", NULL, D3DX_FILTER_NONE, D3DCOLOR_XRGB( 255, 255, 255 ), &ImageInfo );
+        D3DXLoadSurfaceFromFile( m_Cursor, NULL, NULL, "textures/cursor.png", NULL, D3DX_FILTER_NONE, D3DCOLOR_XRGB( 255, 255, 255 ), &ImageInfo );
         Device->SetCursorProperties( 0, 0, m_Cursor );
         Device->SetCursorPosition( 0, 0, D3DCURSOR_IMMEDIATE_UPDATE );
         m_Changed = false;
