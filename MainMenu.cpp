@@ -83,7 +83,8 @@ void MainMenu::Render( )
     Device->Clear( 0, 0, D3DCLEAR_TARGET | D3DCLEAR_ZBUFFER | D3DCLEAR_STENCIL, COLOR_WINDOW, 1.0f, 0 );
     Device->BeginScene( );
 
-    wc->OnRender( );
+	if(wc)
+		wc->OnRender();
 
     Device->EndScene( );
     Device->Present( NULL, NULL, NULL, NULL );

@@ -13,7 +13,7 @@ public:
 	void Update();
 	void Reset();
 	void GetMessages(UINT msg, WPARAM wParam, LPARAM lParam, void * Data);
-
+	void RemoveHealth(float amountToRemove);
 
 	D3DXMATRIX getRearView();
 

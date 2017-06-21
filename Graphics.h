@@ -149,9 +149,10 @@ private:
     D3DXMATRIX m_worldMatrix;
     D3DXMATRIX m_orthoMatrix;
     //Input * m_Input;
-    Sprite* sprt;
+   
     Texture* tex;
 public:
+	Sprite* sprt;
     D3DPRESENT_PARAMETERS d3dpp; //create a struct ot hold device ingormation
     RECT m_ScreneRect;
     IDirect3DSurface9* m_Cursor;

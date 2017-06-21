@@ -198,20 +198,20 @@ void GameWorld::Update( )
 		//	endlessly
 	//}
 	//	check to see if the knight is in the moat
-	if (knight._pos.x <= moat.max.x && knight._pos.x >= moat.min.x && knight._pos.z <= moat.max.z && knight._pos.z >= moat.min.z) {
-		//	check to see if player is dead (if it's y position has touched the moat)
-		if (knight._pos.y <= moat.max.y) {
-			MessageBox(0, 0, 0, 0);
-		}
-		//	check to see if the player is on a bridge fragment
-		if (knight._pos.x <= bridge.box.MAX.x && knight._pos.x >= bridge.box.MIN.x && knight._pos.z <= bridge.box.MAX.z && knight._pos.z >= bridge.box.MIN.z) {
-			//	make sure the player stays on top of the bridge fragment
-			if (knight._pos.y <= bridge.box.MAX.y)
-					knight._pos.y = bridge.box.MAX.y;
-		}
-		//	if the knight is not on a bridge fragment, make him fall
-		else { knight.currentState = Character::FALL; }
-		}
+//if (knight._pos.x <= moat.max.x && knight._pos.x >= moat.min.x && knight._pos.z <= moat.max.z && knight._pos.z >= moat.min.z) {
+//	//	check to see if player is dead (if it's y position has touched the moat)
+//	if (knight._pos.y <= moat.max.y) {
+//		MessageBox(0, 0, 0, 0);
+//	}
+//	//	check to see if the player is on a bridge fragment
+//	if (knight._pos.x <= bridge.box.MAX.x && knight._pos.x >= bridge.box.MIN.x && knight._pos.z <= bridge.box.MAX.z && knight._pos.z >= bridge.box.MIN.z) {
+//		//	make sure the player stays on top of the bridge fragment
+//		if (knight._pos.y <= bridge.box.MAX.y)
+//				knight._pos.y = bridge.box.MAX.y;
+//	}
+//	//	if the knight is not on a bridge fragment, make him fall
+//	else { knight.currentState = Character::FALL; }
+//	}
 
 
 

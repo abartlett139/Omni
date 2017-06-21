@@ -91,8 +91,6 @@ bool Graphics::Render( )
 {
     m_CurrentState->Render( );
 
-    //m_Mouse->Update( );
-    //m_Keyboard->Update( );
     return true;
 }
 
@@ -104,7 +102,6 @@ void Graphics::Update( )
 Graphics::Graphics( )
 {
     m_MainMenu = NULL, m_GameWorld = NULL, m_CurrentState = NULL, m_PreviousState = NULL;
-    //	Device = NULL;
     m_D3DInterface = NULL;
     tex = NULL;
 }
@@ -199,10 +196,13 @@ bool Graphics::Initialized( int height, int width, HINSTANCE hInstance )
 	m_Story = new Story();
 	m_Credits = new Credits();
 	m_Options = new Options();
-	m_Story->Init();
-    m_GameWorld->Init( );
-    m_MainMenu->Init( );
+	//m_Story->Init();
+    //m_GameWorld->Init( );
+    //m_MainMenu->Init( );
     m_CurrentState = m_MainMenu;
+
+	m_MainMenu->Enter();
+
     //load image iformation
     D3DXIMAGE_INFO ImageInfo;
     D3DXGetImageInfoFromFile( "textures/cursor.png", &ImageInfo );

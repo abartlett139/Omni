@@ -6,13 +6,18 @@
 class Dragon : public Character
 {
 public:
+
 	Dragon();
 	~Dragon();
+
 	bool Initialize(Terrain *terrain);
 	void Render();
     void GetMessages( UINT msg, WPARAM wParam, LPARAM lParam, void * Data );
     void Update( );
 	void Reset();
+	
+
+
 	///Variables needed for independent 
 	Character* m_KnightPointer;
 	std::vector<D3DXVECTOR3> mapLocations;

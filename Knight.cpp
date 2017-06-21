@@ -10,12 +10,14 @@ Knight::~Knight()
 
 bool Knight::Initialize(Terrain * terrainPTR)
 {
+	//	initialize all the variables
 	speed = 100.0f;
 	strafeSpeed = 100.0f;
 	turnSpeed = 2.0f;
 
 	terrain = terrainPTR;
 
+	//	initialize the models
 	characterMesh.Initialize("models/knight.x");
 
 	//	set the scale

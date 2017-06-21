@@ -48,6 +48,12 @@ int SoundEngine::Initialize()
 
 	Load("audio/Some-Dreamy-Place.wav", true);
 	Load("audio/Trouble-in-the-Kingdom.wav", true);
+	//Load("audio/menuSound.wav", false);
+	//Load("audio/menuSound2.wav", false);
+	//Load("audio/knightSound.wav", false);
+	//Load("audo/dragonSound.wav", false);
+	//Load("audo/enchantressSound.wav", false);
+
     return 0;
 }
 
