@@ -88,159 +88,108 @@ void Dragon::GetMessages( UINT msg, WPARAM wParam, LPARAM lParam, void * Data )
 
 void Dragon::Update( )
 {
-	//printf("Dragon: x %f, y %f", _pos.x, _pos.y);
-
-	if (isAuto)
+	if (m_Enemy)
 	{
-		switch (m_State)
+		if (isAuto)
 		{
-		case IDLE:
-			IdleState();
-			break;
-		case CHASE:
-			ChaseState();
-			break;
-		case FLEE:
-			FleeState();
-			break;
-		case ATTACK:
-			AttackState();
-			break;
-		default:
-			break;
+			switch (m_State)
+			{
+			case IDLE:
+				IdleState();
+				break;
+			case CHASE:
+				ChaseState();
+				break;
+			case FLEE:
+				FleeState();
+				break;
+			case ATTACK:
+				AttackState();
+				break;
+			case LUNGE:
+				LungeState();
+				break;
+			case GOHOME:
+				GoHome();
+				break;
+			default:
+				break;
+			}
 		}
-	}
-	else
-	{
-		printf("Dragon error: Dragon should be AI driven\n");
-	}
+		else
+		{
+			printf("Dragon error: Dragon should be AI driven\n");
+		}
+
+}
+	//	update third person camera position (rear view)
+	thirdPersonCamera._pos = ((-_look * 20.0) + (_up * 10.0f)) + _pos;
 }
 
 void Dragon::Reset()
 {
 	//	set start position
 	_pos = { -900.0f, 0.0f, 900.0f };
+
+}
+
+bool Dragon::Initialize(std::shared_ptr<IXAnimator>xAnimator)
+{
+	//	set speed variables
+	speed = 50.0f;
+	strafeSpeed = 50.0f;
+	turnSpeed = 2.0f;
+
+	//	set start position
+	Reset();
+
+	//	Use the animation librayr to initialize the physical mesh object
+	m_animator = xAnimator;
+	if (!m_animator->LoadXFile(m_file_path.c_str(), &m_modelId))
+	{
+		printf("IXAnimator library could not load %s", m_file_path.c_str());
+		return false;
+	}
+
+	m_numberOfAnimationSets = m_animator->GetNumberOfAnimationSets(m_modelId);
+
+	//	set the scale
+	D3DXMatrixScaling(&S, 7.0f, 7.0f, 7.0f);
+
+
+	return true;
 }
 
 // Trying to get the dragon to always face the knight
 void Dragon::IdleState()
 {
-	D3DXVECTOR3 l_KnightLoc{ 0,0,0 };
-	m_KnightPointer->getPosition(&l_KnightLoc);
-	//printf("Knight: x %f, y %f", l_KnightLoc.x, l_KnightLoc.y);
-	//Calculate vector pointing from dragon to knight	
-	D3DXVECTOR3 l_TempDirection{ 0,0,0 };
-	D3DXVec3Subtract(&l_TempDirection, &l_KnightLoc, &_pos);
-	D3DXVec3Normalize(&l_TempDirection, &l_TempDirection);
-	float l_dragon_knight_distance = D3DXVec3Length(&l_TempDirection);
+	Character::IdleState();
+}
 
-	D3DXVECTOR3 l_dragonLookDir{ 0,0,0 };
-	getLook(&l_dragonLookDir);
-	D3DXVec3Normalize(&l_dragonLookDir, &l_dragonLookDir);
-
-	float l_angle = D3DXVec3Dot(&l_dragonLookDir, &l_TempDirection);
-
-	// turn dragon to face the knight, if the angle between the two is greater than a small theshold
-	if (fabs(l_angle) >= 0.001f)
-	{
-		yaw(l_angle);
-	}
-	printf("Distance: %f \n", l_dragon_knight_distance);
-	printf("computed distance: %f", (2 * speed));
-	if (l_dragon_knight_distance <= (2 * speed))
-	{
-		m_State = CHASE;
-		printf("Dragon is idle!\n");
-	}
-
-
+void Dragon::GoHome()
+{
+	Character::GoHome();
 }
 
 void Dragon::ChaseState()
 {
-	if (m_KnightPointer)
-	{
-		D3DXVECTOR3 l_TempDirection{ 0,0,0 }, l_TempNormal{ 0,0,0 };
-		D3DXVECTOR3 l_KnightLoc{ 0,0,0 };
-		m_KnightPointer->getPosition(&l_KnightLoc);
-
-		//Calculate vector pointing from dragon to knight
-		D3DXVec3Subtract(&l_TempDirection, &l_KnightLoc, &_pos);
-		float l_dragon_knight_distance = D3DXVec3Length(&l_TempDirection);
-
-		if(l_dragon_knight_distance <= (2*speed) )
-		{
-			m_State = ATTACK;
-			m_FleeTimer = timer.DeltaTime();
-			printf("Dragon is chasing you!\n");
-		}
-		D3DXVec3Normalize(&l_TempDirection, &l_TempDirection);
-		_pos += l_TempDirection*speed;
-	}
+	Character::ChaseState();
 }
 
 void Dragon::AttackState()
 {
-	if (m_KnightPointer)
-	{
-		D3DXVECTOR3 l_TempDirection{ 0,0,0 }, l_TempNormal{ 0,0,0 };
-		D3DXVECTOR3 l_KnightLoc{ 0,0,0 }, l_KnightDir{ 0,0,0 }, l_DragonLookPos{ 0,0,0 };
-		m_KnightPointer->getPosition(&l_KnightLoc);
-		D3DXVec3Subtract(&l_KnightDir, &l_KnightLoc, &_pos);
-
-		float l_dragon_knight_distance = D3DXVec3Length(&l_TempDirection);
-
-		D3DXVECTOR3 l_dragonLookDir{ 0,0,0 };
-		getLook(&l_dragonLookDir);
-		D3DXVec3Normalize(&l_dragonLookDir, &l_dragonLookDir);
-
-		float l_angle = D3DXVec3Dot(&l_dragonLookDir, &l_TempDirection);
-
-		//// turn dragon to face the knight, if the angle between the two is greater than a small theshold
-		//if (fabs(l_angle) >= 0.001f)
-		//{
-		//	yaw(l_angle);
-		//}
-
-		//take the cross product of the up vector and the direction vector
-		//that gives you the direction you want the dragon to go
-		D3DXVec3Cross(&l_TempDirection, &l_KnightDir, &_up);
-		if (m_AttackTimer < 3.0f)
-		{
-			D3DXVec3Normalize(&l_TempDirection, &l_TempDirection);
-			_pos += -l_TempDirection*speed/10;
-		}
-		else
-		{
-			yaw(l_angle);
-			_pos = l_KnightDir;
-		}
-	}
+	Character::AttackState();
+	
 }
 
 void Dragon::FleeState()
 {
-	if (m_KnightPointer)
-	{
-		D3DXVECTOR3 l_TempDirection{ 0,0,0 }, l_TempNormal{ 0,0,0 };
-		D3DXVECTOR3 l_KnightLoc{ 0,0,0 };
-		m_KnightPointer->getPosition(&l_KnightLoc);
+	Character::FleeState();
+}
 
-		//Calculate vector pointing from dragon to knight
-		D3DXVec3Subtract(&l_TempDirection, &l_KnightLoc, &_pos);
-		float l_dragon_knight_distance = D3DXVec3Length(&l_TempDirection);
-		float l_temp = (timer.DeltaTime()) - m_FleeTimer;
-		if ((l_dragon_knight_distance >= (5 * speed))&&(l_temp > .1))
-		{
-			m_State = IDLE;
-			printf("Dragon ate you; O' the indignity & travesty!\n");
-			m_FleeTimer = 0;
-		}
-
-		D3DXVec3Normalize(&l_TempDirection, &l_TempDirection);
-		_pos += l_TempDirection*-speed;
-	}
-
+void Dragon::LungeState()
+{
+	Character::LungeState();
 }
 
 D3DXMATRIX Dragon::getRearView()

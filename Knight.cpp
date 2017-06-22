@@ -1,10 +1,11 @@
 #include "Knight.h"
 #include <Windowsx.h>
-
+#include "UI.h"
 
 Knight::Knight()
 {
     m_prevYaw=0, m_prevPitch=0, m_CurrentYaw=0, m_CurrentPitch=0;
+	m_Print = new UIDevice(graphics.GetDevice());
 }
 
 
@@ -12,36 +13,49 @@ Knight::~Knight()
 {
 }
 
-bool Knight::Initialize()
+bool Knight::Initialize(std::shared_ptr<IXAnimator>xAnimator)
 {
 	//	set speed variables
-	speed = 100.0f;
-	strafeSpeed = 100.0f;
+	speed = 50.0f;
+	strafeSpeed = 50.0f;
 	turnSpeed = 2.0f;
 
 	//	set start position
-	_pos = { 900.0f, 0.0f, -900.0f };
+	Reset();
 
-	//	initialize the physical mesh object
-	characterMesh.Initialize("models/knight.x");
+	//	Use the animation librayr to initialize the physical mesh object
+	m_animator = xAnimator;
+	if (!m_animator->LoadXFile(m_file_path.c_str(), &m_modelId))
+	{
+		printf("IXAnimator library could not load %s", m_file_path.c_str());
+		return false;
+	}
+
+	m_numberOfAnimationSets = m_animator->GetNumberOfAnimationSets(m_modelId);
 
 	//	set the scale
-	D3DXMatrixScaling(&S, 1.0f, 1.0f, 1.0f);
+	D3DXMatrixScaling(&S, 7.0f, 7.0f, 7.0f);
+
 
 	return true;
+}
+
+bool Knight::Initialize()
+{
+	return false;
 }
 
 void Knight::Render()
 {
 	IDirect3DDevice9* Device = graphics.GetDevice();
-
 	//	the position and rotation translation matrix is the inverse of the characters's view matrix
 	getViewMatrix(&T);
 	D3DXMatrixInverse(&T, NULL, &T);
 	P = S*T;
-	Device->SetTransform(D3DTS_WORLD, &P);
 
-	characterMesh.Render();
+	// The render function expects the time to be in milliseconds
+	// timer.DeltaTime() returns units in seconds
+	m_animator->Render(m_modelId, P, timer.DeltaTime()*1000.0f);
 
 	//	update the bounding box coordinates to match the mesh
 	D3DXVec3TransformCoord(&box.MIN, &characterMesh.min, &P);
@@ -58,102 +72,6 @@ void Knight::GetMessages( UINT msg, WPARAM wParam, LPARAM lParam, void * Data )
 {
     if( !isAuto )
     {
-        //int l_deltaYaw = 0, l_deltaPitch = 0;
-
-        //m_prevPitch = m_CurrentPitch;
-        //m_prevYaw = m_CurrentYaw;
-
-        //m_CurrentYaw = GET_Y_LPARAM( lParam );
-        //m_CurrentPitch = GET_X_LPARAM( lParam );
-        //
-        //l_deltaPitch =  m_CurrentPitch- m_prevPitch;
-        //l_deltaYaw= m_CurrentYaw- m_prevYaw ;
-        ////this is code to use the message handler, maybe later
-        //yaw( timer.DeltaTime( )*l_deltaPitch );
-        //pitch( timer.DeltaTime( )*l_deltaYaw );
-
-        //switch( msg )
-        //{
-        //case WM_KEYDOWN:
-        //    switch( wParam )//switch on key down
-        //    {
-            //case VK_RIGHT:
-            //    yaw( timer.DeltaTime( )* turnSpeed );
-            //    if(turnSpeed<200.0f )
-            //        turnSpeed++;
-            //    break;
-            //case VK_LEFT:
-            //    yaw( -timer.DeltaTime( ) * turnSpeed );
-            //    if( turnSpeed<200.0f )
-            //        turnSpeed++;
-            //    break;
-            //case VK_UP:
-            //    pitch( -timer.DeltaTime( )* turnSpeed );
-            //    if( turnSpeed<200.0f )
-            //        turnSpeed++;
-            //    break;
-            //case VK_DOWN:
-            //    pitch( timer.DeltaTime( ) * turnSpeed );
-            //    if( turnSpeed<200.0f )
-            //        turnSpeed++;
-            //    break;
-        //    case 'W':
-        //        walk( timer.DeltaTime( ) * speed );
-        //        if( speed<10000.0f )
-        //            speed += 50.0f;
-        //        break;
-        //    case 'S':
-        //        walk( -timer.DeltaTime( ) * speed );
-        //        if( speed<10000.0f )
-        //            speed += 50.0f;
-        //        break;
-        //    case 'A':
-        //        strafe( -timer.DeltaTime( ) * strafeSpeed );
-        //        if( strafeSpeed<10000.0f )
-        //            strafeSpeed+= 50.0f;
-        //        break;
-        //    case 'D':
-        //        strafe( timer.DeltaTime( ) * strafeSpeed );
-        //        if( strafeSpeed<10000.0f )
-        //            strafeSpeed += 50.0f;
-        //        break;
-        //    default:
-        //        break;
-        //    }break;
-        //case WM_KEYUP:
-        //{
-        //    switch( wParam )//switch on key down
-        //    {
-            //case VK_RIGHT:
-            //    turnSpeed = 0;
-            //    //break;
-            //case VK_LEFT:
-            //    turnSpeed = 0;
-            //    //break;
-            //case VK_UP:
-            //    turnSpeed = 0;
-            //    //break;
-            //case VK_DOWN:
-            //    turnSpeed = 0;
-            //    //break;
-        //    case 'W':
-        //        speed = 1000;
-        //        break;
-        //    case 'S':
-        //        speed = 1000;
-        //        break;
-        //    case 'A':
-        //        strafeSpeed = 1000;
-        //        break;
-        //    case 'D':
-        //        strafeSpeed = 1000;
-        //        break;
-        //    default:
-        //        break;
-        //    }
-        //}break;
-        //}
-
         //using asynckeystate...
 		if (GetAsyncKeyState(VK_RIGHT) & 0x8000f) {
 			yaw(timer.DeltaTime()* turnSpeed);
@@ -207,4 +125,34 @@ D3DXMATRIX Knight::getSideView()
 	D3DXMatrixLookAtLH(&V, &thirdPersonCamera._pos, &D3DXVECTOR3(_pos.x, box.MAX.y, _pos.z), &D3DXVECTOR3(1, 0, 0));
 
 	return V;
+}
+
+void Knight::IdleState()
+{
+	Character::IdleState();
+}
+
+void Knight::GoHome()
+{
+	Character::GoHome();
+}
+
+void Knight::ChaseState()
+{
+	Character::ChaseState();
+}
+
+void Knight::AttackState()
+{
+	Character::AttackState();
+}
+
+void Knight::FleeState()
+{
+	Character::FleeState();
+}
+
+void Knight::LungeState()
+{
+	Character::LungeState();
 }

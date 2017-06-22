@@ -1,5 +1,8 @@
 #ifndef CHARACTER_H
 #define CHARACTER_H
+#include <memory>
+#include <string>
+#include "3rd-party\xanimator\include\XAnimator_lib.h"
 
 #include "Camera.h"
 #include "Mesh.h"
@@ -9,7 +12,7 @@ class Character : public Camera {
 public:
 	Character();
 	~Character();
-	enum state { IDLE, CHASE, FLEE, ATTACK };
+	enum state { IDLE, CHASE, FLEE, ATTACK, LUNGE, GOHOME };
 	int m_State;
 	virtual bool Initialize() = 0;
 	virtual void Render() = 0;
@@ -20,6 +23,20 @@ public:
 	D3D::BoundingBox box;
 
 	D3DXMATRIX P, T, S;
+
+	Character* m_Enemy;
+	void IdleState();
+	void GoHome();
+	void ChaseState();
+	void AttackState();
+	void FleeState();
+	void LungeState();
+	void SetEnemy(Character* Enemy) { m_Enemy = Enemy; }
+
+	float m_FleeTimer;
+	float m_AttackTimer;
+	Camera thirdPersonCamera;
+	float m_Health;
 
 	bool isAuto;
 	int currentState;

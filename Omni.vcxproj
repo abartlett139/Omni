@@ -148,10 +148,10 @@
     <ClCompile Include="MainMenu.cpp" />
     <ClCompile Include="Mesh.cpp" />
     <ClCompile Include="PSYS.cpp" />
-    <ClCompile Include="Skele.cpp" />
     <ClCompile Include="Skybox.cpp" />
     <ClCompile Include="SoundEngine.cpp" />
     <ClCompile Include="Terrain.cpp" />
+    <ClCompile Include="UI.cpp" />
     <ClCompile Include="UIBase.cpp" />
     <ClCompile Include="UIControls.cpp" />
     <ClCompile Include="UIWrappers.cpp" />
@@ -176,10 +176,10 @@
     <ClInclude Include="MainMenu.h" />
     <ClInclude Include="Mesh.h" />
     <ClInclude Include="PSYS.h" />
-    <ClInclude Include="Skele.h" />
     <ClInclude Include="Skybox.h" />
     <ClInclude Include="SoundEngine.h" />
     <ClInclude Include="Terrain.h" />
+    <ClInclude Include="UI.h" />
     <ClInclude Include="Vector3D.h" />
     <ClInclude Include="WAVE.h" />
     <ClInclude Include="UIBase.h" />

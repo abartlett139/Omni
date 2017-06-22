@@ -37,7 +37,6 @@ public:
     Knight knight;
     Dragon dragon;
     Witch witch;
-	Skele skele;
 
     Mesh moat;
 	Mesh castle;
